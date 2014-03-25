@@ -5,10 +5,7 @@ ENV['RACK_ENV'] ||= 'test'
 require 'rack/test'
 
 require File.expand_path('../../config/environment', __FILE__)
+require 'rspec-spies'
 
-RSpec.configure do |config|
-  config.include JsonSpec::Helpers
-
-  config.mock_with :rspec
-  config.expect_with :rspec
-end
+# Require all of the RSpec Support libraries
+Dir[File.expand_path(File.join('support/**/*.rb'), __FILE__)].each { |f| require f }
