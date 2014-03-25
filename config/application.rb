@@ -14,4 +14,4 @@ include_dirs.each do |dir|
   end
 end
 
-require File.expand_path('../../app/sample_app.rb', __FILE__)
+require File.expand_path('../../app/omniapi_app.rb', __FILE__)

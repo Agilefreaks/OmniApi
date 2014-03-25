@@ -7,7 +7,7 @@ module API
   require 'entities/user'
 
   class Root < Grape::API
-    version 'v1', using: :path, vendor: 'sample', cascade: false
+    version 'v1', using: :path, vendor: 'OmniApi', cascade: false
     prefix 'api'
     format :json
 

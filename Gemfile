@@ -2,11 +2,15 @@ source 'http://rubygems.org'
 
 gem 'puma'
 
-gem 'bundler'
-
 gem 'grape', github: 'intridea/grape'
 gem 'grape-entity'
 gem 'grape-swagger'
+
+gem 'mongoid'
+gem 'bson_ext'
+
+gem 'bundler'
+gem 'rake'
 
 gem 'json'
 

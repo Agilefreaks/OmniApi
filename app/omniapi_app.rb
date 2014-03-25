@@ -1,7 +1,7 @@
 require 'api/root'
 require 'rack/oauth2'
 
-module Sample
+module OmniApi
   class App
     def initialize
       @filenames = ['', '.html']
@@ -23,11 +23,11 @@ module Sample
         end
 
         use Rack::Static, urls: ['/apidoc'], root: 'public'
-        use Rack::OAuth2::Server::Resource::Bearer, 'Sample API' do |req|
+        use Rack::OAuth2::Server::Resource::Bearer, 'Omni API' do |req|
           AccessToken.verify(req.access_token) || req.invalid_token!
         end
 
-        run Sample::App.new
+        run OmniApi::App.new
       end.to_app
     end
 

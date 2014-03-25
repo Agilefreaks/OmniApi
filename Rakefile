@@ -26,7 +26,7 @@ task :environment do
 end
 
 task :routes => :environment do
-  Sample::API.routes.each do |route|
+  API.routes.each do |route|
     pp route
   end
 end
