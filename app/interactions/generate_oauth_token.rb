@@ -9,7 +9,7 @@ class GenerateOauthToken
       req.invalid_client! unless client
 
       authorization_class = GenerateOauthToken.const_get(classify(req.grant_type))
-      res.access_token = authorization_class.validate(client, req)
+      res.access_token = authorization_class.create(client, req).to_bearer_token(true)
     end.call(env)
   end
 
@@ -18,23 +18,28 @@ class GenerateOauthToken
   end
 
   class AuthorizationCode
-    def self.validate(client, req)
+    def self.create(client, req)
       req.invalid_grant! unless ::AuthorizationCode.verify(req.code)
-      AccessToken.build.to_bearer_token(true)
+      AccessToken.build
     end
   end
 
   class RefreshToken
-    def self.validate(client, req)
+    def self.create(client, req)
       req.invalid_grant! unless ::RefreshToken.verify(req.refresh_token)
-      AccessToken.build.to_bearer_token
+      AccessToken.build
     end
   end
 
   class ClientCredentials
-    def self.validate(client, req)
+    def self.create(client, req)
       req.invalid_grant! unless client.secret == req.client_secret
-      AccessToken.build.to_bearer_token(true)
+
+      access_token = AccessToken.build
+      client.access_tokens.push(AccessToken.build)
+      client.save
+
+      access_token
     end
   end
 end

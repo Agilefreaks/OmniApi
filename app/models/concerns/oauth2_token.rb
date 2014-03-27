@@ -2,17 +2,19 @@ module Concerns
   module OAuth2Token
     extend ActiveSupport::Concern
 
+    DEFAULT_EXPIRATION_TIME = 1.month
+
     included do
-      attr_accessor :token
-      attr_accessor :expires_in
+      field :token, type: String
+      field :expires_in, type: Integer
     end
 
     module ClassMethods
       def build(token = nil, bytes = 64)
-        builded_token = new
-        builded_token.token = token || SecureRandom.base64(bytes)
-        builded_token.expires_in = 15.minutes
-        builded_token
+        builder_token = new
+        builder_token.token = token || SecureRandom.base64(bytes)
+        builder_token.expires_in = DEFAULT_EXPIRATION_TIME
+        builder_token
       end
     end
   end

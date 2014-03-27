@@ -14,4 +14,6 @@ include_dirs.each do |dir|
   end
 end
 
+Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__))
+
 require File.expand_path('../../app/omniapi_app.rb', __FILE__)

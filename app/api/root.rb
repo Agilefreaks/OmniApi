@@ -11,6 +11,10 @@ module API
     prefix 'api'
     format :json
 
+    rescue_from Mongoid::Errors::DocumentNotFound do
+      rack_response({ error: { message: "We didn't find what we were looking for" } }.to_json, 404)
+    end
+
     helpers do
       def require_oauth_token
         @current_token = request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
