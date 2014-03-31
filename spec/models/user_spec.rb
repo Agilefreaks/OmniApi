@@ -55,6 +55,17 @@ describe User do
 
       it { should == user }
     end
+
+    context 'with expired token' do
+      let(:token) { access_token.token }
+
+      before do
+        user.access_tokens.first.update(expires_at: Date.current - 1.month)
+        user.save
+      end
+
+      it { should be_nil }
+    end
   end
 
   describe :invalidate_authorization_code do

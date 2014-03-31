@@ -12,7 +12,7 @@ class AccessToken
   def to_bearer_token(with_refresh_token = false)
     bearer_token = Rack::OAuth2::AccessToken::Bearer.new(
       access_token: token,
-      expires_in: expires_in
+      expires_in: (expires_at - Date.current).to_i * 24 * 60 * 60
     )
 
     bearer_token.refresh_token = refresh_token.token if with_refresh_token

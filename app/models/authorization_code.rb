@@ -7,7 +7,7 @@ class AuthorizationCode
   DEFAULT_EXPIRATION_TIME = 1.hour
 
   field :code, type: String, default: -> { '12345' }
-  field :expires_in, type: Integer, default: -> { DEFAULT_EXPIRATION_TIME }
+  field :expires_at, type: DateTime, default: -> { Time.now + DEFAULT_EXPIRATION_TIME }
   field :valid, type: Boolean, default: true
 
   embedded_in :user

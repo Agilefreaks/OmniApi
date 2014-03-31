@@ -17,7 +17,7 @@ module Concerns
       end
 
       def find_by_token(token)
-        User.where('access_tokens.token' => token).first ||
+        User.where('access_tokens.token' => token, :'access_tokens.expires_at'.gt => Date.current).first ||
           User.where('access_tokens.refresh_token.token' => token).first
       end
     end

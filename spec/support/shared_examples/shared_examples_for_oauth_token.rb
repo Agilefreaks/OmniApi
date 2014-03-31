@@ -7,13 +7,13 @@ shared_examples :oauth_token do
   end
 
   it { should have_field(:token) }
-  it { should have_field(:expires_in) }
+  it { should have_field(:expires_at) }
 
   describe :build do
     subject { TestToken.build }
 
     its(:token) { should_not be_nil }
 
-    its(:expires_in) { should == Concerns::OAuth2Token::DEFAULT_EXPIRATION_TIME }
+    its(:expires_at) { should == Date.current + Concerns::OAuth2Token::DEFAULT_EXPIRATION_TIME }
   end
 end
