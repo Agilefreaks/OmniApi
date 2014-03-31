@@ -1,9 +1,10 @@
-class User
-  attr_reader :first_name, :last_name, :dob
+require_relative 'concerns/oauth2_user'
 
-  def initialize(first_name: '', last_name: '', dob: nil)
-    @first_name = first_name
-    @last_name = last_name
-    @dob = dob
-  end
+class User
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Concerns::OAuth2User
+
+  field :first_name, type: String
+  field :last_name, type: String
 end

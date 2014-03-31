@@ -7,9 +7,9 @@ describe API::Resources::OAuth2 do
     API::Root
   end
 
-  let(:client_id) { '42' }
-
-  let(:params) { Hash[:grant_type, grant_type, :client_id, '42'] }
+  let(:client) { Fabricate(:client) }
+  let(:client_id) { client.id }
+  let(:params) { Hash[:grant_type, grant_type, :client_id, client_id] }
 
   shared_examples_for 'oauth2 grant type' do
     subject { last_response }
@@ -53,6 +53,11 @@ describe API::Resources::OAuth2 do
     let(:grant_type) { :authorization_code }
     let(:valid_params) { params.merge(code: '43') }
 
+    before do
+      user = Fabricate(:user)
+      user.authorization_codes.create(code: '43')
+    end
+
     it_behaves_like 'oauth2 grant type' do
       let(:invalid_params) { params.merge(code: '44') }
     end
@@ -62,16 +67,24 @@ describe API::Resources::OAuth2 do
 
   context 'when grant type is refresh_token' do
     let(:grant_type) { :refresh_token }
+    let(:access_token) { AccessToken.build(client_id) }
+
+    before do
+      user = Fabricate(:user)
+      access_token.refresh_token = RefreshToken.build(client_id)
+      user.access_tokens.push(access_token)
+      user.save
+    end
 
     it_behaves_like 'oauth2 grant type' do
-      let(:valid_params) { params.merge(refresh_token: 'r123') }
+      let(:valid_params) { params.merge(refresh_token: access_token.refresh_token.token) }
       let(:invalid_params) { params.merge(refresh_token: 'i123') }
     end
   end
 
   context 'when grant type is client_credentials' do
     let(:grant_type) { :client_credentials }
-    let(:valid_params) { params.merge(client_secret: 'secret') }
+    let(:valid_params) { params.merge(client_secret: client.secret) }
 
     it_behaves_like 'oauth2 grant type' do
       let(:invalid_params) { params.merge(client_secret: 'not secret') }

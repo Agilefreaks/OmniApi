@@ -1,5 +1,16 @@
 class AuthorizationCode
-  def self.verify(code)
-    code == '43'
-  end
+  include Mongoid::Document
+  include Mongoid::Timestamps
+
+  default_scope -> { where(valid: true) }
+
+  DEFAULT_EXPIRATION_TIME = 1.hour
+
+  field :code, type: String, default: -> { '12345' }
+  field :expires_at, type: DateTime, default: -> { Time.now + DEFAULT_EXPIRATION_TIME }
+  field :valid, type: Boolean, default: true
+
+  embedded_in :user
+
+  validates_presence_of :code
 end
