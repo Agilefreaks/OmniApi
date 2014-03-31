@@ -65,14 +65,22 @@ describe API::Resources::OAuth2 do
     it_behaves_like 'contains refresh_token'
   end
 
-  # context 'when grant type is refresh_token' do
-  #   let(:grant_type) { :refresh_token }
-  #
-  #   it_behaves_like 'oauth2 grant type' do
-  #     let(:valid_params) { params.merge(refresh_token: 'r123') }
-  #     let(:invalid_params) { params.merge(refresh_token: 'i123') }
-  #   end
-  # end
+  context 'when grant type is refresh_token' do
+    let(:grant_type) { :refresh_token }
+    let(:access_token) { AccessToken.build }
+
+    before do
+      user = Fabricate(:user)
+      access_token.refresh_token = RefreshToken.build
+      user.access_tokens.push(access_token)
+      user.save
+    end
+
+    it_behaves_like 'oauth2 grant type' do
+      let(:valid_params) { params.merge(refresh_token: access_token.refresh_token.token) }
+      let(:invalid_params) { params.merge(refresh_token: 'i123') }
+    end
+  end
 
   context 'when grant type is client_credentials' do
     let(:grant_type) { :client_credentials }
@@ -85,17 +93,17 @@ describe API::Resources::OAuth2 do
     it_behaves_like 'contains refresh_token'
   end
 
-  # context 'when grant type is invalid' do
-  #   let(:grant_type) { :invalid }
-  #
-  #   before :each do
-  #     post '/api/v1/oauth2/token', params
-  #   end
-  #
-  #   subject { last_response }
-  #
-  #   its(:status) { should == 400 }
-  #
-  #   its(:body) { should have_json_path('error') }
-  # end
+  context 'when grant type is invalid' do
+    let(:grant_type) { :invalid }
+
+    before :each do
+      post '/api/v1/oauth2/token', params
+    end
+
+    subject { last_response }
+
+    its(:status) { should == 400 }
+
+    its(:body) { should have_json_path('error') }
+  end
 end

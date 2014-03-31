@@ -9,7 +9,7 @@ class GenerateOauthToken
       req.invalid_client! unless client
 
       authorization_class = GenerateOauthToken.const_get(classify(req.grant_type))
-      res.access_token = authorization_class.create(client, req).to_bearer_token(true)
+      res.access_token = authorization_class.create(client, req).to_bearer_token(:with_refresh_token)
     end.call(env)
   end
 
@@ -17,23 +17,34 @@ class GenerateOauthToken
     symbol.to_s.split('_').map(&:capitalize).join
   end
 
+  def self.build_access_token_for(access_tokens_holder, client_id = nil)
+    access_token = AccessToken.build
+    access_token.client_id = client_id if client_id
+    access_token.refresh_token = ::RefreshToken.build
+    access_tokens_holder.access_tokens.push(access_token)
+    access_tokens_holder.save
+
+    access_token
+  end
+
   class AuthorizationCode
     def self.create(client, req)
       user = User.find_by_code(req.code)
       req.invalid_grant! unless user
 
-      access_token = AccessToken.build
-      user.access_tokens.push(access_token)
-      user.save
+      # remove authorization code
+      user.invalidate_authorization_code(req.code)
 
-      access_token
+      GenerateOauthToken.build_access_token_for(user, client.id)
     end
   end
 
   class RefreshToken
     def self.create(client, req)
-      req.invalid_grant! unless ::RefreshToken.verify(req.refresh_token)
-      AccessToken.build
+      user = User.find_by_token(req.refresh_token)
+      req.invalid_grant! unless user
+
+      GenerateOauthToken.build_access_token_for(user, client.id)
     end
   end
 
@@ -41,11 +52,7 @@ class GenerateOauthToken
     def self.create(client, req)
       req.invalid_grant! unless client.secret == req.client_secret
 
-      access_token = AccessToken.build
-      client.access_tokens.push(access_token)
-      client.save
-
-      access_token
+      GenerateOauthToken.build_access_token_for(client)
     end
   end
 end

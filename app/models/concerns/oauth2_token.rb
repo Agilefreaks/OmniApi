@@ -7,6 +7,7 @@ module Concerns
     included do
       field :token, type: String
       field :expires_in, type: Integer
+      field :client_id, type: BSON::ObjectId
     end
 
     module ClassMethods
