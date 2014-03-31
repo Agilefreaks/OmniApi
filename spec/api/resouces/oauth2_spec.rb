@@ -8,7 +8,7 @@ describe API::Resources::OAuth2 do
   end
 
   let(:client) { Fabricate(:client) }
-  let(:client_id) { client._id }
+  let(:client_id) { client.id }
   let(:params) { Hash[:grant_type, grant_type, :client_id, client_id] }
 
   shared_examples_for 'oauth2 grant type' do
@@ -67,11 +67,11 @@ describe API::Resources::OAuth2 do
 
   context 'when grant type is refresh_token' do
     let(:grant_type) { :refresh_token }
-    let(:access_token) { AccessToken.build }
+    let(:access_token) { AccessToken.build(client_id) }
 
     before do
       user = Fabricate(:user)
-      access_token.refresh_token = RefreshToken.build
+      access_token.refresh_token = RefreshToken.build(client_id)
       user.access_tokens.push(access_token)
       user.save
     end

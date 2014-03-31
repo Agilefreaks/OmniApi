@@ -10,10 +10,12 @@ shared_examples :oauth_token do
   it { should have_field(:expires_at) }
 
   describe :build do
-    subject { TestToken.build }
+    subject { TestToken.build('42') }
 
     its(:token) { should_not be_nil }
 
     its(:expires_at) { should == Date.current + Concerns::OAuth2Token::DEFAULT_EXPIRATION_TIME }
+
+    its(:client_id) { should == '42' }
   end
 end

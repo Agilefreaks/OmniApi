@@ -18,9 +18,8 @@ class GenerateOauthToken
   end
 
   def self.build_access_token_for(access_tokens_holder, client_id = nil)
-    access_token = AccessToken.build
-    access_token.client_id = client_id if client_id
-    access_token.refresh_token = ::RefreshToken.build
+    access_token = AccessToken.build(client_id)
+    access_token.refresh_token = ::RefreshToken.build(client_id)
     access_tokens_holder.access_tokens.push(access_token)
     access_tokens_holder.save
 
@@ -41,7 +40,7 @@ class GenerateOauthToken
 
   class RefreshToken
     def self.create(client, req)
-      user = User.find_by_token(req.refresh_token)
+      user = User.find_by_token(req.refresh_token, client.id)
       req.invalid_grant! unless user
 
       GenerateOauthToken.build_access_token_for(user, client.id)

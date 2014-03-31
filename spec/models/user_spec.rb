@@ -27,8 +27,9 @@ describe User do
   end
 
   describe :find_by_token do
-    let(:access_token) { AccessToken.build }
-    let(:refresh_token) { RefreshToken.build }
+    let(:client_id) { '42' }
+    let(:access_token) { AccessToken.build('42') }
+    let(:refresh_token) { RefreshToken.build('42') }
 
     before do
       access_token.refresh_token = refresh_token
@@ -36,7 +37,7 @@ describe User do
       user.save
     end
 
-    subject { User.find_by_token(token) }
+    subject { User.find_by_token(token, client_id) }
 
     context 'with valid token' do
       let(:token) { access_token.token }
@@ -63,6 +64,13 @@ describe User do
         user.access_tokens.first.update(expires_at: Date.current - 1.month)
         user.save
       end
+
+      it { should be_nil }
+    end
+
+    context 'with invalid client_id' do
+      let(:token) { access_token.token }
+      let(:client_id) { 'invalid' }
 
       it { should be_nil }
     end
