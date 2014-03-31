@@ -49,17 +49,22 @@ describe API::Resources::OAuth2 do
     end
   end
 
-  # context 'when grant type is authorization_code' do
-  #   let(:grant_type) { :authorization_code }
-  #   let(:valid_params) { params.merge(code: '43') }
-  #
-  #   it_behaves_like 'oauth2 grant type' do
-  #     let(:invalid_params) { params.merge(code: '44') }
-  #   end
-  #
-  #   it_behaves_like 'contains refresh_token'
-  # end
-  #
+  context 'when grant type is authorization_code' do
+    let(:grant_type) { :authorization_code }
+    let(:valid_params) { params.merge(code: '43') }
+
+    before do
+      user = Fabricate(:user)
+      user.authorization_codes.create(code: '43')
+    end
+
+    it_behaves_like 'oauth2 grant type' do
+      let(:invalid_params) { params.merge(code: '44') }
+    end
+
+    it_behaves_like 'contains refresh_token'
+  end
+
   # context 'when grant type is refresh_token' do
   #   let(:grant_type) { :refresh_token }
   #

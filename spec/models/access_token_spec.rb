@@ -5,7 +5,7 @@ describe AccessToken do
 
   it { should be_embedded_in(:client) }
   it { should be_embedded_in(:user) }
-  it { should embed_many(:refresh_tokens) }
+  it { should embed_one(:refresh_tokens) }
 
   describe :to_bearer_token do
     let(:access_token) { AccessToken.new(token: '42', expires_in: 15.minutes) }

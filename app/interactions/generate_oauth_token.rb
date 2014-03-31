@@ -19,8 +19,14 @@ class GenerateOauthToken
 
   class AuthorizationCode
     def self.create(client, req)
-      req.invalid_grant! unless ::AuthorizationCode.verify(req.code)
-      AccessToken.build
+      user = User.find_by_code(req.code)
+      req.invalid_grant! unless user
+
+      access_token = AccessToken.build
+      user.access_tokens.push(access_token)
+      user.save
+
+      access_token
     end
   end
 
@@ -36,7 +42,7 @@ class GenerateOauthToken
       req.invalid_grant! unless client.secret == req.client_secret
 
       access_token = AccessToken.build
-      client.access_tokens.push(AccessToken.build)
+      client.access_tokens.push(access_token)
       client.save
 
       access_token

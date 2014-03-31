@@ -5,9 +5,12 @@ class User
   field :first_name, type: String
   field :last_name, type: String
 
-  def initialize(first_name: '', last_name: '', dob: nil)
-    @first_name = first_name
-    @last_name = last_name
-    @dob = dob
+  embeds_many :access_tokens
+  embeds_many :authorization_codes
+
+  index({ 'authorization_codes.code' => 1 }, { unique: true })
+
+  def self.find_by_code(code)
+    User.where('authorization_codes.code' => code).first
   end
 end

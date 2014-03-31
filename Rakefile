@@ -34,4 +34,6 @@ end
 require 'rubocop/rake_task'
 Rubocop::RakeTask.new(:rubocop)
 
+load 'mongoid/tasks/database.rake'
+
 task default: [:rubocop, :spec]

@@ -5,9 +5,11 @@ class AccessToken
   include Mongoid::Timestamps
   include Concerns::OAuth2Token
 
+  field :client_id, type: BSON::ObjectId
+
   embedded_in :client
   embedded_in :user
-  embeds_many :refresh_tokens
+  embeds_one :refresh_tokens
 
   def to_bearer_token(with_refresh_token = false)
     bearer_token = Rack::OAuth2::AccessToken::Bearer.new(
