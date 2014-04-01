@@ -15,4 +15,20 @@ describe AccessToken do
     its(:access_token) { should == '42' }
     its(:expires_in) { should == 1.month }
   end
+
+  describe :verify do
+    subject { AccessToken.verify(token) }
+
+    context 'when token is valid' do
+      let(:token) { '42' }
+
+      it { should be_a(AccessToken) }
+    end
+
+    context 'when token is invalid' do
+      let(:token) { '' }
+
+      it { should be_nil }
+    end
+  end
 end

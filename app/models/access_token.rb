@@ -9,6 +9,11 @@ class AccessToken
   embedded_in :user
   embeds_one :refresh_token
 
+  def self.verify(token)
+    access_token = AccessToken.new(token: token)
+    access_token if access_token.valid?
+  end
+
   def to_bearer_token(with_refresh_token = false)
     bearer_token = Rack::OAuth2::AccessToken::Bearer.new(
       access_token: token,

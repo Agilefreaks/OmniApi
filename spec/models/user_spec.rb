@@ -5,6 +5,7 @@ describe User do
 
   it { should embed_many(:access_tokens) }
   it { should embed_many(:authorization_codes) }
+  it { should embed_many(:registered_devices) }
 
   describe :find_by_code do
     before do
@@ -37,7 +38,7 @@ describe User do
       user.save
     end
 
-    subject { User.find_by_token(token, client_id) }
+    subject { User.find_by_token(token) }
 
     context 'with valid token' do
       let(:token) { access_token.token }
@@ -64,13 +65,6 @@ describe User do
         user.access_tokens.first.update(expires_at: Date.current - 1.month)
         user.save
       end
-
-      it { should be_nil }
-    end
-
-    context 'with invalid client_id' do
-      let(:token) { access_token.token }
-      let(:client_id) { 'invalid' }
 
       it { should be_nil }
     end

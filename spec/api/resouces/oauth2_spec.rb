@@ -4,7 +4,7 @@ describe API::Resources::OAuth2 do
   include Rack::Test::Methods
 
   def app
-    API::Root
+    OmniApi::App.instance
   end
 
   let(:client) { Fabricate(:client) }

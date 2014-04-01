@@ -181,7 +181,7 @@ DEPENDENCIES
   bundler
   database_cleaner
   fabrication
-  grape
+  grape (~> 0.6.1)
   grape-entity
   grape-swagger
   growl

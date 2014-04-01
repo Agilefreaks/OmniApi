@@ -7,4 +7,7 @@ class User
 
   field :first_name, type: String
   field :last_name, type: String
+
+  embeds_many :registered_devices
+  accepts_nested_attributes_for :registered_devices
 end
