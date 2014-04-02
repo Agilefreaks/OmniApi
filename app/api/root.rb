@@ -12,6 +12,7 @@ module API
   require 'resources/version'
   require 'resources/users'
   require 'resources/devices'
+  require 'resources/phones'
 
   class Root < Grape::API
     version 'v1', using: :path, vendor: 'OmniApi', cascade: false
@@ -29,6 +30,7 @@ module API
     mount Resources::Version
     mount Resources::Users
     mount Resources::Devices
+    mount Resources::Phones
 
     add_swagger_documentation(
       api_version: 'v1',

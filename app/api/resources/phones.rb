@@ -1,11 +1,11 @@
-module WebOmni
+module API
   module Resources
     class Phones < Grape::API
       resources :phones do
         desc 'Call the number.', {
           headers: {
-            :'Channel' => {
-              description: 'The channel, usually the users email address',
+            :'Authorization' => {
+              description: 'The authorization token.',
               required: true
             }
           }
@@ -15,7 +15,7 @@ module WebOmni
         end
         post '/call' do
           authenticate!
-          Call.with(call_params)
+          Call.with(merged_params(params))
         end
       end
     end
