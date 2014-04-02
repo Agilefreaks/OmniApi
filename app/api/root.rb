@@ -1,4 +1,8 @@
 module API
+  # helpers
+  require 'helpers/authentication_helper'
+  require 'helpers/params_helper'
+
   # entities
   require 'entities/user'
   require 'entities/registered_device_entity'
@@ -18,18 +22,8 @@ module API
       rack_response({ error: { message: "We didn't find what we were looking for" } }.to_json, 404)
     end
 
-    helpers do
-      def require_oauth_token
-        @current_token = request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
-        fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_token
-      end
-
-      def authenticate!
-        require_oauth_token
-        @current_user = User.find_by_token(@current_token.token)
-        fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_user
-      end
-    end
+    helpers AuthenticationHelper
+    helpers ParamsHelper
 
     mount Resources::OAuth2
     mount Resources::Version

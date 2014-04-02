@@ -2,24 +2,6 @@ module API
   module Resources
     class Devices < Grape::API
       resources :devices do
-        helpers do
-          def merged_params(params)
-            declared(params).merge(access_token: @current_token.token)
-          end
-
-          # def activate_params
-          #   ActionController::Parameters.new(merged_params).permit(:channel, :identifier, :registration_id)
-          # end
-          #
-          # def deactivate_params
-          #   ActionController::Parameters.new(merged_params).permit(:channel, :identifier)
-          # end
-          #
-          # def merged_params
-          #   params.merge(channel: headers['Channel'])
-          # end
-        end
-
         desc 'Register a device', {
           headers: {
             :'Authorization' => {
