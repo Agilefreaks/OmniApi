@@ -16,19 +16,21 @@ describe API::Resources::Devices do
     let(:params) { { :'identifier' => 'Omega prime', :'name' => 'The truck' } }
 
     it 'will call Register.device with the correct params' do
-      expect(Register).to receive(:device).with(:access_token => access_token, :identifier => 'Omega prime', :name => 'The truck')
+      expect(Register).to receive(:device).with(access_token: access_token, identifier: 'Omega prime', name: 'The truck')
       post '/api/v1/devices', params.to_json, options
     end
   end
 
-  # describe "DELETE 'api/v1/devices/:identifier'" do
-  #   let(:options) { { :'CONTENT_TYPE' => 'application/json', :'ACCEPT' => 'application/json', :'CHANNEL' => current_user.email } }
-  #
-  #   it 'will call Unregister device with the correct params' do
-  #     expect(Unregister).to receive(:device).with('channel' => current_user.email, 'identifier' => 'sony tv')
-  #     delete '/api/v1/devices/sony%20tv', nil, options
-  #   end
-  # end
+  describe "DELETE 'api/v1/devices/:identifier'" do
+    include_context :with_authentificated_user
+
+    let(:options) { { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => 'bearer 42' } }
+
+    it 'will call Unregister device with the correct params' do
+      expect(Unregister).to receive(:device).with(access_token: access_token, identifier: 'sony tv')
+      delete '/api/v1/devices/sony%20tv', nil, options
+    end
+  end
   #
   # describe "PUT 'api/v1/devices/activate'" do
   #   let(:options) { { :'CONTENT_TYPE' => 'application/json', :'ACCEPT' => 'application/json', :'CHANNEL' => current_user.email } }

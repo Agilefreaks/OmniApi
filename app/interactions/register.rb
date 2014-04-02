@@ -16,6 +16,7 @@ class Register
 
     registered_device = user.registered_devices.find_or_initialize_by(:identifier => @identifier)
     registered_device.name = name
+    user.registered_devices.push(registered_device)
     registered_device.save!
 
     registered_device

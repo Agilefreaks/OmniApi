@@ -3,25 +3,21 @@ module API
     class Devices < Grape::API
       resources :devices do
         helpers do
-          def register(params)
+          def merged_params(params)
             declared(params).merge(access_token: @current_token.token)
           end
 
-          def unregister_params
-            ActionController::Parameters.new(merged_params).permit(:channel, :identifier)
-          end
-
-          def activate_params
-            ActionController::Parameters.new(merged_params).permit(:channel, :identifier, :registration_id)
-          end
-
-          def deactivate_params
-            ActionController::Parameters.new(merged_params).permit(:channel, :identifier)
-          end
-
-          def merged_params
-            params.merge(channel: headers['Channel'])
-          end
+          # def activate_params
+          #   ActionController::Parameters.new(merged_params).permit(:channel, :identifier, :registration_id)
+          # end
+          #
+          # def deactivate_params
+          #   ActionController::Parameters.new(merged_params).permit(:channel, :identifier)
+          # end
+          #
+          # def merged_params
+          #   params.merge(channel: headers['Channel'])
+          # end
         end
 
         desc 'Register a device', {
@@ -38,13 +34,13 @@ module API
         end
         post '/' do
           authenticate!
-          present Register.device(register(params)), with: API::Entities::RegisteredDeviceEntity
+          present Register.device(merged_params(params)), with: API::Entities::RegisteredDeviceEntity
         end
 
         desc 'Unregister a device.', {
           headers: {
-            :'Channel' => {
-              description: 'The channel, usually the users email address',
+            :'Authorization' => {
+              description: 'The authorization token.',
               required: true
             }
           }
@@ -55,7 +51,7 @@ module API
         route_param :identifier do
           delete '/' do
             authenticate!
-            Unregister.device(unregister_params)
+            Unregister.device(merged_params(params))
           end
         end
 
