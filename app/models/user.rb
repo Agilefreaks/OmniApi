@@ -13,4 +13,8 @@ class User
 
   embeds_many :clippings
   accepts_nested_attributes_for :clippings
+
+  def active_registered_devices
+    registered_devices.active
+  end
 end

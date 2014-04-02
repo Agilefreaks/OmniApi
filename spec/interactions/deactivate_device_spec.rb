@@ -2,13 +2,7 @@ require 'spec_helper'
 
 describe DeactivateDevice do
   describe 'with' do
-    let(:user) { Fabricate(:user) }
-    let(:access_token) { AccessToken.build }
-
-    before do
-      user.access_tokens.push(access_token)
-      user.save
-    end
+    include_context :with_authentificated_user
 
     subject { DeactivateDevice.with(access_token => access_token.token, identifier: 'violin') }
 

@@ -80,4 +80,14 @@ describe User do
       expect { subject }.to change(authorization_code, :valid).to(false)
     end
   end
+
+  describe :active_registered_devices do
+    let(:user) { Fabricate(:user) }
+    let!(:active_registered_device) { user.registered_devices.create(registration_id: '42') }
+    let!(:inactive_registered_device) { user.registered_devices.create }
+
+    subject { user.active_registered_devices }
+
+    it { should == [active_registered_device] }
+  end
 end

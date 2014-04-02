@@ -12,7 +12,7 @@ Dir[Pathname.new(__FILE__).dirname.join('initializers', '*.rb')].each do |file|
 end
 
 # require all the rest
-include_dirs = %w(models interactions finders)
+include_dirs = %w(models interactions finders factories services)
 
 include_dirs.each do |dir|
   Dir[Pathname.new(__FILE__).dirname.join('..', 'app', dir, '*.rb')].each do |f|
@@ -20,6 +20,8 @@ include_dirs.each do |dir|
   end
 end
 
+# mongo configuration
 Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__))
 
+# boot up the app
 require File.expand_path('../../app/omniapi_app.rb', __FILE__)

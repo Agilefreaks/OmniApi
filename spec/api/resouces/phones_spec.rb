@@ -7,9 +7,8 @@ describe API::Resources::Phones do
     OmniApi::App.instance
   end
 
-  let(:access_token) { '42' }
   let(:options) {
-    { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => 'bearer 42' }
+    { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "bearer #{access_token.token}" }
   }
 
   describe "POST 'api/v1/phones/call'" do
@@ -18,7 +17,7 @@ describe API::Resources::Phones do
     let(:params) { { :'phone_number' => '898989' } }
 
     it 'will call Call.device with the correct params' do
-      expect(Call).to receive(:with).with(access_token: access_token, phone_number: '898989')
+      expect(Call).to receive(:with).with(access_token: access_token.token, phone_number: '898989')
       post '/api/v1/phones/call', params.to_json, options
     end
   end

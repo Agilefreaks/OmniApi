@@ -2,13 +2,7 @@ require 'spec_helper'
 
 describe ActivateDevice do
   describe 'with' do
-    let(:user) { Fabricate(:user) }
-    let(:access_token) { AccessToken.build }
-
-    before do
-      user.access_tokens.push(access_token)
-      user.save
-    end
+    include_context :with_authentificated_user
 
     subject { ActivateDevice.with(access_token: access_token.token, identifier: 'flute', registration_id: '42') }
 

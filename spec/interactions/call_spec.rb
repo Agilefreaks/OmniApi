@@ -1,19 +1,15 @@
 require 'spec_helper'
 
 describe Call do
-  let(:call) { Call.new(token, phone_number) }
+  let(:call) { Call.new(access_token.token, phone_number) }
 
   describe :with do
+    include_context :with_authentificated_user
+
     let(:notification_service) { double(:notification_service) }
-    let(:user) { Fabricate(:user) }
-    let(:access_token) { AccessToken.build }
-    let(:token) { access_token.token }
     let(:phone_number) { '898989' }
 
     before do
-      user.access_tokens.push(access_token)
-      user.save
-
       call.notification_service = notification_service
       allow(notification_service).to receive(:notify)
     end

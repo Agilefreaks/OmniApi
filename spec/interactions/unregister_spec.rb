@@ -2,14 +2,9 @@ require 'spec_helper'
 
 describe Unregister do
   describe :execute do
-    let(:user) { Fabricate(:user) }
-    let(:access_token) { AccessToken.build }
-    let(:identifier) { '132' }
+    include_context :with_authentificated_user
 
-    before do
-      user.access_tokens.push(access_token)
-      user.save
-    end
+    let(:identifier) { '132' }
 
     subject { Unregister.device(access_token: access_token.token, identifier: identifier) }
 

@@ -1,7 +1,9 @@
 shared_context :with_authentificated_user do
-  let(:current_user) { Fabricate(:user) }
+  let(:user) { Fabricate(:user) }
+  let(:access_token) { AccessToken.build }
 
-  before(:each) do
-    allow(User).to receive(:find_by_token).and_return(current_user)
+  before do
+    user.access_tokens.push(access_token)
+    user.save
   end
 end

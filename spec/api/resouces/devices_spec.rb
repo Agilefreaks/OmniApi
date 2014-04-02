@@ -8,9 +8,8 @@ describe API::Resources::Devices do
   end
 
   let(:options) {
-    { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => 'bearer 42' }
+    { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "bearer #{access_token.token}" }
   }
-  let(:access_token) { '42' }
 
   describe "POST 'api/v1/devices'" do
     include_context :with_authentificated_user
@@ -19,7 +18,7 @@ describe API::Resources::Devices do
 
     it 'will call Register.device with the correct params' do
       expect(Register).to receive(:device).
-                            with(access_token: access_token, identifier: 'Omega prime', name: 'The truck')
+                            with(access_token: access_token.token, identifier: 'Omega prime', name: 'The truck')
       post '/api/v1/devices', params.to_json, options
     end
   end
@@ -28,7 +27,7 @@ describe API::Resources::Devices do
     include_context :with_authentificated_user
 
     it 'will call Unregister device with the correct params' do
-      expect(Unregister).to receive(:device).with(access_token: access_token, identifier: 'sony tv')
+      expect(Unregister).to receive(:device).with(access_token: access_token.token, identifier: 'sony tv')
       delete '/api/v1/devices/sony%20tv', nil, options
     end
   end
@@ -40,7 +39,7 @@ describe API::Resources::Devices do
 
     it 'will call ActivateDevice with the correct params' do
       expect(ActivateDevice).to receive(:with).
-                                  with(access_token: access_token,
+                                  with(access_token: access_token.token,
                                        identifier: 'sony tv',
                                        registration_id: '42',
                                        provider: nil)
@@ -54,7 +53,7 @@ describe API::Resources::Devices do
     let(:params) { { :'identifier' => 'sony tv' } }
 
     it 'will call Unregister device with the correct params' do
-      expect(DeactivateDevice).to receive(:with).with(access_token: access_token, identifier: 'sony tv')
+      expect(DeactivateDevice).to receive(:with).with(access_token: access_token.token, identifier: 'sony tv')
       put '/api/v1/devices/deactivate', params.to_json, options
     end
   end
