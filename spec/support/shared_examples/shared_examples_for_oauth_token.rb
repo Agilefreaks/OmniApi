@@ -9,6 +9,8 @@ shared_examples :oauth_token do
   it { should have_field(:token) }
   it { should have_field(:expires_at) }
 
+  it { should validate_presence_of(:token) }
+
   describe :build do
     subject { TestToken.build('42') }
 

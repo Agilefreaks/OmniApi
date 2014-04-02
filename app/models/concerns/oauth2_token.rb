@@ -8,10 +8,12 @@ module Concerns
       field :token, type: String
       field :expires_at, type: Date
       field :client_id, type: BSON::ObjectId
+
+      validates_presence_of :token
     end
 
     module ClassMethods
-      def build(client_id, bytes = 64)
+      def build(client_id = nil, bytes = 64)
         builder_token = new
         builder_token.token = SecureRandom.base64(bytes)
         builder_token.client_id = client_id

@@ -1,10 +1,20 @@
 module API
-  # resources
-  require 'resources/users'
-  require 'resources/oauth2'
+  # helpers
+  require 'helpers/authentication_helper'
+  require 'helpers/params_helper'
 
   # entities
   require 'entities/user'
+  require 'entities/registered_device_entity'
+  require 'entities/clipping_entity'
+
+  # resources
+  require 'resources/oauth2'
+  require 'resources/version'
+  require 'resources/users'
+  require 'resources/devices'
+  require 'resources/phones'
+  require 'resources/clippings'
 
   class Root < Grape::API
     version 'v1', using: :path, vendor: 'OmniApi', cascade: false
@@ -15,20 +25,15 @@ module API
       rack_response({ error: { message: "We didn't find what we were looking for" } }.to_json, 404)
     end
 
-    helpers do
-      def require_oauth_token
-        @current_token = request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
-        fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_token
-      end
-    end
-
-    desc 'Gets the latest version.'
-    get :version do
-      { version: '1.0.0' }
-    end
+    helpers AuthenticationHelper
+    helpers ParamsHelper
 
     mount Resources::OAuth2
+    mount Resources::Version
     mount Resources::Users
+    mount Resources::Devices
+    mount Resources::Phones
+    mount Resources::Clippings
 
     add_swagger_documentation(
       api_version: 'v1',

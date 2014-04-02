@@ -44,6 +44,9 @@ GEM
     fabrication (2.11.0)
     ffi (1.9.3)
     formatador (0.2.4)
+    gcm (0.0.7)
+      httparty
+      json
     grape (0.6.1)
       activesupport
       builder
@@ -75,6 +78,9 @@ GEM
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     hashie (2.0.5)
+    httparty (0.13.0)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     httpclient (2.3.4.1)
     i18n (0.6.9)
     ice_nine (0.11.0)
@@ -112,6 +118,7 @@ GEM
     parser (2.1.7)
       ast (~> 1.1)
       slop (~> 3.4, >= 3.4.5)
+    phone (1.2.3)
     powerpack (0.0.9)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -181,7 +188,8 @@ DEPENDENCIES
   bundler
   database_cleaner
   fabrication
-  grape
+  gcm
+  grape (~> 0.6.1)
   grape-entity
   grape-swagger
   growl
@@ -192,6 +200,7 @@ DEPENDENCIES
   json_spec
   mongoid (= 4.0.0.beta1)
   mongoid-rspec
+  phone
   pry
   puma
   rack-cors

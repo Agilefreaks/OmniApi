@@ -6,14 +6,22 @@ require 'boot'
 
 Bundler.require :default, ENV['RACK_ENV']
 
-include_dirs = %w(models interactions)
+# require initializers
+Dir[Pathname.new(__FILE__).dirname.join('initializers', '*.rb')].each do |file|
+  require file
+end
+
+# require all the rest
+include_dirs = %w(models interactions finders factories services)
 
 include_dirs.each do |dir|
-  Dir[File.expand_path(File.join('../../app', dir, '*.rb'), __FILE__)].each do |f|
+  Dir[Pathname.new(__FILE__).dirname.join('..', 'app', dir, '*.rb')].each do |f|
     require f
   end
 end
 
+# mongo configuration
 Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__))
 
+# boot up the app
 require File.expand_path('../../app/omniapi_app.rb', __FILE__)
