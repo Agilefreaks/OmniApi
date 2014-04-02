@@ -4,8 +4,9 @@ module API
   require 'entities/registered_device_entity'
 
   # resources
-  require 'resources/users'
   require 'resources/oauth2'
+  require 'resources/version'
+  require 'resources/users'
   require 'resources/devices'
 
   class Root < Grape::API
@@ -30,12 +31,8 @@ module API
       end
     end
 
-    desc 'Gets the latest version.'
-    get :version do
-      { version: '1.0.0' }
-    end
-
     mount Resources::OAuth2
+    mount Resources::Version
     mount Resources::Users
     mount Resources::Devices
 
