@@ -57,8 +57,8 @@ module API
 
         desc 'Activate.', {
           headers: {
-            :'Channel' => {
-              description: 'The channel, usually the users email address',
+            :'Authorization' => {
+              description: 'The authorization token.',
               required: true
             }
           }
@@ -70,7 +70,7 @@ module API
         end
         put 'activate' do
           authenticate!
-          present ActivateDevice.with(activate_params), with: Entities::RegisteredDeviceEntity
+          present ActivateDevice.with(merged_params(params)), with: Entities::RegisteredDeviceEntity
         end
 
         desc 'Deactivate.', {
