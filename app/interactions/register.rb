@@ -14,7 +14,7 @@ class Register
   def execute
     user = User.find_by_token(@token)
 
-    registered_device = user.registered_devices.find_or_initialize_by(:identifier => @identifier)
+    registered_device = user.registered_devices.find_or_initialize_by(identifier: @identifier)
     registered_device.name = name
     user.registered_devices.push(registered_device)
     registered_device.save!

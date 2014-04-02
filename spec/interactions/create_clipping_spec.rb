@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CreateClipping do
-  let(:service) { CreateClipping.new({ access_token: access_token.token, content: 'some content', identifier: '42' }) }
+  let(:service) { CreateClipping.new(access_token: access_token.token, content: 'some content', identifier: '42') }
 
   describe :with do
     include_context :with_authentificated_user

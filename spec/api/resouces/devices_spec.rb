@@ -7,18 +7,23 @@ describe API::Resources::Devices do
     OmniApi::App.instance
   end
 
+  # rubocop:disable Blocks
   let(:options) {
-    { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json', 'HTTP_AUTHORIZATION' => "bearer #{access_token.token}" }
+    {
+      'CONTENT_TYPE' => 'application/json',
+      'ACCEPT' => 'application/json',
+      'HTTP_AUTHORIZATION' => "bearer #{access_token.token}"
+    }
   }
 
   describe "POST 'api/v1/devices'" do
     include_context :with_authentificated_user
 
-    let(:params) { { :'identifier' => 'Omega prime', :'name' => 'The truck' } }
+    let(:params) { { identifier: 'Omega prime', name: 'The truck' } }
 
     it 'will call Register.device with the correct params' do
-      expect(Register).to receive(:device).
-                            with(access_token: access_token.token, identifier: 'Omega prime', name: 'The truck')
+      expect(Register).to receive(:device)
+                          .with(access_token: access_token.token, identifier: 'Omega prime', name: 'The truck')
       post '/api/v1/devices', params.to_json, options
     end
   end
@@ -27,7 +32,8 @@ describe API::Resources::Devices do
     include_context :with_authentificated_user
 
     it 'will call Unregister device with the correct params' do
-      expect(Unregister).to receive(:device).with(access_token: access_token.token, identifier: 'sony tv')
+      expect(Unregister).to receive(:device)
+                            .with(access_token: access_token.token, identifier: 'sony tv')
       delete '/api/v1/devices/sony%20tv', nil, options
     end
   end
@@ -35,14 +41,14 @@ describe API::Resources::Devices do
   describe "PUT 'api/v1/devices/activate'" do
     include_context :with_authentificated_user
 
-    let(:params) { { :'registration_id' => '42', :'identifier' => 'sony tv' } }
+    let(:params) { { registration_id: '42', identifier: 'sony tv' } }
 
     it 'will call ActivateDevice with the correct params' do
-      expect(ActivateDevice).to receive(:with).
-                                  with(access_token: access_token.token,
-                                       identifier: 'sony tv',
-                                       registration_id: '42',
-                                       provider: nil)
+      expect(ActivateDevice).to receive(:with)
+                                .with(access_token: access_token.token,
+                                      identifier: 'sony tv',
+                                      registration_id: '42',
+                                      provider: nil)
       put '/api/v1/devices/activate', params.to_json, options
     end
   end
@@ -50,10 +56,11 @@ describe API::Resources::Devices do
   describe "PUT 'api/v1/devices/deactivate'" do
     include_context :with_authentificated_user
 
-    let(:params) { { :'identifier' => 'sony tv' } }
+    let(:params) { { identifier: 'sony tv' } }
 
     it 'will call Unregister device with the correct params' do
-      expect(DeactivateDevice).to receive(:with).with(access_token: access_token.token, identifier: 'sony tv')
+      expect(DeactivateDevice).to receive(:with)
+                                  .with(access_token: access_token.token, identifier: 'sony tv')
       put '/api/v1/devices/deactivate', params.to_json, options
     end
   end

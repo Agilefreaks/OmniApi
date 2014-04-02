@@ -14,7 +14,10 @@ describe Unregister do
       end
 
       it 'will delete the existing device' do
-        expect { subject }.to change { user.reload; user.registered_devices.count }.from(1).to(0)
+        expect { subject }.to change {
+          user.reload
+          user.registered_devices.count
+        }.from(1).to(0)
       end
     end
 

@@ -4,7 +4,7 @@ describe Register do
   describe 'execute' do
     include_context :with_authentificated_user
 
-    subject { Register.device(:access_token => access_token.token, :identifier => 'Tu La', :name => 'Tu mem') }
+    subject { Register.device(access_token: access_token.token, identifier: 'Tu La', name: 'Tu mem') }
 
     shared_examples :registered_device do
       its(:user) { should == user }

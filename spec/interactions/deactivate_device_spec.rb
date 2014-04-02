@@ -11,7 +11,7 @@ describe DeactivateDevice do
         user.registered_devices.create(identifier: 'violin', registration_id: '42')
       end
 
-      its(:registration_id) { should == nil }
+      its(:registration_id) { should be_nil }
     end
 
     context 'with no existing device' do

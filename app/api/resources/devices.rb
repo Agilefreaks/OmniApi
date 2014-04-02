@@ -2,14 +2,13 @@ module API
   module Resources
     class Devices < Grape::API
       resources :devices do
-        desc 'Register a device', {
-          headers: {
-            :'Authorization' => {
-              description: 'The authorization token.',
-              required: true
-            }
-          }
-        }
+        desc 'Register a device',
+             headers: {
+               'Authorization' => {
+                 description: 'The authorization token.',
+                 required: true
+               }
+             }
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
           optional :name, type: String, desc: 'The name of the device.'
@@ -19,14 +18,13 @@ module API
           present Register.device(merged_params(params)), with: API::Entities::RegisteredDeviceEntity
         end
 
-        desc 'Unregister a device.', {
-          headers: {
-            :'Authorization' => {
-              description: 'The authorization token.',
-              required: true
-            }
-          }
-        }
+        desc 'Unregister a device.',
+             headers: {
+               'Authorization' => {
+                 description: 'The authorization token.',
+                 required: true
+               }
+             }
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
         end
@@ -37,14 +35,13 @@ module API
           end
         end
 
-        desc 'Activate.', {
-          headers: {
-            :'Authorization' => {
-              description: 'The authorization token.',
-              required: true
-            }
-          }
-        }
+        desc 'Activate.',
+             headers: {
+               'Authorization' => {
+                 description: 'The authorization token.',
+                 required: true
+               }
+             }
         params do
           requires :registration_id, type: String, desc: 'The registration id for the push notification service.'
           requires :identifier, type: String, desc: 'The unique device identifier.'
@@ -55,14 +52,13 @@ module API
           present ActivateDevice.with(merged_params(params)), with: Entities::RegisteredDeviceEntity
         end
 
-        desc 'Deactivate.', {
-          headers: {
-            :'Authorization' => {
-              description: 'The authorization token.',
-              required: true
-            }
-          }
-        }
+        desc 'Deactivate.',
+             headers: {
+               'Authorization' => {
+                 description: 'The authorization token.',
+                 required: true
+               }
+             }
         params do
           requires :identifier, type: String, desc: 'The unique device identifier.'
         end

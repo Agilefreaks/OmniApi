@@ -2,16 +2,16 @@ class NotificationService
   attr_accessor :gcm
 
   def notify(model, source_identifier)
-    self.send(model.class.to_s.underscore.to_sym, model, source_identifier)
+    send(model.class.to_s.underscore.to_sym, model, source_identifier)
   end
 
   def clipping(model, source_identifier)
-    options = {data: {registration_id: 'other', :provider => 'clipboard'}}
+    options = { data: { registration_id: 'other', provider: 'clipboard' } }
     gcm_send(model.user, source_identifier, options)
   end
 
   def phone_number(model, source_identifier)
-    options = {data: {registration_id: 'other', phone_number: model.content, :provider => 'phone'}}
+    options = { data: { registration_id: 'other', phone_number: model.content, provider: 'phone' } }
     gcm_send(model.user, source_identifier, options)
   end
 

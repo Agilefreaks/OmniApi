@@ -31,7 +31,7 @@ describe FindClipping do
     end
 
     context 'when user has no clipping' do
-      it { should == nil }
+      it { should be_nil }
     end
   end
 end

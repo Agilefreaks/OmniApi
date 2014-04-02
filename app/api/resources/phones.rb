@@ -2,14 +2,13 @@ module API
   module Resources
     class Phones < Grape::API
       resources :phones do
-        desc 'Call the number.', {
-          headers: {
-            :'Authorization' => {
-              description: 'The authorization token.',
-              required: true
-            }
-          }
-        }
+        desc 'Call the number.',
+             headers: {
+               'Authorization' => {
+                 description: 'The authorization token.',
+                 required: true
+               }
+             }
         params do
           requires :phone_number, type: String, desc: 'The phone number to dial.'
         end

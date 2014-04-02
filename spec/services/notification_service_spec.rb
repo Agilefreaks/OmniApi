@@ -57,12 +57,12 @@ describe NotificationService do
   describe :clipping do
     let(:model) { Clipping.new(user: user) }
 
-    it_behaves_like :gcm_notification, {data: {registration_id: 'other', :provider => 'clipboard'}}
+    it_behaves_like :gcm_notification, data: { registration_id: 'other', provider: 'clipboard' }
   end
 
   describe :phone_number do
     let(:model) { PhoneNumber.new(user: user, content: '123') }
 
-    it_behaves_like :gcm_notification, {data: {registration_id: 'other', phone_number: '123', :provider => 'phone'}}
+    it_behaves_like :gcm_notification, data: { registration_id: 'other', phone_number: '123', provider: 'phone' }
   end
 end

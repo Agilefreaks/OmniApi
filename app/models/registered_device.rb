@@ -13,5 +13,5 @@ class RegisteredDevice
   validates_presence_of :identifier
 
   index({ identifier: 1 }, { unique: true })
-  index({ registration_id: 1 })
+  index(registration_id: 1)
 end

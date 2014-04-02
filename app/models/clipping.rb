@@ -3,9 +3,9 @@ class Clipping
   include Mongoid::Timestamps
 
   TYPES = {
-    :phone_number => :phone_number,
-    :web_site => :web_site,
-    :unknown => :unknown
+    phone_number: :phone_number,
+    web_site: :web_site,
+    unknown: :unknown
   }
 
   field :content, type: String

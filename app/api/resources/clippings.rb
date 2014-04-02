@@ -2,14 +2,13 @@ module API
   module Resources
     class Clippings < Grape::API
       resources :clippings do
-        desc 'Create a clipping.', {
-          headers: {
-            :'Authorization' => {
-              description: 'The authorization token.',
-              required: true
-            }
-          }
-        }
+        desc 'Create a clipping.',
+             headers: {
+               'Authorization' => {
+                 description: 'The authorization token.',
+                 required: true
+               }
+             }
         params do
           requires :identifier, type: String, desc: 'Source device identifier.'
           requires :content, type: String, desc: 'Content for the clipping.'
@@ -19,17 +18,16 @@ module API
           present CreateClipping.with(merged_params(params)), with: API::Entities::ClippingEntity
         end
 
-        desc 'Get latest clipping.', {
-          headers: {
-            :'Authorization' => {
-              description: 'The authorization token.',
-              required: true
-            }
-          }
-        }
+        desc 'Get latest clipping.',
+             headers: {
+               'Authorization' => {
+                 description: 'The authorization token.',
+                 required: true
+               }
+             }
         get '/last' do
           authenticate!
-          present FindClipping.for(@current_token.token), :with => API::Entities::ClippingEntity
+          present FindClipping.for(@current_token.token), with: API::Entities::ClippingEntity
         end
       end
     end
