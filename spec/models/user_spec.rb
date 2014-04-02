@@ -6,6 +6,7 @@ describe User do
   it { should embed_many(:access_tokens) }
   it { should embed_many(:authorization_codes) }
   it { should embed_many(:registered_devices) }
+  it { should embed_many(:clippings) }
 
   describe :find_by_code do
     before do
