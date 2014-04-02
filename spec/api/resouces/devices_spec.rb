@@ -48,13 +48,14 @@ describe API::Resources::Devices do
     end
   end
 
-  # describe "PUT 'api/v1/devices/deactivate'" do
-  #   let(:options) { { :'CONTENT_TYPE' => 'application/json', :'ACCEPT' => 'application/json', :'CHANNEL' => current_user.email } }
-  #   let(:params) { { :'identifier' => 'sony tv' } }
-  #
-  #   it 'will call Unregister device with the correct params' do
-  #     expect(DeactivateDevice).to receive(:with).with('channel' => current_user.email, 'identifier' => 'sony tv')
-  #     put '/api/v1/devices/deactivate', params.to_json, options
-  #   end
-  # end
+  describe "PUT 'api/v1/devices/deactivate'" do
+    include_context :with_authentificated_user
+
+    let(:params) { { :'identifier' => 'sony tv' } }
+
+    it 'will call Unregister device with the correct params' do
+      expect(DeactivateDevice).to receive(:with).with(access_token: access_token, identifier: 'sony tv')
+      put '/api/v1/devices/deactivate', params.to_json, options
+    end
+  end
 end
