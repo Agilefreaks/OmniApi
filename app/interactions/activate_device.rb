@@ -5,7 +5,7 @@ class ActivateDevice
 
   attr_reader :access_token, :identifier, :registration_id
 
-  def initialize(channel, identifier, registration_id)
+  def initialize(access_token, identifier, registration_id)
     @access_token = access_token
     @identifier = identifier
     @registration_id = registration_id

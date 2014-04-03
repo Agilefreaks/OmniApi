@@ -33,7 +33,7 @@ describe User do
     let(:access_token) { AccessToken.build('42') }
     let(:refresh_token) { RefreshToken.build('42') }
 
-    before do
+    before :each do
       access_token.refresh_token = refresh_token
       user.access_tokens.push(access_token)
       user.save
@@ -65,6 +65,17 @@ describe User do
       before do
         user.access_tokens.first.update(expires_at: Date.current - 1.month)
         user.save
+      end
+
+      it { should be_nil }
+    end
+
+    context 'with nil token and no refresh token' do
+      let(:token) { nil }
+
+      before :each do
+        access_token.refresh_token = nil
+        access_token.save
       end
 
       it { should be_nil }

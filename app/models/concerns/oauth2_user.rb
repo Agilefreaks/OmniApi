@@ -26,7 +26,7 @@ module Concerns
           'access_tokens.token' => token,
           :'access_tokens.expires_at'.gt => Date.current).first ||
           User.where(
-            'access_tokens.refresh_token.token' => token).first
+            'access_tokens.refresh_token.token' => token).first unless token.nil?
       end
     end
   end
