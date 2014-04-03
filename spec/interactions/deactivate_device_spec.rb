@@ -4,7 +4,7 @@ describe DeactivateDevice do
   describe 'with' do
     include_context :with_authentificated_user
 
-    subject { DeactivateDevice.with(access_token => access_token.token, identifier: 'violin') }
+    subject { DeactivateDevice.with(access_token: access_token.token, identifier: 'violin') }
 
     context 'with an existing registered device' do
       before :each do

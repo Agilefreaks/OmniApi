@@ -11,7 +11,7 @@ class DeactivateDevice
   end
 
   def execute
-    user = User.find_by_token(access_token)
+    user = User.find_by_token(@access_token)
 
     registered_device = user.registered_devices.find_by(identifier: @identifier)
     registered_device.update_attribute(:registration_id, nil)
