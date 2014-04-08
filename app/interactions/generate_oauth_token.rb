@@ -43,7 +43,9 @@ class GenerateOauthToken
       user = User.find_by_token(req.refresh_token)
       req.invalid_grant! unless user
 
-      GenerateOauthToken.build_access_token_for(user, client.id)
+      token = user.access_tokens.where('refresh_token.token' => req.refresh_token).first
+      token.update_attribute(:expires_at, token.expires_at + Concerns::OAuth2Token::DEFAULT_EXPIRATION_TIME)
+      token
     end
   end
 
