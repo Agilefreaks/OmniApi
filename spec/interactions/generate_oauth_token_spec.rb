@@ -46,25 +46,27 @@ describe :GenerateOauthToken do
   end
 
   describe GenerateOauthToken::RefreshToken do
-    let(:req) { double('request', refresh_token: '42') }
+    let(:access_token) { AccessToken.build('42', token: 'access') }
+    let(:refresh_token) { RefreshToken.build(token: 'refresh') }
+    let(:req) { double('request', refresh_token: refresh_token.token) }
     let(:user) { Fabricate(:user) }
 
     subject { GenerateOauthToken::RefreshToken.create(client, req) }
 
     context 'when refresh token is valid' do
       before :each do
-        allow(User).to receive(:find_by_token).and_return(user)
+        access_token.refresh_token = refresh_token
+        user.access_tokens.push(access_token)
+        user.save
       end
 
       it 'will create a new access token' do
-        expect { subject }.to change(user.access_tokens, :count).by(1)
+        expect { subject }.to change(user.access_tokens, :count).by(0)
       end
 
-      its(:token) { should == user.access_tokens.last.token }
+      its(:client_id) { should == '42' }
 
-      its(:client_id) { should == client.id }
-
-      its(:refresh_token) { should_not be_nil }
+      its('refresh_token.token') { should eq 'refresh' }
     end
   end
 end

@@ -13,9 +13,9 @@ module Concerns
     end
 
     module ClassMethods
-      def build(client_id = nil, bytes = 64)
+      def build(client_id = nil, token: nil, bytes: 64)
         builder_token = new
-        builder_token.token = SecureRandom.base64(bytes)
+        builder_token.token = token || SecureRandom.base64(bytes)
         builder_token.client_id = client_id
         builder_token.expires_at = Date.current + DEFAULT_EXPIRATION_TIME
         builder_token
