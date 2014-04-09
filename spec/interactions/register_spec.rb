@@ -15,11 +15,17 @@ describe Register do
     end
 
     context 'when user has a device with the same identifier' do
-      let!(:registered_device) { user.registered_devices.create(identifier: 'Tu La') }
+      before :each do
+        user.registered_devices.create(identifier: 'Tu La')
+      end
 
       it_behaves_like :registered_device
 
-      it { should == registered_device }
+      it 'will have only one registered device' do
+        subject
+        user.reload
+        expect(user.registered_devices.count).to eq 1
+      end
     end
 
     context 'when the user has no device' do

@@ -16,8 +16,8 @@ class Register
 
     registered_device = user.registered_devices.find_or_initialize_by(identifier: @identifier)
     registered_device.name = name
-    user.registered_devices.push(registered_device)
-    registered_device.save!
+    user.registered_devices.push(registered_device) if registered_device.new_record?
+    user.save
 
     registered_device
   end
