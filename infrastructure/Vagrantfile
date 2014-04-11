@@ -1,0 +1,54 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = 'hashicorp/precise64'
+
+  config.ssh.forward_agent = true  
+
+  $script = <<SCRIPT  
+  wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
+  dpkg -i puppetlabs-release-precise.deb
+  rm puppetlabs-release-precise.deb
+  
+  apt-get update -y --fix-missing
+  apt-get install puppet-common -y
+SCRIPT
+
+  config.vm.provision :shell, :inline => $script
+
+  config.vm.provider :softlayer do |sl, override|
+    override.vm.box = 'softlayer'
+    override.ssh.username = "root"
+
+    sl.api_key  = '20eb02eaaf29815aedcc70c6c81411d8068c0d38fe85deefae1efbeec6aafb36'
+    sl.username = 'SL285378'
+    sl.ssh_key  = ['Vagrant insecure public key', 'Calin Ubuntu']
+
+    # machine config
+    sl.datacenter = 'ams01'
+    sl.network_speed = '100'
+    sl.operating_system = 'UBUNTU_12_64'
+    sl.domain = 'omnipasteapp.com'
+  end
+
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = 'puppet/manifests'
+    puppet.module_path = 'puppet/modules'
+    puppet.manifest_file  = 'site.pp'
+    puppet.options = '--verbose'
+  end
+
+  config.vm.define 'api' do |web|
+    web.vm.hostname = 'api'
+    config.vm.network 'private_network', type: 'dhcp'
+  end
+
+  config.vm.define 'mongo' do |mongo|
+    mongo.vm.hostname = 'mongo'
+    config.vm.network 'private_network', type: 'dhcp'
+  end
+end

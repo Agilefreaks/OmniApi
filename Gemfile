@@ -29,6 +29,12 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'
+
+  # deploy
+  gem 'capistrano', '~> 3.1.0', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano3-puma', require: false, github: 'balauru/capistrano-puma'
 end
 
 group :test do

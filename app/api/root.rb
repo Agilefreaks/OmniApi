@@ -40,6 +40,6 @@ module API
       mount_path: 'doc',
       hide_documentation_path: true,
       markdown: true
-      )
+    )
   end
 end
