@@ -21,9 +21,12 @@ public/uploads
 # Ignore coverage reports
 coverage
 
-# cers
-certs/*
+# certs
+infrastructure/certs/*
 
 # Zeus
 zeus.json
 custom_plan.rb
+
+# Vagrant machines
+.vagrant
