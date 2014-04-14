@@ -9,17 +9,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.forward_agent = true  
 
-  $script = <<SCRIPT  
-  wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
-  dpkg -i puppetlabs-release-precise.deb
-  rm puppetlabs-release-precise.deb
-  
-  apt-get update -y --fix-missing
-  apt-get install puppet-common -y
-SCRIPT
-
-  config.vm.provision :shell, :inline => $script
-
   config.vm.provider :softlayer do |sl, override|
     override.vm.box = 'softlayer'
     override.ssh.username = "root"
@@ -50,6 +39,17 @@ SCRIPT
       end
     end    
   end
+
+  $script = <<SCRIPT  
+  wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
+  dpkg -i puppetlabs-release-precise.deb
+  rm puppetlabs-release-precise.deb
+  
+  apt-get update -y --fix-missing
+  apt-get install puppet-common -y
+SCRIPT
+
+  config.vm.provision :shell, :inline => $script
 
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = 'puppet/manifests'
