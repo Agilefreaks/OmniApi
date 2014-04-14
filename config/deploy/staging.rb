@@ -4,11 +4,13 @@
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
 # Don't declare `role :all`, it's a meta role
-role :app, %w(deploy@37.58.66.30)
-role :web, %w(deploy@37.58.66.30)
+role :app, %w(deploy@46.16.191.69)
+role :web, %w(deploy@46.16.191.69)
 
 set :deploy_to, '/var/www/omniapi_staging'
 set :branch, 'master'
+
+set :puma_workers, 4
 
 # Extended Server Syntax
 # ======================

@@ -9,17 +9,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.forward_agent = true  
 
-  $script = <<SCRIPT  
-  wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
-  dpkg -i puppetlabs-release-precise.deb
-  rm puppetlabs-release-precise.deb
-  
-  apt-get update -y --fix-missing
-  apt-get install puppet-common -y
-SCRIPT
-
-  config.vm.provision :shell, :inline => $script
-
   config.vm.provider :softlayer do |sl, override|
     override.vm.box = 'softlayer'
     override.ssh.username = "root"
@@ -35,20 +24,37 @@ SCRIPT
     sl.domain = 'omnipasteapp.com'
   end
 
+  config.vm.define 'api' do |web|
+    web.vm.hostname = 'api'
+    web.vm.network 'private_network', type: 'dhcp'
+  end
+
+  3.times do |i|
+    config.vm.define "mongo#{i}" do |mongo|
+      mongo.vm.hostname = "mongo#{i}"
+      mongo.vm.network 'private_network', type: 'dhcp'      
+      mongo.vm.provider :softlayer do |provider|
+        # TODO: this does no get picked up, the disk size is still 25G
+        provider.disk_capacity = { 0 => 100 }
+      end
+    end    
+  end
+
+  $script = <<SCRIPT  
+  wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb
+  dpkg -i puppetlabs-release-precise.deb
+  rm puppetlabs-release-precise.deb
+  
+  apt-get update -y --fix-missing
+  apt-get install puppet-common -y
+SCRIPT
+
+  config.vm.provision :shell, :inline => $script
+
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path = 'puppet/manifests'
     puppet.module_path = 'puppet/modules'
     puppet.manifest_file  = 'site.pp'
     puppet.options = '--verbose'
-  end
-
-  config.vm.define 'api' do |web|
-    web.vm.hostname = 'api'
-    config.vm.network 'private_network', type: 'dhcp'
-  end
-
-  config.vm.define 'mongo' do |mongo|
-    mongo.vm.hostname = 'mongo'
-    config.vm.network 'private_network', type: 'dhcp'
   end
 end

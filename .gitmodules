@@ -16,3 +16,6 @@
 [submodule "infrastructure/puppet/modules/rvm"]
 	path = infrastructure/puppet/modules/rvm
 	url = git@github.com:joebew42/puppet-rvm.git
+[submodule "infrastructure/puppet/modules/newrelic"]
+	path = infrastructure/puppet/modules/newrelic
+	url = git@github.com:fsalum/puppet-newrelic.git

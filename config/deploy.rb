@@ -6,6 +6,9 @@ set :repo_url, 'git@github.com:Agilefreaks/OmniApi.git'
 
 set :rvm_ruby_version, 'ruby-2.1.1@omniapi'
 
+set :puma_workers, 4
+set :puma_preload_app, true
+
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
