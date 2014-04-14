@@ -20,6 +20,9 @@ gem 'rack-oauth2'
 
 gem 'gcm'
 
+gem 'newrelic_rpm'
+gem 'newrelic-grape'
+
 group :development, :test do
   gem 'pry'
   gem 'rb-fsevent'
@@ -34,7 +37,7 @@ group :development, :test do
   gem 'capistrano', '~> 3.1.0', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rvm', require: false
-  gem 'capistrano3-puma', require: false, github: 'balauru/capistrano-puma'
+  gem 'capistrano3-puma', require: false
 end
 
 group :test do

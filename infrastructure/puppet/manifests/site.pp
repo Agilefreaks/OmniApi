@@ -2,7 +2,13 @@ package { "vim":
   ensure => latest
 }
 
-node 'api' {
+node 'common' {
+  newrelic::server {"$hostname":
+    newrelic_license_key => '7186669cdca6dfc5b3766c60f5c59a824f256f63',
+  }
+}
+
+node 'api' inherits 'common' {
   $group = 'deploy'
   $user = 'deploy'
   $home = '/home/deploy'
@@ -96,7 +102,7 @@ node 'api' {
   }
 }
 
-node /^mongo[0-2]$/ {
+node /^mongo[0-2]$/ inherits 'common' {
   class { '::mongodb::globals':
     manage_package_repo => true,
   }->
