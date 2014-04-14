@@ -87,8 +87,8 @@ node 'api' {
     ensure => present,
     rewrite_to_https => true,
     ssl              => true,
-    ssl_cert         => "/vagrant/certs/apistaging.crt",
-    ssl_key          => "/vagrant/certs/apistaging.key",
+    ssl_cert         => "/vagrant/certs/omnipasteapp.com.crt",
+    ssl_key          => "/vagrant/certs/omnipasteapp.com.key.nopass",
     access_log => "$deploy_to/$app_name/shared/log/nginx_access.log",
     error_log => "$deploy_to/$app_name/shared/log/nginx_error.log",
     location_cfg_append => $cache_config,
@@ -96,10 +96,19 @@ node 'api' {
   }
 }
 
-node 'mongo' {
-  class {'::mongodb::globals':
+node /^mongo[0-2]$/ {
+  class { '::mongodb::globals':
     manage_package_repo => true,
   }->
-  class {'::mongodb::server': }->
-  class {'::mongodb::client': }
+  class { '::mongodb::server': 
+    bind_ip => ['127.0.0.1',"$ipaddress_eth0"],
+    replset    => 'rsomni'
+  }->
+  class { '::mongodb::client': }
+
+  exec { 'open firewall port for mongo':
+    command => "/sbin/iptables -A INPUT -s $ipaddress_eth0 -p tcp --destination-port 27017 -m state --state NEW,ESTABLISHED -j ACCEPT && 
+                /sbin/iptables -A OUTPUT -d $ipaddress_eth0 -p tcp --source-port 27017 -m state --state ESTABLISHED -j ACCEPT",
+    refreshonly => true
+  }
 }
