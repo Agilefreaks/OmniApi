@@ -10,6 +10,8 @@ role :web, %w(deploy@37.58.66.30)
 set :deploy_to, '/var/www/omniapi_staging'
 set :branch, 'master'
 
+set :puma_workers, 4
+
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server
