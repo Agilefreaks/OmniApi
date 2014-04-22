@@ -7,6 +7,7 @@ describe User do
   it { should embed_many(:authorization_codes) }
   it { should embed_many(:registered_devices) }
   it { should embed_many(:clippings) }
+  it { should embed_many(:providers) }
 
   describe :find_by_code do
     before do
@@ -100,5 +101,29 @@ describe User do
     subject { user.active_registered_devices }
 
     it { should == [active_registered_device] }
+  end
+
+  describe :find_by_provider do
+    let(:user) { Fabricate(:user) }
+
+    subject { User.find_by_provider_or_email(email, provider).entries }
+
+    before :each do
+      user.providers.create(email: 'user@email.com', name: 'some provider')
+    end
+
+    context 'with a valid provider' do
+      let(:email) { 'user@email.com' }
+      let(:provider) { 'some provider' }
+
+      it { should == [user] }
+    end
+
+    context 'with invalid provider' do
+      let(:email) { 'other@email.com' }
+      let(:provider) { 'other provider' }
+
+      it { should == [] }
+    end
   end
 end

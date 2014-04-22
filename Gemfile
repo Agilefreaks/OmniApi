@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'puma'
 
-gem 'grape', '~> 0.6.1'
+gem 'grape', '~> 0.7'
 gem 'grape-entity'
 gem 'grape-swagger'
 

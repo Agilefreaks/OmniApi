@@ -6,9 +6,9 @@ module Concerns
       embeds_many :access_tokens
       embeds_many :authorization_codes
 
-      index({ 'authorization_codes.code' => 1, 'authorization_codes.valid' => 1 }, { unique: true })
-      index({ 'access_tokens.token' => 1 }, { unique: true })
-      index({ 'access_tokens.refresh_token.token' => 1 }, { unique: true })
+      index({ 'authorization_codes.code' => 1, 'authorization_codes.valid' => 1 })
+      index({ 'access_tokens.token' => 1 })
+      index({ 'access_tokens.refresh_token.token' => 1 })
     end
 
     def invalidate_authorization_code(code)

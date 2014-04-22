@@ -15,7 +15,7 @@ module API
         end
         post '/' do
           authenticate!
-          present CreateClipping.with(merged_params(params)), with: API::Entities::Clipping
+          present CreateClipping.with(merged_params), with: API::Entities::Clipping
         end
 
         desc 'Get latest clipping.',

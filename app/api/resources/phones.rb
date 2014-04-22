@@ -14,7 +14,7 @@ module API
         end
         post '/call' do
           authenticate!
-          Call.with(merged_params(params))
+          Call.with(merged_params)
         end
       end
     end
