@@ -15,7 +15,7 @@ module API
         end
         post '/' do
           authenticate!
-          present CreateClipping.with(merged_params(params)), with: API::Entities::ClippingEntity
+          present CreateClipping.with(merged_params(params)), with: API::Entities::Clipping
         end
 
         desc 'Get latest clipping.',
@@ -27,7 +27,7 @@ module API
              }
         get '/last' do
           authenticate!
-          present FindClipping.for(@current_token.token), with: API::Entities::ClippingEntity
+          present FindClipping.for(@current_token.token), with: API::Entities::Clipping
         end
       end
     end

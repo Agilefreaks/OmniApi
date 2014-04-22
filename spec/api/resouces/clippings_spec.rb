@@ -38,7 +38,7 @@ describe API::Resources::Clippings do
     it 'calls FindClipping for with correct argument' do
       allow(FindClipping).to receive(:for).with(access_token.token).and_return(clipping)
       get '/api/v1/clippings/last', nil, options
-      expect(last_response.body).to eql API::Entities::ClippingEntity.new(clipping).to_json
+      expect(last_response.body).to eql API::Entities::Clipping.new(clipping).to_json
     end
   end
 end

@@ -15,7 +15,7 @@ module API
         end
         post '/' do
           authenticate!
-          present Register.device(merged_params(params)), with: API::Entities::RegisteredDeviceEntity
+          present Register.device(merged_params(params)), with: API::Entities::RegisteredDevice
         end
 
         desc 'Unregister a device.',
@@ -49,7 +49,7 @@ module API
         end
         put 'activate' do
           authenticate!
-          present ActivateDevice.with(merged_params(params)), with: Entities::RegisteredDeviceEntity
+          present ActivateDevice.with(merged_params(params)), with: Entities::RegisteredDevice
         end
 
         desc 'Deactivate.',
@@ -64,7 +64,7 @@ module API
         end
         put 'deactivate' do
           authenticate!
-          present DeactivateDevice.with(merged_params(params)), with: Entities::RegisteredDeviceEntity
+          present DeactivateDevice.with(merged_params(params)), with: Entities::RegisteredDevice
         end
       end
     end
