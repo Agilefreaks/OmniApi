@@ -39,6 +39,7 @@ module API
           requires :email, type: String, desc: 'The Email of the user.'
           optional :first_name, type: String
           optional :last_name, type: String
+          optional :image_url, type: String
           optional :providers, type: Array do
             requires :name
             requires :uid
@@ -56,11 +57,11 @@ module API
           optional :email, type: String, desc: 'The Email of the user.'
           optional :first_name, type: String
           optional :last_name, type: String
-          optional :sign_in_count
-          optional :current_sign_in_at
-          optional :last_sign_in_at
-          optional :current_sign_in_ip
-          optional :last_sign_in_ip
+          optional :sign_in_count, type: String
+          optional :current_sign_in_at, type: String
+          optional :last_sign_in_at, type: String
+          optional :current_sign_in_ip, type: String
+          optional :last_sign_in_ip, type: String
         end
         route_param :id do
           put do
