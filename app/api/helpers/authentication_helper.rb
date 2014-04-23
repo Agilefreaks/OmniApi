@@ -9,4 +9,10 @@ module AuthenticationHelper
     @current_user = User.find_by_token(@current_token.token)
     fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_user
   end
+
+  def authenticate_client!
+    require_oauth_token
+    @current_client = Client.find_by_token(@current_token.token)
+    fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_client
+  end
 end

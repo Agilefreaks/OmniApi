@@ -2,19 +2,17 @@ module API
   module Resources
     class Phones < Grape::API
       resources :phones do
-        desc 'Call the number.',
-             headers: {
-               'Authorization' => {
-                 description: 'The authorization token.',
-                 required: true
-               }
-             }
+        before do
+          authenticate!
+        end
+
+        desc 'Call the number.', ParamsHelper.auth_headers
         params do
           requires :phone_number, type: String, desc: 'The phone number to dial.'
         end
         post '/call' do
           authenticate!
-          Call.with(merged_params(params))
+          Call.with(merged_params)
         end
       end
     end

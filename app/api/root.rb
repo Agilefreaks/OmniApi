@@ -4,9 +4,10 @@ module API
   require 'helpers/params_helper'
 
   # entities
+  require 'entities/provider'
   require 'entities/user'
-  require 'entities/registered_device_entity'
-  require 'entities/clipping_entity'
+  require 'entities/registered_device'
+  require 'entities/clipping'
 
   # resources
   require 'resources/oauth2'

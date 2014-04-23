@@ -1,6 +1,6 @@
 module API
   module Entities
-    class RegisteredDeviceEntity < Grape::Entity
+    class RegisteredDevice < Grape::Entity
       format_with(:iso_timestamp) { |dt| dt.iso8601 }
 
       expose :identifier, :name, :registration_id
