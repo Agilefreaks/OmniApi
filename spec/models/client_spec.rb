@@ -12,4 +12,12 @@ describe Client do
 
     its('access_tokens.count') { should == 1 }
   end
+
+  describe :find_by_token do
+    let(:client) { Fabricate(:client) }
+
+    subject { Client.find_by_token(client.access_tokens.first.token) }
+
+    it { should == client }
+  end
 end

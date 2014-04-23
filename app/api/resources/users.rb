@@ -1,11 +1,12 @@
 module API
   module Resources
     class Users < Grape::API
-      before do
-        # require_oauth_token
-      end
-
       resource :users do
+        before do
+          authenticate_client!
+        end
+
+        desc 'Fetch a user.', ParamsHelper.auth_headers
         params do
           requires :id, type: String, desc: 'The id of the user.'
         end
@@ -15,6 +16,7 @@ module API
           end
         end
 
+        desc 'Fetch a users.', ParamsHelper.auth_headers
         params do
           optional :id, type: String, desc: 'The id of the user.'
           optional :email, type: String
@@ -32,6 +34,7 @@ module API
           present user, with: API::Entities::User
         end
 
+        desc 'Create a new user.', ParamsHelper.auth_headers
         params do
           requires :email, type: String, desc: 'The Email of the user.'
           optional :first_name, type: String
@@ -47,6 +50,7 @@ module API
           present UserFactory.new.create(declared_params), with: API::Entities::User
         end
 
+        desc 'Update and existing user.', ParamsHelper.auth_headers
         params do
           requires :id, type: String, desc: 'The id of the user.'
           optional :email, type: String, desc: 'The Email of the user.'
