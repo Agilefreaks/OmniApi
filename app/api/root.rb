@@ -8,6 +8,7 @@ module API
   require 'entities/user'
   require 'entities/registered_device'
   require 'entities/clipping'
+  require 'entities/authorization_code'
 
   # resources
   require 'resources/oauth2'
@@ -16,6 +17,7 @@ module API
   require 'resources/devices'
   require 'resources/phones'
   require 'resources/clippings'
+  require 'resources/authorization_codes'
 
   class Root < Grape::API
     version 'v1', using: :path, vendor: 'OmniApi', cascade: false
@@ -35,6 +37,7 @@ module API
     mount Resources::Devices
     mount Resources::Phones
     mount Resources::Clippings
+    mount Resources::AuthorizationCodes
 
     add_swagger_documentation(
       api_version: 'v1',

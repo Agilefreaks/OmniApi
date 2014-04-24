@@ -6,6 +6,9 @@ set :repo_url, 'git@github.com:Agilefreaks/OmniApi.git'
 
 set :rvm_ruby_version, 'ruby-2.1.1@omniapi'
 
+role :app, %w(deploy@46.16.191.69)
+role :web, %w(deploy@46.16.191.69)
+
 set :puma_workers, 4
 set :puma_preload_app, true
 
