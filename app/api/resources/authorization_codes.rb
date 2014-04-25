@@ -6,6 +6,7 @@ module API
           authenticate_client!
         end
 
+        desc 'Create an authorization code.', ParamsHelper.auth_headers
         params do
           requires :user_id, type: String, desc: 'Identifies the user that will get a authorization code.'
         end
