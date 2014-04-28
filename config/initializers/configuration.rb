@@ -6,7 +6,8 @@ class Configuration
     attr_accessor :omni_sync_api_key
   end
 
-  @app_version = '1.0.8'
+  @app_version = '1.0.9'
+
   @google_api_key = 'AIzaSyDiX6YE0kjKmnjSygNRC_sYq6MBUfzsg2I'
 
   @omni_sync_url = 'http://localhost:9293'
