@@ -10,6 +10,11 @@ class Configuration
 
   @google_api_key = 'AIzaSyDiX6YE0kjKmnjSygNRC_sYq6MBUfzsg2I'
 
-  @omni_sync_url = 'http://localhost:9293'
+  @omni_sync_url = case ENV['RACK_ENV']
+                   when 'development'
+                     'http://localhost:9293'
+                   when 'staging'
+                     'https://syncstaging.omnipasteapp.com'
+                   end
   @omni_sync_api_key = '42'
 end
