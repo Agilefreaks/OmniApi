@@ -1,5 +1,12 @@
 class NotificationService
-  attr_accessor :gcm
+  attr_accessor :providers
+
+  def initialize
+    @providers = {
+      gcm: GCM.new(Configuration.google_api_key),
+      omni_sync: OmniSync.new(Configuration.omni_sync_api_key)
+    }
+  end
 
   def notify(model, source_identifier)
     send(model.class.to_s.underscore.to_sym, model, source_identifier)
@@ -7,19 +14,27 @@ class NotificationService
 
   def clipping(model, source_identifier)
     options = { data: { registration_id: 'other', provider: 'clipboard' } }
-    gcm_send(model.user, source_identifier, options)
+    send_notification(model.user, source_identifier, options)
   end
 
   def phone_number(model, source_identifier)
     options = { data: { registration_id: 'other', phone_number: model.content, provider: 'phone' } }
-    gcm_send(model.user, source_identifier, options)
+    send_notification(model.user, source_identifier, options)
   end
 
   private
 
-  def gcm_send(user, source_identifier, options)
-    @gcm ||= GCM.new(Configuration.google_api_key)
+  def send_notification(user, source_identifier, options)
     devices_to_notify = user.active_registered_devices.where(:identifier.ne => source_identifier)
-    @gcm.send_notification(devices_to_notify.map(&:registration_id), options) if devices_to_notify.any?
+
+    grouped_providers = {}
+    devices_to_notify.each do |device|
+      grouped_providers[device.provider] ||= []
+      grouped_providers[device.provider].append(device.registration_id)
+    end
+
+    grouped_providers.each do |key, values|
+      @providers[key].send_notification(values, options)
+    end
   end
 end
