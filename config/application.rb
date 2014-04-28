@@ -20,6 +20,9 @@ include_dirs.each do |dir|
   end
 end
 
+# require omni_sync
+require_relative '../lib/omni_sync'
+
 # mongo configuration
 Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__))
 
