@@ -29,7 +29,7 @@ module API
         params do
           requires :registration_id, type: String, desc: 'The registration id for the push notification service.'
           requires :identifier, type: String, desc: 'The unique device identifier.'
-          optional :provider, type: Symbol, values: [:gcm], desc: 'The push notification provider'
+          optional :provider, type: Symbol, values: [:gcm, :omni_sync], desc: 'The push notification provider'
         end
         put 'activate' do
           present ActivateDevice.with(merged_params), with: Entities::RegisteredDevice
