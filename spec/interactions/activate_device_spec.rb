@@ -4,6 +4,7 @@ describe ActivateDevice do
   describe 'with' do
     include_context :with_authentificated_user
 
+    # rubocop:disable LineLength
     subject { ActivateDevice.with(access_token: access_token.token, identifier: 'flute', registration_id: '42', provider: :omni_sync) }
 
     context 'with an existing registered device' do

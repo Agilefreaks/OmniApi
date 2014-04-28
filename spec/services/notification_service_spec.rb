@@ -68,7 +68,9 @@ describe NotificationService do
   describe :phone_number do
     let(:model) { PhoneNumber.new(user: user, content: '123') }
 
-    it_behaves_like :notification_provider, :gcm, data: { registration_id: 'other', phone_number: '123', provider: 'phone' }
-    it_behaves_like :notification_provider, :omni_sync, data: { registration_id: 'other', phone_number: '123', provider: 'phone' }
+    it_behaves_like :notification_provider, :gcm,
+                    data: { registration_id: 'other', phone_number: '123', provider: 'phone' }
+    it_behaves_like :notification_provider, :omni_sync,
+                    data: { registration_id: 'other', phone_number: '123', provider: 'phone' }
   end
 end

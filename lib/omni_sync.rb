@@ -13,10 +13,10 @@ class OmniSync
     post_body = { registration_ids: registration_ids }.merge(options)
 
     params = {
-      :body => post_body.to_json,
-      :headers => {
+      body: post_body.to_json,
+      headers: {
         'Authorization' => "#{@api_key}",
-        'Content-Type' => 'application/json',
+        'Content-Type' => 'application/json'
       }
     }
 
