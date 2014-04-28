@@ -9,8 +9,8 @@ class OmniSync
     @api_key = api_key
   end
 
-  def send_notification(registration_id, options = {})
-    post_body = { registration_id: registration_id }.merge(options)
+  def send_notification(registration_ids, options = {})
+    post_body = { registration_ids: registration_ids }.merge(options)
 
     params = {
       :body => post_body.to_json,
