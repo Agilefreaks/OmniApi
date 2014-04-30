@@ -30,3 +30,6 @@ custom_plan.rb
 
 # Vagrant machines
 .vagrant
+
+# CTags files
+.tags
