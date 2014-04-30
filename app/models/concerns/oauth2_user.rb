@@ -15,7 +15,7 @@ module Concerns
 
     module ClassMethods
       def find_by_code(code)
-        User.where({:authorization_codes => {'$elemMatch' => {:code => code, :valid => true}}}).first
+        User.where(authorization_codes: { '$elemMatch' => { code: code, valid: true } }).first
       end
     end
   end
