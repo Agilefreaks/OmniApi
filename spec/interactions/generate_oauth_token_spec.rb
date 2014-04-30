@@ -60,13 +60,23 @@ describe :GenerateOauthToken do
         user.save
       end
 
-      it 'will create a new access token' do
+      it 'will not create a new access token' do
         expect { subject }.to change(user.access_tokens, :count).by(0)
+      end
+
+      context 'if access_token is expired' do
+        before do
+          access_token.expires_at = Date.today - 2.months
+          user.save
+        end
+
+        its(:expires_at) { should >= Date.today }
       end
 
       its(:client_id) { should == '42' }
 
       its('refresh_token.token') { should eq 'refresh' }
     end
+
   end
 end
