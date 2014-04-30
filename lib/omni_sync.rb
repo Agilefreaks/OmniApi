@@ -20,6 +20,6 @@ class OmniSync
       }
     }
 
-    self.class.post('', params)
+    self.class.post('/api/v1/notify', params)
   end
 end
