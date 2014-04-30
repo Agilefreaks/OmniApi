@@ -1,7 +1,7 @@
 module API
   module Entities
     class User < Grape::Entity
-      expose(:id) { |user, options| user.id.to_s }
+      expose(:id) { |user, _options| user.id.to_s }
       expose :email
       expose :first_name
       expose :last_name

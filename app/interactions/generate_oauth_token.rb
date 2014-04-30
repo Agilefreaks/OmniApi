@@ -39,7 +39,7 @@ class GenerateOauthToken
   end
 
   class RefreshToken
-    def self.create(client, req)
+    def self.create(_client, req)
       user = User.find_by_token(req.refresh_token)
       req.invalid_grant! unless user
 

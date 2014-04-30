@@ -9,22 +9,22 @@ module API
 
       namespace :oauth2 do
         params do
-          requires  :grant_type,
-                    type: Symbol,
-                    values: [:authorization_code, :refresh_token, :client_credentials],
-                    desc: 'The grant type.'
-          optional  :code,
-                    type: String,
-                    desc: 'The authorization code.'
-          requires  :client_id,
-                    type: String,
-                    desc: 'The client id.'
-          optional  :client_secret,
-                    type: String,
-                    desc: 'The client secret.'
-          optional  :refresh_token,
-                    type: String,
-                    desc: 'The refresh_token.'
+          requires :grant_type,
+                   type: Symbol,
+                   values: [:authorization_code, :refresh_token, :client_credentials],
+                   desc: 'The grant type.'
+          optional :code,
+                   type: String,
+                   desc: 'The authorization code.'
+          requires :client_id,
+                   type: String,
+                   desc: 'The client id.'
+          optional :client_secret,
+                   type: String,
+                   desc: 'The client secret.'
+          optional :refresh_token,
+                   type: String,
+                   desc: 'The refresh_token.'
         end
         post :token do
           response = authorization_response(env)

@@ -5,5 +5,5 @@ LineLength:
   Max: 120
 
 AllCops:
-  Excludes:
+  Exclude:
     - infrastructure/**
