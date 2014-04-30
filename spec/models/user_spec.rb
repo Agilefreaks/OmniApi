@@ -32,6 +32,7 @@ describe User do
   describe :find_by_token do
     let(:client_id) { '42' }
     let(:access_token) { AccessToken.build('42') }
+    let(:expired_access_token) { AccessToken.build('42') }
     let(:refresh_token) { RefreshToken.build('42') }
 
     before :each do
@@ -65,6 +66,18 @@ describe User do
 
       before do
         user.access_tokens.first.update(expires_at: Date.current - 1.month)
+        user.save
+      end
+
+      it { should be_nil }
+    end
+
+    context 'with an expired token but other while user has other valid tokens' do
+      let(:token) { expired_access_token.token }
+
+      before do
+        expired_access_token.expires_at = expired_access_token.expires_at - 2.month
+        user.access_tokens.push(expired_access_token)
         user.save
       end
 

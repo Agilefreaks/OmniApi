@@ -11,11 +11,8 @@ module Concerns
 
     module ClassMethods
       def find_by_token(token)
-        where(
-          'access_tokens.token' => token,
-          :'access_tokens.expires_at'.gt => Date.current).first ||
-          where(
-            'access_tokens.refresh_token.token' => token).first unless token.nil?
+        where(access_tokens: { '$elemMatch' => { token: token, expires_at: { '$gt' => Date.current } } }).first ||
+        where('access_tokens.refresh_token.token' => token).first unless token.nil?
       end
     end
   end
