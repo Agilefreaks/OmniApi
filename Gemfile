@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby '2.1.1'
 
 gem 'puma'
 
@@ -32,6 +33,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'
+  gem 'guard-rubocop'
 
   # deploy
   gem 'capistrano', '~> 3.2.0', require: false

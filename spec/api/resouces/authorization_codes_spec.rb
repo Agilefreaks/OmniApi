@@ -1,24 +1,9 @@
 require 'spec_helper'
 
 describe API::Resources::Users do
-  include Rack::Test::Methods
-
-  def app
-    OmniApi::App.instance
-  end
-
-  # rubocop:disable Blocks
-  let(:options) {
-    {
-      'CONTENT_TYPE' => 'application/json',
-      'ACCEPT' => 'application/json',
-      'HTTP_AUTHORIZATION' => "bearer #{access_token.token}"
-    }
-  }
+  include_context :with_authentificated_client
 
   describe 'POST /authorization_codes' do
-    include_context :with_authentificated_client
-
     let(:authorization_code) { AuthorizationCode.new }
     let(:params) { { user_id: '42' } }
 
