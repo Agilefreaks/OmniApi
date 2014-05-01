@@ -24,7 +24,7 @@ task routes: :environment do
   end
 end
 
-if ENV['RACK_ENV'] == 'development'
+if ENV['RACK_ENV'] == 'development' || ENV['RACK_ENV'] == 'test'
   require 'rspec/core'
   require 'rspec/core/rake_task'
 
