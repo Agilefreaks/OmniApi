@@ -12,6 +12,4 @@ class Clipping
   field :type, type: Symbol
 
   embedded_in :user
-
-  index created_at: -1
 end
