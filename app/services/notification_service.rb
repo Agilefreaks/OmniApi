@@ -12,6 +12,8 @@ class NotificationService
     send(model.class.to_s.underscore.to_sym, model, source_identifier)
   end
 
+  private
+
   def clipping(model, source_identifier)
     options = { data: { registration_id: 'other', provider: 'clipboard' } }
     send_notification(model.user, source_identifier, options)
@@ -22,7 +24,18 @@ class NotificationService
     send_notification(model.user, source_identifier, options)
   end
 
-  private
+  def incoming_call_notification(model, source_identifier)
+    options = {
+      data:
+        {
+          registration_id: 'other',
+          type: 'incoming_call_notification',
+          phone_number: model.phone_number,
+          provider: 'notification'
+        }
+    }
+    send_notification(model.user, source_identifier, options)
+  end
 
   def send_notification(user, source_identifier, options)
     devices_to_notify = user.active_registered_devices.where(:identifier.ne => source_identifier)

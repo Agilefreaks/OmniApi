@@ -73,4 +73,13 @@ describe NotificationService do
     it_behaves_like :notification_provider, :omni_sync,
                     data: { registration_id: 'other', phone_number: '123', provider: 'phone' }
   end
+
+  describe :incoming_call_notification do
+    let(:model) { IncomingCallNotification.new(user: user, identifier: '123', phone_number: '123') }
+
+    it_behaves_like :notification_provider, :gcm,
+                    data: { registration_id: 'other', type: 'incoming_call_notification', phone_number: '123', provider: 'notification' }
+    it_behaves_like :notification_provider, :omni_sync,
+                    data: { registration_id: 'other', type: 'incoming_call_notification', phone_number: '123', provider: 'notification' }
+  end
 end
