@@ -44,7 +44,7 @@ end
 group :test do
   gem 'rspec'
   gem 'rspec-spies'
-  gem 'json_spec'
+  gem 'json_spec', require: true
   gem 'rack-test'
   gem 'fabrication'
   gem 'database_cleaner'
