@@ -18,6 +18,7 @@ module API
   require 'resources/phones'
   require 'resources/clippings'
   require 'resources/authorization_codes'
+  require 'resources/notifications'
 
   class Root < Grape::API
     version 'v1', using: :path, vendor: 'OmniApi', cascade: false
@@ -38,6 +39,7 @@ module API
     mount Resources::Phones
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
+    mount Resources::Notifications
 
     add_swagger_documentation(
       api_version: 'v1',

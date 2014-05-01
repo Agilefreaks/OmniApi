@@ -1,12 +1,6 @@
 require 'spec_helper'
 
 describe API::Resources::OAuth2 do
-  include Rack::Test::Methods
-
-  def app
-    OmniApi::App.instance
-  end
-
   let(:client) { Fabricate(:client) }
   let(:client_id) { client.id }
   let(:params) { Hash[:grant_type, grant_type, :client_id, client_id] }

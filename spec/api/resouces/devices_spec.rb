@@ -1,24 +1,9 @@
 require 'spec_helper'
 
 describe API::Resources::Devices do
-  include Rack::Test::Methods
-
-  def app
-    OmniApi::App.instance
-  end
-
-  # rubocop:disable Blocks
-  let(:options) {
-    {
-      'CONTENT_TYPE' => 'application/json',
-      'ACCEPT' => 'application/json',
-      'HTTP_AUTHORIZATION' => "bearer #{access_token.token}"
-    }
-  }
+  include_context :with_authentificated_user
 
   describe "POST 'api/v1/devices'" do
-    include_context :with_authentificated_user
-
     let(:params) { { identifier: 'Omega prime', name: 'The truck' } }
 
     it 'will call Register.device with the correct params' do
@@ -29,8 +14,6 @@ describe API::Resources::Devices do
   end
 
   describe "DELETE 'api/v1/devices/:identifier'" do
-    include_context :with_authentificated_user
-
     it 'will call Unregister device with the correct params' do
       expect(Unregister).to receive(:device)
                             .with(access_token: access_token.token, identifier: 'sony tv')
@@ -39,8 +22,6 @@ describe API::Resources::Devices do
   end
 
   describe "PUT 'api/v1/devices/activate'" do
-    include_context :with_authentificated_user
-
     let(:params) { { registration_id: '42', identifier: 'sony tv' } }
 
     it 'will call ActivateDevice with the correct params' do
@@ -54,8 +35,6 @@ describe API::Resources::Devices do
   end
 
   describe "PUT 'api/v1/devices/deactivate'" do
-    include_context :with_authentificated_user
-
     let(:params) { { identifier: 'sony tv' } }
 
     it 'will call Unregister device with the correct params' do

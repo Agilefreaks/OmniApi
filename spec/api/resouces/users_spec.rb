@@ -1,24 +1,9 @@
 require 'spec_helper'
 
 describe API::Resources::Users do
-  include Rack::Test::Methods
-
-  def app
-    OmniApi::App.instance
-  end
-
-  # rubocop:disable Blocks
-  let(:options) {
-    {
-      'CONTENT_TYPE' => 'application/json',
-      'ACCEPT' => 'application/json',
-      'HTTP_AUTHORIZATION' => "bearer #{access_token.token}"
-    }
-  }
+  include_context :with_authentificated_client
 
   describe 'GET /users/:id' do
-    include_context :with_authentificated_client
-
     let!(:user) { Fabricate(:user, _id: '42') }
 
     subject { get '/api/v1/users/42', '', options }
@@ -30,8 +15,6 @@ describe API::Resources::Users do
   end
 
   describe 'POST /users' do
-    include_context :with_authentificated_client
-
     let(:params) { { email: 'some@user.com', providers: [] } }
 
     subject { post '/api/v1/users', params.to_json, options }
