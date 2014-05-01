@@ -14,4 +14,13 @@ describe API::Resources::Notifications do
       expect(last_response.status).to eq 201
     end
   end
+
+  describe 'GET /api/v1/notification/:id' do
+    subject { get '/api/v1/notifications/42', '', options }
+
+    it 'will call FindNotification for' do
+      expect(FindNotification).to receive(:for).with(access_token.token, '42')
+      subject
+    end
+  end
 end
