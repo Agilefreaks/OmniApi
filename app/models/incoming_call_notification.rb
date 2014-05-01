@@ -1,3 +1,5 @@
+require_relative 'notification'
+
 class IncomingCallNotification < Notification
   field :phone_number
 
