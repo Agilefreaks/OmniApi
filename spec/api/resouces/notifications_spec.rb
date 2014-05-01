@@ -16,10 +16,10 @@ describe API::Resources::Notifications do
   end
 
   describe 'GET /api/v1/notification/:id' do
-    subject { get '/api/v1/notifications/42', '', options }
+    subject { get '/api/v1/notifications', '', options }
 
     it 'will call FindNotification for' do
-      expect(FindNotification).to receive(:for).with(access_token.token, '42')
+      expect(FindNotification).to receive(:for).with(access_token.token)
       subject
     end
   end
