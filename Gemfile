@@ -32,6 +32,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'
+  gem 'guard-rubocop'
 
   # deploy
   gem 'capistrano', '~> 3.2.0', require: false

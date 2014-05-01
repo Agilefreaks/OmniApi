@@ -25,7 +25,8 @@ describe CreateNotification do
     subject { create_notification.create }
 
     it 'will create a new notification for the user' do
-      expect(notification_factory).to receive(:create).with(:incoming_call, phone_number: '0745857479', identifier: '42')
+      expect(notification_factory).to receive(:create)
+                                      .with(:incoming_call, phone_number: '0745857479', identifier: '42')
       subject
     end
 

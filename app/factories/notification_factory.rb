@@ -8,7 +8,7 @@ class NotificationFactory
   def create(type, params = {})
     user = User.find_by_token(@token)
 
-    notification_klass = type.to_s.split('_').collect(&:capitalize).join.concat('Notification').constantize
+    notification_klass = type.to_s.split('_').map(&:capitalize).join.concat('Notification').constantize
     notification = notification_klass.new(params)
     user.notifications.push(notification)
     user.save

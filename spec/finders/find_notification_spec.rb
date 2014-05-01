@@ -7,8 +7,8 @@ describe FindNotification do
     let!(:notification1) { user.notifications.create(identifier: 'Phone') }
     let!(:notification2) { user.notifications.create(identifier: 'TV') }
 
-    subject { FindNotification.for(access_token.token, notification1.id) }
+    subject { FindNotification.for(access_token.token) }
 
-    it { should == notification1 }
+    it { should == notification2 }
   end
 end

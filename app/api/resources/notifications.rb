@@ -19,13 +19,8 @@ module API
         end
 
         desc 'Get notification.', ParamsHelper.auth_headers
-        params do
-          requires :id, type: String, desc: 'Notification id.'
-        end
-        route_param :id do
-          get do
-            present FindNotification.for(@current_token.token, declared_params[:id]), with: API::Entities::Notification
-          end
+        get do
+          present FindNotification.for(@current_token.token), with: API::Entities::Notification
         end
       end
     end
