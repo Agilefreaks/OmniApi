@@ -26,10 +26,24 @@ describe ClippingFactory do
       its(:type) { should == :phone_number }
     end
 
+    context 'when content is phone without prefix' do
+      let(:content) { '0745857479' }
+
+      its(:type) { should == :phone_number }
+    end
+
     context 'when content is https link' do
       let(:content) { 'https://news.ycombinator.com/item?id=6602902' }
 
       its(:content) { should == 'https://news.ycombinator.com/item?id=6602902' }
+
+      its(:type) { should == :web_site }
+    end
+
+    context 'when content is address' do
+      let(:content) { 'str. Avram Iancu, nr. 1 - 3, ap. 5' }
+
+      its(:type) { should == :address }
     end
   end
 end
