@@ -6,6 +6,15 @@ class ClippingFactory
   private
 
   def get_type(content)
-    Phoner::Phone.valid?(content.clone) ? Clipping::TYPES[:phone_number] : Clipping::TYPES[:unknown]
+    case content
+    when /^[0-9+\(\)#\.\s\/ext-]+$/
+      Clipping::TYPES[:phone_number]
+    when %r{https?://[\S]+}
+      Clipping::TYPES[:web_site]
+    when /^[a-zA-Z0-9\s,\.,\-]+,.*$/
+      Clipping::TYPES[:address]
+    else
+      Clipping::TYPES[:unknown]
+    end
   end
 end

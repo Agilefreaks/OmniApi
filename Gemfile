@@ -12,8 +12,6 @@ gem 'mongoid', '4.0.0.beta1'
 gem 'bundler'
 gem 'rake'
 
-gem 'phone'
-
 gem 'json'
 
 gem 'rack-cors'

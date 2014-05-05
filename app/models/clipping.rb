@@ -5,6 +5,7 @@ class Clipping
   TYPES = {
     phone_number: :phone_number,
     web_site: :web_site,
+    address: :address,
     unknown: :unknown
   }
 
