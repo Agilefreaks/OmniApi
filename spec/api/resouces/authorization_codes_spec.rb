@@ -5,7 +5,7 @@ describe API::Resources::Users do
 
   describe 'POST /authorization_codes' do
     let(:authorization_code) { AuthorizationCode.new }
-    let(:params) { { user_id: '42' } }
+    let(:params) { { user_access_token: '42' } }
 
     subject { post 'api/v1/authorization_codes', params.to_json, options }
 

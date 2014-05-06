@@ -1,12 +1,12 @@
 module API
   module Entities
     class User < Grape::Entity
-      expose(:id) { |user, _options| user.id.to_s }
       expose :email
       expose :first_name
       expose :last_name
-      expose :sign_in_count
-      expose :providers, using: API::Entities::Provider
+      expose :access_token do |user, _options|
+        user.access_tokens.last.token
+      end
     end
   end
 end

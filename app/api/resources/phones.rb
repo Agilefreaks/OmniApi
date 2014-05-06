@@ -11,7 +11,6 @@ module API
           requires :phone_number, type: String, desc: 'The phone number to dial.'
         end
         post '/call' do
-          authenticate!
           Call.with(merged_params)
         end
       end

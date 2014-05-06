@@ -8,10 +8,10 @@ module API
 
         desc 'Create an authorization code.', ParamsHelper.auth_headers
         params do
-          requires :user_id, type: String, desc: 'Identifies the user that will get a authorization code.'
+          requires :user_access_token, type: String, desc: 'Identifies the user that will get a authorization code.'
         end
         post do
-          present GetAuthorizationCode.for(declared_params[:user_id]), with: API::Entities::AuthorizationCode
+          present GetAuthorizationCode.for(declared_params[:user_access_token]), with: API::Entities::AuthorizationCode
         end
       end
     end
