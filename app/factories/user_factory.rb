@@ -1,5 +1,8 @@
 class UserFactory
-  def create(params)
-    User.create(params)
+  def create(client, params)
+    user = User.create(params)
+    GenerateOauthToken.build_access_token_for(user, client.id)
+
+    user
   end
 end
