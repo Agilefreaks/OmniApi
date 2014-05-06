@@ -15,6 +15,8 @@ class Configuration
                      'http://localhost:9293'
                    when 'staging'
                      'https://syncstaging.omnipasteapp.com'
+                   else
+                     'not sure'
                    end
   @omni_sync_api_key = '42'
 end

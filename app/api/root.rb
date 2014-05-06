@@ -42,11 +42,17 @@ module API
     mount Resources::AuthorizationCodes
     mount Resources::Notifications
 
+    base_paths = {
+      'development' => 'http://localhost:9292',
+      'staging' => 'https://apistaging.omnipasteapp.com'
+    }
+
     add_swagger_documentation(
       api_version: 'v1',
       mount_path: 'doc',
       hide_documentation_path: true,
-      markdown: true
+      markdown: true,
+      base_path: base_paths[ENV['RACK_ENV']]
     )
   end
 end
