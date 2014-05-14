@@ -11,7 +11,7 @@ class ClippingFactory
       Clipping::TYPES[:phone_number]
     when %r{https?://[\S]+}
       Clipping::TYPES[:web_site]
-    when /^[a-zA-Z0-9\s,\.,\-]+,.*$/
+    when /^[\p{L}0-9\s,\.,\-]+,.*$/
       Clipping::TYPES[:address]
     else
       Clipping::TYPES[:unknown]

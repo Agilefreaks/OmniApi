@@ -45,5 +45,11 @@ describe ClippingFactory do
 
       its(:type) { should == :address }
     end
+
+    context 'when content content contains polish letters' do
+      let(:content) { 'Dajwór 25, 31-052 Kraków, Poland' }
+
+      its(:type) { should == :address }
+    end
   end
 end
