@@ -34,7 +34,7 @@ group :development, :test do
   gem 'guard-rubocop'
 
   # deploy
-  gem 'capistrano', '~> 3.2.0', require: false
+  gem 'capistrano', '~> 3.2.1', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano3-puma', require: false
