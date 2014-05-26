@@ -6,12 +6,24 @@ module API
           authenticate_client!
         end
 
+        helpers do
+          def check_access_token(user)
+            access_token = user.access_tokens.where(client_id: @current_client.id).first ||
+              GenerateOauthToken.build_access_token_for(user, @current_client.id)
+            access_token.touch
+          end
+        end
+
         desc 'Fetch a user.', ParamsHelper.auth_headers
         params do
           requires :email, type: String, desc: 'The Email of the user.'
         end
         get do
           users = User.where(email: declared_params[:email])
+          users.each do |user|
+            check_access_token(user)
+          end
+
           present users, with: API::Entities::User
         end
 
@@ -34,9 +46,7 @@ module API
         put do
           user = User.find_by(email: declared_params[:email])
           user.update(declared_params)
-          access_token = user.access_tokens.where(client_id: @current_client.id).first ||
-            GenerateOauthToken.build_access_token_for(user, @current_client.id)
-          access_token.touch
+          check_access_token(user)
 
           present user, with: API::Entities::User
         end
