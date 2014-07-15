@@ -37,7 +37,7 @@ describe ClippingFactory do
 
       its(:content) { should == 'https://news.ycombinator.com/item?id=6602902' }
 
-      its(:type) { should == :web_site }
+      its(:type) { should == :url }
     end
 
     context 'when content is address' do
