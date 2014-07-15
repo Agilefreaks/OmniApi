@@ -103,7 +103,7 @@ describe User do
     subject { user.invalidate_authorization_code(authorization_code.code) }
 
     it 'will mark the authorization code as invalid' do
-      expect { subject }.to change(authorization_code, :valid).to(false)
+      expect { subject }.to change(authorization_code, :active).to(false)
     end
   end
 

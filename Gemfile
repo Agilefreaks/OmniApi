@@ -43,6 +43,7 @@ end
 group :test do
   gem 'rspec'
   gem 'rspec-spies'
+  gem 'rspec-its'
   gem 'json_spec'
   gem 'rack-test'
   gem 'fabrication'
