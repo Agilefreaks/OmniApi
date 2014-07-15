@@ -24,7 +24,7 @@ class NotificationService
     send_notification(model.user, source_identifier, options)
   end
 
-  def incoming_call_notification(model, source_identifier)
+  def incoming_call_event(model, source_identifier)
     options = { data: { registration_id: 'other', provider: 'notification' } }
     send_notification(model.user, source_identifier, options)
   end

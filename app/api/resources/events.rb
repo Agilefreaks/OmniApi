@@ -1,12 +1,12 @@
 module API
   module Resources
-    class Notifications < Grape::API
-      resources :notifications do
+    class Events < Grape::API
+      resources :events do
         before do
           authenticate!
         end
 
-        desc 'Create a notification.', ParamsHelper.auth_headers
+        desc 'Create a event.', ParamsHelper.auth_headers
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
           requires :type, type: Symbol, values: [:incoming_call, :incoming_sms]
@@ -15,12 +15,12 @@ module API
           end
         end
         post '/' do
-          present CreateNotification.with(merged_params), with: API::Entities::Notification
+          present CreateEvent.with(merged_params), with: API::Entities::Event
         end
 
-        desc 'Get notification.', ParamsHelper.auth_headers
+        desc 'Get event.', ParamsHelper.auth_headers
         get do
-          present FindNotification.for(@current_token.token), with: API::Entities::Notification
+          present FindEvent.for(@current_token.token), with: API::Entities::Event
         end
       end
     end

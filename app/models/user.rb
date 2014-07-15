@@ -23,8 +23,8 @@ class User
   embeds_many :providers
   accepts_nested_attributes_for :providers
 
-  embeds_many :notifications
-  accepts_nested_attributes_for :notifications
+  embeds_many :events
+  accepts_nested_attributes_for :events
 
   def active_registered_devices
     registered_devices.active

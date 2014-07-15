@@ -1,6 +1,6 @@
-class FindNotification
+class FindEvent
   def self.for(token)
     user = User.find_by_token(token)
-    user.notifications.last
+    user.events.last
   end
 end

@@ -8,7 +8,7 @@ describe User do
   it { should embed_many(:registered_devices) }
   it { should embed_many(:clippings) }
   it { should embed_many(:providers) }
-  it { should embed_many(:notifications) }
+  it { should embed_many(:events) }
 
   describe :find_by_code do
     before do
