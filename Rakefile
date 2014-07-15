@@ -34,7 +34,7 @@ if ENV['RACK_ENV'] == 'development' || ENV['RACK_ENV'] == 'test'
   end
 
   require 'rubocop/rake_task'
-  Rubocop::RakeTask.new(:rubocop)
+  RuboCop::RakeTask.new(:rubocop)
 
   task default: [:rubocop, :spec]
 end
