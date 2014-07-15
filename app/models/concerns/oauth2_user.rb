@@ -9,13 +9,13 @@ module Concerns
     end
 
     def invalidate_authorization_code(code)
-      authorization_codes.where(code: code).update(valid: false)
+      authorization_codes.where(code: code).update(active: false)
       save
     end
 
     module ClassMethods
       def find_by_code(code)
-        User.where(authorization_codes: { '$elemMatch' => { code: code, valid: true } }).first
+        User.where(authorization_codes: { '$elemMatch' => { code: code, active: true } }).first
       end
     end
   end

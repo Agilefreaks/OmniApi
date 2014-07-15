@@ -4,11 +4,11 @@ class AuthorizationCode
 
   DEFAULT_EXPIRATION_TIME = 1.hour
 
-  default_scope -> { where(valid: true, :expires_at.gt => Time.now.utc) }
+  default_scope -> { where(active: true, :expires_at.gt => Time.now.utc) }
 
   field :code, type: String, default: -> { Random.new(Time.now.utc.to_i).rand(100_000..999_999) }
   field :expires_at, type: DateTime, default: -> { Time.now.utc + DEFAULT_EXPIRATION_TIME }
-  field :valid, type: Boolean, default: true
+  field :active, type: Boolean, default: true
 
   embedded_in :user
 

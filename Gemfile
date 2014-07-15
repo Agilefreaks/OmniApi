@@ -7,7 +7,7 @@ gem 'grape', '~> 0.7'
 gem 'grape-entity'
 gem 'grape-swagger'
 
-gem 'mongoid', '4.0.0.beta1'
+gem 'mongoid', '4.0.0'
 
 gem 'bundler'
 gem 'rake'
@@ -43,6 +43,7 @@ end
 group :test do
   gem 'rspec'
   gem 'rspec-spies'
+  gem 'rspec-its'
   gem 'json_spec'
   gem 'rack-test'
   gem 'fabrication'
