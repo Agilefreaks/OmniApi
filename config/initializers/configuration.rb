@@ -16,7 +16,7 @@ class Configuration
                    when 'staging'
                      'https://syncstaging.omnipasteapp.com'
                    else
-                     'not sure'
+                     'https://sync.omnipasteapp.com'
                    end
   @omni_sync_api_key = '42'
 end
