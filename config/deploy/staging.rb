@@ -1,4 +1,4 @@
-set :deploy_to, '/var/www/omniapi_staging'
+set :deploy_to, '/var/www/omniapi'
 set :branch, 'staging'
 
 role :app, %w(deploy@46.16.191.69)
