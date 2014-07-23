@@ -12,7 +12,7 @@ Dir[Pathname.new(__FILE__).dirname.join('initializers', '*.rb')].each do |file|
 end
 
 # require all the rest
-include_dirs = %w(models interactions finders factories services)
+include_dirs = %w(models interactions finders factories services repositories)
 
 include_dirs.each do |dir|
   Dir[Pathname.new(__FILE__).dirname.join('..', 'app', dir, '*.rb')].each do |f|

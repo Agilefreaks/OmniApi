@@ -7,10 +7,22 @@ describe Client do
 
   its(:secret) { should_not be_nil }
 
-  describe :before_create do
-    subject { Fabricate(:client) }
+  describe 'save' do
+    context 'when no access tokens where added' do
+      it 'will add an access token before save' do
+        client = Fabricate(:client)
+        expect(client.access_tokens.count).to eq 1
+      end
+    end
 
-    its('access_tokens.count') { should == 1 }
+    context 'when an access token was added' do
+      it 'will not add a new one' do
+        client = Fabricate.build(:client)
+        client.access_tokens.push(AccessToken.build)
+        client.save
+        expect(client.access_tokens.count).to eq 1
+      end
+    end
   end
 
   describe :find_by_token do
