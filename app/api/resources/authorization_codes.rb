@@ -11,6 +11,7 @@ module API
           requires :user_access_token, type: String, desc: 'Identifies the user that will get a authorization code.'
         end
         post do
+          AuthorizationService.verify(:authorization_codes, :create, @current_token)
           present GetAuthorizationCode.for(declared_params[:user_access_token]), with: API::Entities::AuthorizationCode
         end
       end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe API::Resources::Users do
-  include_context :with_authentificated_client
+  include_context :with_authenticated_client
 
   describe 'POST /authorization_codes' do
     let(:authorization_code) { AuthorizationCode.new }
