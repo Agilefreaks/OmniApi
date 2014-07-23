@@ -1,6 +1,6 @@
 shared_context :with_authenticated_client do
   let(:client) { Fabricate(:client) }
-  let(:access_token) { AccessToken.build }
+  let(:access_token) { client.access_tokens.first }
 
   # rubocop:disable Blocks
   let(:options) {
@@ -10,9 +10,4 @@ shared_context :with_authenticated_client do
       'HTTP_AUTHORIZATION' => "bearer #{access_token.token}"
     }
   }
-
-  before do
-    client.access_tokens.push(access_token)
-    client.save
-  end
 end
