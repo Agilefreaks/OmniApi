@@ -1,16 +1,24 @@
 class GetAuthorizationCode
-  def self.for(user_id)
-    GetAuthorizationCode.new(user_id).execute
+  class << self
+    def for(user_access_token)
+      GetAuthorizationCode.new.execute_with_access_token(user_access_token)
+    end
+
+    def for_emails(emails)
+      GetAuthorizationCode.new.execute_with_emails(emails)
+    end
   end
 
-  attr_reader :user_access_token
+  def execute_with_access_token(user_access_token)
+    user = User.find_by_token(user_access_token)
 
-  def initialize(user_access_token)
-    @user_access_token = user_access_token
-  end
+    fail Mongoid::Errors::DocumentNotFound.new(User, nil) unless user
 
-  def execute
-    user = User.find_by_token(@user_access_token)
     user.authorization_codes.first || user.authorization_codes.create
+  end
+
+  def execute_with_emails(emails)
+    user = User.find_by(:email.in => emails, 'authorization_codes.active' => true)
+    user.authorization_codes.first
   end
 end
