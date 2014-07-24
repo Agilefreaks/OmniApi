@@ -8,7 +8,7 @@ describe AuthorizationService do
 
     subject { AuthorizationService.verify(resource, method, token) }
 
-    context 'when access token has no roles' do
+    context 'when access token has no scopes' do
       let(:token) { AccessToken.new }
 
       it 'will throw an authorization error' do
@@ -16,8 +16,8 @@ describe AuthorizationService do
       end
     end
 
-    context 'when access token has roles' do
-      let(:token) { AccessToken.new(roles: [:mock_resource_create]) }
+    context 'when access token has scopes' do
+      let(:token) { AccessToken.new(scopes: [:mock_resource_create]) }
 
       it 'will not raise and error' do
         expect { subject }.not_to raise_error

@@ -5,7 +5,7 @@ class AccessToken
   include Mongoid::Timestamps
   include Concerns::OAuth2Token
 
-  field :roles, type: Array
+  field :scopes, type: Array
 
   embedded_in :client
   embedded_in :user

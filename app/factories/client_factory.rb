@@ -14,11 +14,11 @@ class ClientFactory
 
     private
 
-    def create_client(name, roles)
+    def create_client(name, group)
       client = Client.new(name: name)
       access_token = AccessToken.build
       access_token.expires_at = Date.current + 1.year
-      access_token.roles = RolesRepository.get(roles)
+      access_token.scopes = ScopesRepository.get(group)
       client.access_tokens.push(access_token)
       client.save
 

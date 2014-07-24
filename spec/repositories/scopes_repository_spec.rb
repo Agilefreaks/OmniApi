@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe RolesRepository do
+describe ScopesRepository do
   describe :get do
-    subject { RolesRepository.get(group) }
+    subject { ScopesRepository.get(group) }
 
     context 'for web_client' do
       let(:group) { :web_client }
