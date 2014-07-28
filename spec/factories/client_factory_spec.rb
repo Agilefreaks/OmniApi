@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe :ClientFactory do
   describe :create_web_client do
-    subject { ClientFactory.create_web_client }
+    let(:id) { BSON::ObjectId.new }
+    subject { ClientFactory.create_web_client(id) }
 
     its(:name) { is_expected.to eq 'WebClient' }
+    its(:_id) { is_expected.to eq id }
     its('access_tokens.count') { is_expected.to eq 1 }
     its('access_tokens.first.scopes') { is_expected.to eq ScopesRepository.get(:web_client) }
   end
