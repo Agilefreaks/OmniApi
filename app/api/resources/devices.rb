@@ -45,6 +45,11 @@ module API
         put 'deactivate' do
           present DeactivateDevice.with(merged_params), with: Entities::RegisteredDevice
         end
+
+        desc 'Get all registered devices for the user', ParamsHelper.auth_headers
+        get '' do
+          present @current_user.registered_devices, with: Entities::RegisteredDevice
+        end
       end
     end
   end
