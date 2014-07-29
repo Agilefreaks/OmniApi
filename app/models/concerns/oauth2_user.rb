@@ -15,7 +15,7 @@ module Concerns
 
     module ClassMethods
       def find_by_code(code)
-        User.where(authorization_codes: { '$elemMatch' => { code: code, active: true } }).first
+        User.where(authorization_codes: { '$elemMatch' => { code: code, active: true, :expires_at.gt => Time.now.utc } }).first
       end
     end
   end

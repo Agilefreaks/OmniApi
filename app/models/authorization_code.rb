@@ -2,7 +2,7 @@ class AuthorizationCode
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  DEFAULT_EXPIRATION_TIME = 1.hour
+  DEFAULT_EXPIRATION_TIME = 5.minutes
 
   default_scope -> { where(active: true, :expires_at.gt => Time.now.utc) }
 

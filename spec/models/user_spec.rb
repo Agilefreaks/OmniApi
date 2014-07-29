@@ -26,7 +26,17 @@ describe User do
     context 'with invalid code' do
       let(:code) { '43' }
 
-      it { should be_nil }
+      it { is_expected.to be_nil }
+    end
+
+    context 'with expired code' do
+      let(:code) { '42' }
+
+      before do
+        user.authorization_codes.last.update_attribute(:expires_at, Time.now - 6.minutes)
+      end
+
+      it { is_expected.to be_nil }
     end
   end
 
