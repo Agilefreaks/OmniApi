@@ -9,8 +9,6 @@ class RegisteredDevice
   field :identifier, type: String
   field :provider, type: Symbol
 
-  attr_accessor :just_created
-
   embedded_in :user
 
   validates_presence_of :identifier

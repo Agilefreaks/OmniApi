@@ -6,26 +6,6 @@ describe API::Resources::Devices do
   describe "POST 'api/v1/devices'" do
     let(:params) { { identifier: 'Omega prime', name: 'The truck' } }
 
-    context 'with new device' do
-      it 'creates a new device' do
-        post '/api/v1/devices', params.to_json, options
-        expect(JSON.parse(last_response.body)['just_created']).to eq(true)
-      end
-    end
-
-    context 'with existing device' do
-      before do
-        user.registered_devices.push(RegisteredDevice.new :identifier => 'Omega prime' )
-        user.save
-      end
-
-      it "doesn't create a new device" do
-        post '/api/v1/devices', params.to_json, options
-
-        expect(JSON.parse(last_response.body)['just_created']).to eq(false)
-      end
-    end
-
     it 'will call Register.device with the correct params' do
       expect(Register).to receive(:device)
                           .with(access_token: access_token.token, identifier: 'Omega prime', name: 'The truck')
@@ -61,6 +41,20 @@ describe API::Resources::Devices do
       expect(DeactivateDevice).to receive(:with)
                                   .with(access_token: access_token.token, identifier: 'sony tv')
       put '/api/v1/devices/deactivate', params.to_json, options
+    end
+  end
+
+  describe "GET 'api/v1/devices/'" do
+    let (:devices) { [ Fabricate(:registered_device, user: user, identifier: 'sony tv', name: 'sony tv') ] }
+
+    before do
+      user.registered_devices = devices
+    end
+
+    it 'will return all registered devices for the user' do
+      get '/api/v1/devices', '', options
+
+      expect(JSON.parse(last_response.body)).to have_exactly(1).items
     end
   end
 end
