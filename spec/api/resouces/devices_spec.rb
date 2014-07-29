@@ -45,7 +45,7 @@ describe API::Resources::Devices do
   end
 
   describe "GET 'api/v1/devices/'" do
-    let (:devices) { [ Fabricate(:registered_device, user: user, identifier: 'sony tv', name: 'sony tv') ] }
+    let(:devices) { [Fabricate(:registered_device, user: user, identifier: 'sony tv', name: 'sony tv')] }
 
     before do
       user.registered_devices = devices
