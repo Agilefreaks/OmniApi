@@ -17,8 +17,7 @@ class NotificationService
       data:
         {
           registration_id: 'other',
-          phone_number: model.content,
-          phone_action: 'call',
+          phone_action: 'call', phone_number: model.content,
           provider: 'phone'
         }
     }
@@ -42,9 +41,7 @@ class NotificationService
       data:
         {
           registration_id: 'other',
-          phone_action: 'sms',
-          phone_number: model.phone_number,
-          sms_content: model.content,
+          phone_action: 'sms', phone_number: model.phone_number, sms_content: model.content,
           provider: 'phone'
         }
     }
