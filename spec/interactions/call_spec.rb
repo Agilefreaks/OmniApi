@@ -11,11 +11,10 @@ describe Call do
 
     before do
       call.notification_service = notification_service
-      allow(notification_service).to receive(:notify)
     end
 
     it 'will send a call notification with the correct params' do
-      expect(notification_service).to receive(:notify).with(an_instance_of(PhoneNumber), '')
+      expect(notification_service).to receive(:call).with(an_instance_of(PhoneNumber), '')
       call.execute
     end
   end

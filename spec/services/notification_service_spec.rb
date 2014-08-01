@@ -58,6 +58,28 @@ describe NotificationService do
     end
   end
 
+  shared_examples :interaction_notification_provider do |interaction, provider, hash|
+    context 'when user has no registered devices' do
+      it 'will not call send_notification' do
+        expect(send(provider)).to_not receive(:send_notification)
+        service.send(interaction, model, source_identifier)
+      end
+    end
+
+    context 'when user has registered devices' do
+      before :each do
+        user.registered_devices.create(registration_id: '42', identifier: 'tv', provider: provider)
+        user.registered_devices.create(registration_id: '43', identifier: 'radio', provider: provider)
+        user.registered_devices.create(registration_id: '44', identifier: 'phone', provider: provider)
+      end
+
+      it 'will call send_notification with the correct params' do
+        expect(send(provider)).to receive(:send_notification).with(%w(43 44), hash).once
+        service.send(interaction, model, source_identifier)
+      end
+    end
+  end
+
   describe :clipping do
     let(:model) { Clipping.new(user: user) }
 
@@ -65,19 +87,28 @@ describe NotificationService do
     it_behaves_like :notification_provider, :omni_sync, data: { registration_id: 'other', provider: 'clipboard' }
   end
 
-  describe :phone_number do
-    let(:model) { PhoneNumber.new(user: user, content: '123') }
-
-    it_behaves_like :notification_provider, :gcm,
-                    data: { registration_id: 'other', phone_number: '123', provider: 'phone' }
-    it_behaves_like :notification_provider, :omni_sync,
-                    data: { registration_id: 'other', phone_number: '123', provider: 'phone' }
-  end
-
   describe :incoming_call_event do
     let(:model) { IncomingCallEvent.new(id: '42', user: user, identifier: '123', phone_number: '123') }
 
     it_behaves_like :notification_provider, :gcm, data: { registration_id: 'other', provider: 'notification' }
     it_behaves_like :notification_provider, :omni_sync, data: { registration_id: 'other', provider: 'notification' }
+  end
+
+  describe :call do
+    let(:model) { PhoneNumber.new(user: user, content: '123') }
+
+    it_behaves_like :interaction_notification_provider, :call, :gcm,
+                    data: { registration_id: 'other', phone_number: '123', phone_action: 'call', provider: 'phone' }
+    it_behaves_like :interaction_notification_provider, :call, :omni_sync,
+                    data: { registration_id: 'other', phone_number: '123', phone_action: 'call', provider: 'phone' }
+  end
+
+  describe :call do
+    let(:model) { PhoneNumber.new(user: user) }
+
+    it_behaves_like :interaction_notification_provider, :end_call, :gcm,
+                    data: { registration_id: 'other', phone_action: 'end_call', provider: 'phone' }
+    it_behaves_like :interaction_notification_provider, :end_call, :omni_sync,
+                    data: { registration_id: 'other', phone_action: 'end_call', provider: 'phone' }
   end
 end

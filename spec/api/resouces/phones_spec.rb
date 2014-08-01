@@ -11,4 +11,11 @@ describe API::Resources::Phones do
       post '/api/v1/phones/call', params.to_json, options
     end
   end
+
+  describe "POST 'api/v1/phones/end_call'" do
+    it 'will call EndCall.with' do
+      expect(EndCall).to receive(:with).with(access_token: access_token.token)
+      post '/api/v1/phones/end_call', nil, options
+    end
+  end
 end
