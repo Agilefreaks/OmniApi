@@ -37,6 +37,20 @@ class NotificationService
     send_notification(model.user, source_identifier, options)
   end
 
+  def sms(model, source_identifier)
+    options = {
+      data:
+        {
+          registration_id: 'other',
+          phone_action: 'sms',
+          phone_number: model.phone_number,
+          sms_content: model.content,
+          provider: 'phone'
+        }
+    }
+    send_notification(model.user, source_identifier, options)
+  end
+
   private
 
   def clipping(model, source_identifier)

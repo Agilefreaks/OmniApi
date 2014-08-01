@@ -18,4 +18,13 @@ describe API::Resources::Phones do
       post '/api/v1/phones/end_call', nil, options
     end
   end
+
+  describe "POST 'api/v1/phones/sms'" do
+    let(:params) { { phone_number: '898989', content: 'I am hot!' } }
+
+    it 'will call Call.device with the correct params' do
+      expect(Sms).to receive(:with).with(access_token: access_token.token, phone_number: '898989', content: 'I am hot!')
+      post '/api/v1/phones/sms', params.to_json, options
+    end
+  end
 end

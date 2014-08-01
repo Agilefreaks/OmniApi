@@ -15,6 +15,6 @@ class Call
     user = User.find_by_token(access_token)
 
     @notification_service ||= NotificationService.new
-    @notification_service.call(PhoneNumber.new(user: user, content: phone_number), '')
+    @notification_service.call(PhoneNumber.new(user: user, content: @phone_number), '')
   end
 end
