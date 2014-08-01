@@ -12,14 +12,7 @@ class NotificationService
     send(model.class.to_s.underscore.to_sym, model, source_identifier)
   end
 
-  private
-
-  def clipping(model, source_identifier)
-    options = { data: { registration_id: 'other', provider: 'clipboard' } }
-    send_notification(model.user, source_identifier, options)
-  end
-
-  def phone_number(model, source_identifier)
+  def call(model, source_identifier)
     options = {
       data:
         {
@@ -32,7 +25,7 @@ class NotificationService
     send_notification(model.user, source_identifier, options)
   end
 
-  def phone_end_call(model, source_identifier)
+  def end_call(model, source_identifier)
     options = {
       data:
         {
@@ -41,6 +34,13 @@ class NotificationService
           provider: 'phone'
         }
     }
+    send_notification(model.user, source_identifier, options)
+  end
+
+  private
+
+  def clipping(model, source_identifier)
+    options = { data: { registration_id: 'other', provider: 'clipboard' } }
     send_notification(model.user, source_identifier, options)
   end
 

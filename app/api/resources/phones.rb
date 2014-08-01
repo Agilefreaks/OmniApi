@@ -13,6 +13,11 @@ module API
         post '/call' do
           Call.with(merged_params)
         end
+
+        desc 'End an incoming call.', ParamsHelper.auth_headers
+        post '/end_call' do
+          EndCall.with(merged_params)
+        end
       end
     end
   end
