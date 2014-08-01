@@ -103,4 +103,12 @@ describe NotificationService do
                     data: { registration_id: 'other', phone_number: '123', phone_action: 'call', provider: 'phone' }
   end
 
+  describe :call do
+    let(:model) { PhoneNumber.new(user: user) }
+
+    it_behaves_like :interaction_notification_provider, :end_call, :gcm,
+                    data: { registration_id: 'other', phone_action: 'end_call', provider: 'phone' }
+    it_behaves_like :interaction_notification_provider, :end_call, :omni_sync,
+                    data: { registration_id: 'other', phone_action: 'end_call', provider: 'phone' }
+  end
 end
