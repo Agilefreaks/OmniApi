@@ -11,7 +11,7 @@ describe CreateEvent do
         access_token: access_token.token,
         identifier: '42',
         type: type,
-        **payload)
+        ** payload)
     end
 
     before do
@@ -26,7 +26,7 @@ describe CreateEvent do
 
     context 'for incoming call' do
       let(:type) { :incoming_call }
-      let(:payload) { { incoming_call: { phone_number: '0745857479' }} }
+      let(:payload) { { incoming_call: { phone_number: '0745857479' } } }
 
       it 'will create a new notification for the user' do
         expect(event_factory).to receive(:create)
@@ -42,7 +42,7 @@ describe CreateEvent do
 
     context 'for incoming sms' do
       let(:type) { :incoming_sms }
-      let(:payload) { { incoming_sms: { phone_number: '0745857479', content: 'content' }} }
+      let(:payload) { { incoming_sms: { phone_number: '0745857479', content: 'content' } } }
 
       it 'will create a new notification for the user' do
         expect(event_factory).to receive(:create)
