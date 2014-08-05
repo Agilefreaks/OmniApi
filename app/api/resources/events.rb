@@ -13,6 +13,10 @@ module API
           optional :incoming_call, type: Hash do
             optional :phone_number, type: String, desc: 'The source phone number.'
           end
+          optional :incoming_sms, type: Hash do
+            optional :phone_number, type: String, desc: 'The source phone number.'
+            optional :content, type: String, desc: 'The content of the sms.'
+          end
         end
         post '/' do
           present CreateEvent.with(merged_params), with: API::Entities::Event

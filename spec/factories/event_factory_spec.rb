@@ -6,17 +6,40 @@ describe EventFactory do
   let(:factory) { EventFactory.new(access_token.token) }
 
   describe :create do
-    subject { factory.create(:incoming_call, identifier: '42', phone_number: '0745857479') }
+    subject { factory.create(type, params) }
 
-    it 'will create a incoming_call event' do
-      subject
-      user.reload
-      event = user.events.last
-      expect(event).to be_a_kind_of(IncomingCallEvent)
+    context 'for incoming call' do
+      let(:type) { :incoming_call }
+      let(:params) { { identifier: '42', phone_number: '0745857479' } }
+
+      it 'will create a incoming_call event' do
+        subject
+        user.reload
+        event = user.events.last
+        expect(event).to be_a_kind_of(IncomingCallEvent)
+      end
+
+      its(:identifier) { should == '42' }
+
+      its(:phone_number) { should == '0745857479' }
     end
 
-    its(:identifier) { should == '42' }
+    context 'for incoming sms' do
+      let(:type) { :incoming_sms }
+      let(:params) { { identifier: '42', phone_number: '0745857479', content: 'Ta na na na!' } }
 
-    its(:phone_number) { should == '0745857479' }
+      it 'will create a incoming_sms event' do
+        subject
+        user.reload
+        event = user.events.last
+        expect(event).to be_kind_of(IncomingSmsEvent)
+      end
+
+      its(:identifier) { should == '42' }
+
+      its(:phone_number) { should == '0745857479' }
+
+      its(:content) { should == 'Ta na na na!' }
+    end
   end
 end
