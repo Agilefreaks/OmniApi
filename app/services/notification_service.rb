@@ -60,6 +60,11 @@ class NotificationService
     send_notification(model.user, source_identifier, options)
   end
 
+  def incoming_sms_event(model, source_identifier)
+    options = { data: { registration_id: 'other', provider: 'notification' } }
+    send_notification(model.user, source_identifier, options)
+  end
+
   def send_notification(user, source_identifier, options)
     devices_to_notify = user.active_registered_devices.where(:identifier.ne => source_identifier)
 

@@ -10,7 +10,7 @@ class CreateEvent
     @access_token = params[:access_token]
     @identifier = params[:identifier]
     @type = params[:type]
-    @payload = params[:incoming_call]
+    @payload = params[@type.to_sym]
   end
 
   def create
