@@ -2,7 +2,7 @@
 
 directory '/var/www/omniapi/current'
 rackup '/var/www/omniapi/current/config.ru'
-environment 'staging'
+environment ENV['RACK_ENV']
 
 pidfile '/var/www/omniapi/shared/tmp/pids/puma.pid'
 state_path '/var/www/omniapi/shared/tmp/pids/puma.state'
