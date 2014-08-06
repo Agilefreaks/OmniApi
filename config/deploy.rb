@@ -6,9 +6,6 @@ set :repo_url, 'git@github.com:Agilefreaks/OmniApi.git'
 
 set :rvm_ruby_version, 'ruby-2.1.2@omniapi'
 
-set :puma_workers, 4
-set :puma_preload_app, true
-
 namespace :deploy do
 
   desc 'Restart application'
