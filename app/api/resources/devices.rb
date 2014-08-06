@@ -47,7 +47,7 @@ module API
         end
 
         desc 'Get all registered devices for the user', ParamsHelper.auth_headers
-        get '' do
+        get do
           present @current_user.registered_devices, with: Entities::RegisteredDevice
         end
       end
