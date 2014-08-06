@@ -43,4 +43,18 @@ describe API::Resources::Devices do
       put '/api/v1/devices/deactivate', params.to_json, options
     end
   end
+
+  describe "GET 'api/v1/devices/'" do
+    let(:devices) { [Fabricate(:registered_device, user: user, identifier: 'sony tv', name: 'sony tv')] }
+
+    before do
+      user.registered_devices = devices
+    end
+
+    it 'will return all registered devices for the user' do
+      get '/api/v1/devices', '', options
+
+      expect(JSON.parse(last_response.body)).to have_exactly(1).items
+    end
+  end
 end
