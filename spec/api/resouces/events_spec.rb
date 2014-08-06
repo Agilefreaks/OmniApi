@@ -17,7 +17,10 @@ describe API::Resources::Events do
     end
 
     context 'when incoming sms' do
-      let(:params) { { identifier: '42', type: :incoming_sms, incoming_sms: { phone_number: '0745857479', content: 'some content' } } }
+      let(:params) { { identifier: '42', type: :incoming_sms, incoming_sms:
+        {
+          phone_number: '0745857479', content: 'some content'
+        } } }
 
       it 'will call CreateEvent.with the right params' do
         expect(CreateEvent).to receive(:with).with(params.merge(access_token: access_token.token))
