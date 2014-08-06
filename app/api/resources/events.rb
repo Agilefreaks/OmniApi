@@ -19,7 +19,11 @@ module API
           end
         end
         post '/' do
-          present CreateEvent.with(merged_params), with: API::Entities::Event
+          type = params[:type]
+          event_params = { identifier: params[:identifier], type: type, type => params[type].to_hash.symbolize_keys!}
+          event_params = merge_access_token(event_params)
+
+          present CreateEvent.with(event_params), with: API::Entities::Event
         end
 
         desc 'Get event.', ParamsHelper.auth_headers

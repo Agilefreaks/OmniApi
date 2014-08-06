@@ -6,7 +6,11 @@ module ParamsHelper
   end
 
   def merged_params
-    declared_params.merge(access_token: @current_token.token)
+    merge_access_token(declared_params)
+  end
+
+  def merge_access_token(params)
+    params.merge(access_token: @current_token.token)
   end
 
   def auth_headers
