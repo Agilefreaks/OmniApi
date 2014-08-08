@@ -25,6 +25,12 @@ describe API::Resources::Events do
         subject
         expect(last_response.status).to eq 201
       end
+
+      it 'will return the event with content property set' do
+        subject
+
+        expect(JSON.parse(last_response.body)['content']).to eq 'some content'
+      end
     end
   end
 
