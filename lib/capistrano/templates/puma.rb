@@ -11,7 +11,7 @@ stdout_redirect '/var/www/omniapi/shared/log/puma_access.log', '/var/www/omniapi
 threads 0, 4
 
 bind 'unix:/var/www/omniapi/shared/tmp/sockets/puma.sock'
-workers 4
+workers 2
 
 preload_app!
 
