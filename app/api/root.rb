@@ -9,7 +9,8 @@ module API
   require 'entities/registered_device'
   require 'entities/clipping'
   require 'entities/authorization_code'
-  require 'entities/event'
+  require 'entities/incoming_call_event'
+  require 'entities/incoming_sms_event'
 
   # resources
   require 'resources/oauth2'

@@ -28,7 +28,6 @@ describe API::Resources::Events do
 
       it 'will return the event with content property set' do
         subject
-
         expect(JSON.parse(last_response.body)['content']).to eq 'some content'
       end
     end
@@ -37,9 +36,27 @@ describe API::Resources::Events do
   describe 'GET /api/v1/events/:id' do
     subject { get '/api/v1/events', '', options }
 
-    it 'will call FindEvent for' do
-      expect(FindEvent).to receive(:for).with(access_token.token)
-      subject
+    before do
+      expect(FindEvent).to receive(:for).with(access_token.token).and_return(event)
+    end
+
+    context 'with IncomingSmsEvent event' do
+      let(:event) { IncomingSmsEvent.new(content: 'some content') }
+
+      it 'will present IncomingSmsEvent' do
+        subject
+        expect(JSON.parse(last_response.body)['content']).to eq 'some content'
+        expect(JSON.parse(last_response.body)['type']).to eq 'IncomingSmsEvent'
+      end
+    end
+
+    context 'with IncomingCallEvent' do
+      let(:event) { IncomingCallEvent.new }
+
+      it 'will present IncomingCallEvent' do
+        subject
+        expect(JSON.parse(last_response.body)['type']).to eq 'IncomingCallEvent'
+      end
     end
   end
 end
