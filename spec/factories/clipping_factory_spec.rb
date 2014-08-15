@@ -26,6 +26,12 @@ describe ClippingFactory do
       its(:type) { should == :phone_number }
     end
 
+    context 'when content contains numbers' do
+      let(:content) { 'some 1234' }
+
+      its(:type) { should == :unknown }
+    end
+
     context 'when content is phone without prefix' do
       let(:content) { '0745857479' }
 
@@ -38,6 +44,12 @@ describe ClippingFactory do
       its(:content) { should == 'https://news.ycombinator.com/item?id=6602902' }
 
       its(:type) { should == :url }
+    end
+
+    context 'when content contains http link' do
+      let(:content) { 'asdasdasd http://google.com' }
+
+      its(:type) { should == :unknown }
     end
 
     context 'when content is address' do
