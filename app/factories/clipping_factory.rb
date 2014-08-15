@@ -9,9 +9,9 @@ class ClippingFactory
     case content
     when /^[0-9+\(\)#\.\s\/ext-]+$/
       Clipping::TYPES[:phone_number]
-    when %r{https?://[\S]+}
+    when %r{^https?://[\S]+$}
       Clipping::TYPES[:url]
-    when /^[\p{L}0-9\s,\.,\-]+,.*$/
+    when /^[\p{L}0-9\s,\.,\-]+,[\S,\s,\d]+$/
       Clipping::TYPES[:address]
     else
       Clipping::TYPES[:unknown]
