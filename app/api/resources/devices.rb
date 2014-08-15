@@ -50,6 +50,28 @@ module API
         get do
           present @current_user.registered_devices, with: Entities::RegisteredDevice
         end
+
+        desc 'Call the number.', ParamsHelper.auth_headers
+        params do
+          requires :phone_number, type: String, desc: 'The phone number to dial.'
+        end
+        post '/call' do
+          Call.with(merged_params)
+        end
+
+        desc 'End an incoming call.', ParamsHelper.auth_headers
+        post '/end_call' do
+          EndCall.with(merged_params)
+        end
+
+        desc 'Send sms.', ParamsHelper.auth_headers
+        params do
+          requires :phone_number, type: String, desc: 'The phone number to dial.'
+          requires :content, type: String, desc: 'The content of the sms.'
+        end
+        post '/sms' do
+          Sms.with(merged_params)
+        end
       end
     end
   end

@@ -17,7 +17,6 @@ module API
   require 'resources/version'
   require 'resources/users'
   require 'resources/devices'
-  require 'resources/phones'
   require 'resources/clippings'
   require 'resources/authorization_codes'
   require 'resources/events'
@@ -38,7 +37,6 @@ module API
     mount Resources::Version
     mount Resources::Users
     mount Resources::Devices
-    mount Resources::Phones
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
     mount Resources::Events

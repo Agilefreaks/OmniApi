@@ -57,4 +57,29 @@ describe API::Resources::Devices do
       expect(JSON.parse(last_response.body).size).to eq(1)
     end
   end
+
+  describe "POST 'api/v1/devices/call'" do
+    let(:params) { { phone_number: '898989' } }
+
+    it 'will call Call.device with the correct params' do
+      expect(Call).to receive(:with).with(access_token: access_token.token, phone_number: '898989')
+      post '/api/v1/devices/call', params.to_json, options
+    end
+  end
+
+  describe "POST 'api/v1/devices/end_call'" do
+    it 'will call EndCall.with' do
+      expect(EndCall).to receive(:with).with(access_token: access_token.token)
+      post '/api/v1/devices/end_call', nil, options
+    end
+  end
+
+  describe "POST 'api/v1/devices/sms'" do
+    let(:params) { { phone_number: '898989', content: 'I am hot!' } }
+
+    it 'will call Call.device with the correct params' do
+      expect(Sms).to receive(:with).with(access_token: access_token.token, phone_number: '898989', content: 'I am hot!')
+      post '/api/v1/devices/sms', params.to_json, options
+    end
+  end
 end
