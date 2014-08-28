@@ -11,7 +11,8 @@ describe API::Resources::Devices do
     context 'when identifier is not nil' do
       it 'will call Register.device with the correct params' do
         expect(Register).to receive(:device)
-                            .with(access_token: access_token.token, identifier: identifier, name: 'The truck')
+                            .with(access_token: access_token.token, identifier: 'Omega prime', name: 'The truck')
+                            .and_return(RegisteredDevice.new)
         subject
       end
     end
