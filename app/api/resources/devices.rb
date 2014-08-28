@@ -12,7 +12,13 @@ module API
           optional :name, type: String, desc: 'The name of the device.'
         end
         post '/' do
-          present Register.device(merged_params), with: API::Entities::RegisteredDevice
+          register_device = Register.device(merged_params)
+
+          unless register_device.valid?
+            error!(register_device.errors.full_messages, '400')
+          end
+
+          present register_device, with: API::Entities::RegisteredDevice
         end
 
         desc 'Unregister a device.', ParamsHelper.auth_headers

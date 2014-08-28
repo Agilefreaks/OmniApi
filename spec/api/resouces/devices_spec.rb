@@ -4,12 +4,23 @@ describe API::Resources::Devices do
   include_context :with_authentificated_user
 
   describe "POST 'api/v1/devices'" do
+    subject { post '/api/v1/devices', params.to_json, options }
+
     let(:params) { { identifier: 'Omega prime', name: 'The truck' } }
 
-    it 'will call Register.device with the correct params' do
-      expect(Register).to receive(:device)
-                          .with(access_token: access_token.token, identifier: 'Omega prime', name: 'The truck')
-      post '/api/v1/devices', params.to_json, options
+    context 'when identifier is not nil' do
+      it 'will call Register.device with the correct params' do
+        expect(Register).to receive(:device)
+                            .with(access_token: access_token.token, identifier: identifier, name: 'The truck')
+        subject
+      end
+    end
+
+    context 'when device is not valid' do
+      it 'will return error code' do
+        expect(Register).to receive(:device).and_return(RegisteredDevice.new)
+        expect(subject.status).to eq 400
+      end
     end
   end
 
