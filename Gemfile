@@ -19,7 +19,7 @@ gem 'rack-oauth2'
 
 gem 'gcm'
 
-gem 'newrelic_rpm', '~> 3.8.1'
+gem 'newrelic_rpm'
 gem 'newrelic-grape'
 
 group :development, :test do
