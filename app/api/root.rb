@@ -50,7 +50,6 @@ module API
       api_version: 'v1',
       mount_path: 'doc',
       hide_documentation_path: true,
-      markdown: true,
       base_path: base_paths[ENV['RACK_ENV']]
     )
   end
