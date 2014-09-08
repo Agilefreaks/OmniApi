@@ -53,16 +53,16 @@ describe GetAuthorizationCode do
     context 'when no email matches' do
       let(:emails) { %w(no@match.com) }
 
-      it 'will throw a 404' do
-        expect { subject }.to raise_error(Mongoid::Errors::DocumentNotFound)
+      it 'will return a EmptyAuthorizationCode' do
+        expect(subject).to be_a(EmptyAuthorizationCode)
       end
     end
 
     context 'when email matches but no active authorization code' do
       let(:emails) { %w(eyes@dream.com some@other.com) }
 
-      it 'will throw a 404' do
-        expect { subject }.to raise_error(Mongoid::Errors::DocumentNotFound)
+      it 'will return a EmptyAuthorizationCode' do
+        expect(subject).to be_a EmptyAuthorizationCode
       end
     end
   end

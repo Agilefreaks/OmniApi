@@ -21,7 +21,11 @@ module API
         end
         get do
           AuthorizationService.verify(:authorization_codes, :get, @current_token)
-          present GetAuthorizationCode.for_emails(declared_params[:emails]), with: API::Entities::AuthorizationCode
+
+          authorization_code_for_emails = GetAuthorizationCode.for_emails(declared_params[:emails])
+          error!('No authorization code found', 404) if authorization_code_for_emails.is_a?(EmptyAuthorizationCode)
+
+          present authorization_code_for_emails, with: API::Entities::AuthorizationCode
         end
       end
     end

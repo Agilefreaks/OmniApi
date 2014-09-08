@@ -1,0 +1,2 @@
+class EmptyAuthorizationCode
+end
