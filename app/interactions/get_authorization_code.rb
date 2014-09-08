@@ -18,7 +18,7 @@ class GetAuthorizationCode
   end
 
   def execute_with_emails(emails)
-    user = User.find_by(:email.in => emails, 'authorization_codes.active' => true)
-    user.authorization_codes.first
+    user = User.where(:email.in => emails, 'authorization_codes.active' => true).first
+    user ? user.authorization_codes.first : EmptyAuthorizationCode.new
   end
 end
