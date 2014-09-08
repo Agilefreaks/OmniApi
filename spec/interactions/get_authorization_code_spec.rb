@@ -53,9 +53,9 @@ describe GetAuthorizationCode do
     context 'when no email matches' do
       let(:emails) { %w(no@match.com) }
 
-      it 'will return a EmptyAuthorizationCode' do
-        expect(subject).to be_a(EmptyAuthorizationCode)
-      end
+      it { is_expected.to be_a EmptyAuthorizationCode }
+
+      its(:emails) { is_expected.to eq emails }
     end
 
     context 'when email matches but no active authorization code' do
