@@ -8,6 +8,8 @@ module AuthenticationHelper
     require_oauth_token
     @current_user = User.find_by_token(@current_token.token)
     fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_user
+
+    NewRelic::Agent.add_custom_parameters(user_email: @current_user.email)
     @current_token = @current_user.access_tokens.find_by(token: @current_token.token)
   end
 
@@ -15,6 +17,8 @@ module AuthenticationHelper
     require_oauth_token
     @current_client = Client.find_by_token(@current_token.token)
     fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_client
+
+    NewRelic::Agent.add_custom_parameters(client_name: @current_client.name)
     @current_token = @current_client.access_tokens.find_by(token: @current_token.token)
   end
 end
