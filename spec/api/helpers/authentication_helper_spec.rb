@@ -4,21 +4,11 @@ describe :AuthenticationHelper do
   class AuthenticationHelperTest
     include AuthenticationHelper
 
-    def what_is_current_token
-      @current_token
-    end
-
-    def what_is_current_user
-      @current_user
-    end
-
-    def what_is_current_client
-      @current_client
-    end
+    attr_reader :current_token, :current_user, :current_client
   end
 
   let(:authentication_helper) { AuthenticationHelperTest.new }
-  let(:request) { Rack::Request.new({ "#{Rack::OAuth2::Server::Resource::ACCESS_TOKEN}" => token}) }
+  let(:request) { Rack::Request.new("#{Rack::OAuth2::Server::Resource::ACCESS_TOKEN}" => token) }
 
   before do
     allow(authentication_helper).to receive(:request).and_return(request)
@@ -44,7 +34,7 @@ describe :AuthenticationHelper do
 
       it 'will set current_token' do
         subject
-        expect(authentication_helper.what_is_current_token).to eq token
+        expect(authentication_helper.current_token).to eq token
       end
     end
   end
@@ -75,12 +65,12 @@ describe :AuthenticationHelper do
 
       it 'will set current token' do
         subject
-        expect(authentication_helper.what_is_current_token).to eq token
+        expect(authentication_helper.current_token).to eq token
       end
 
       it 'will set current user' do
         subject
-        expect(authentication_helper.what_is_current_user).to eq user
+        expect(authentication_helper.current_user).to eq user
       end
 
       it 'will set custom params for new relic' do
@@ -116,12 +106,12 @@ describe :AuthenticationHelper do
 
       it 'will set current token' do
         subject
-        expect(authentication_helper.what_is_current_token).to eq token
+        expect(authentication_helper.current_token).to eq token
       end
 
       it 'will set current client' do
         subject
-        expect(authentication_helper.what_is_current_client).to eq client
+        expect(authentication_helper.current_client).to eq client
       end
 
       it 'will set custom params for new relic' do

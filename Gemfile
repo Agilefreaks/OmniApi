@@ -25,7 +25,7 @@ gem 'newrelic-grape'
 group :development, :test do
   gem 'pry'
   gem 'rb-fsevent'
-  gem 'growl'  
+  gem 'growl'
   gem 'rubocop'
   gem 'rerun'
   gem 'guard'
