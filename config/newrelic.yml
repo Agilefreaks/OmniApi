@@ -75,6 +75,8 @@ common: &default_settings
   # to send your metrics over http uncomment the following line.
   # ssl: false
 
+  disable_middleware_instrumentation: true
+
   #============================== Browser Monitoring ===============================
   # New Relic Real User Monitoring gives you insight into the performance real users are
   # experiencing with your website. This is accomplished by measuring the time it takes for
