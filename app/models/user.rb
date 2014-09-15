@@ -23,7 +23,7 @@ class User
   has_many :clippings
   has_many :events
 
-  index({ :'registered_devices.identifier' => 1 }, { unique: true, drop_dups: true })
+  index({ :'registered_devices.identifier' => 1 }, { unique: true, drop_dups: true, sparse: true })
   index(:'registered_devices.registration_id' => 1)
 
   def active_registered_devices
