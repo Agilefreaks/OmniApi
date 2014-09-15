@@ -12,5 +12,5 @@ class Clipping
   field :content, type: String
   field :type, type: Symbol
 
-  belongs_to :user
+  belongs_to :user, index: true
 end

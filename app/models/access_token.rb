@@ -11,8 +11,6 @@ class AccessToken
   embedded_in :user
   embeds_one :refresh_token
 
-  index 'refresh_token.token' => 1
-
   def self.verify(token)
     access_token = AccessToken.new(token: token, expires_at: Date.current + 1.hour)
     access_token if access_token.valid?

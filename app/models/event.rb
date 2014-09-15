@@ -4,7 +4,7 @@ class Event
 
   field :identifier
 
-  belongs_to :user
+  belongs_to :user, index: true
 
   validates_presence_of :identifier
 end
