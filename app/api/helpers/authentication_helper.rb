@@ -1,7 +1,11 @@
 module AuthenticationHelper
   def require_oauth_token
     @current_token = request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
-    fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_token
+
+    unless @current_token
+      NewRelic::Agent.add_custom_parameters(request.env)
+      fail Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless @current_token
+    end
   end
 
   def authenticate!
