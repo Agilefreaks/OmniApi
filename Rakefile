@@ -40,3 +40,4 @@ if ENV['RACK_ENV'] == 'development' || ENV['RACK_ENV'] == 'test'
 end
 
 load 'mongoid/tasks/database.rake'
+load 'lib/migrate.rake'

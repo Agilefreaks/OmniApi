@@ -14,7 +14,7 @@ class AccessToken
   index 'refresh_token.token' => 1
 
   def self.verify(token)
-    access_token = AccessToken.new(token: token)
+    access_token = AccessToken.new(token: token, expires_at: Date.current + 1.hour)
     access_token if access_token.valid?
   end
 

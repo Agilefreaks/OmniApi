@@ -10,6 +10,11 @@ module Concerns
       field :client_id, type: BSON::ObjectId
 
       validates_presence_of :token
+      validate :validate_expiration_date
+
+      def validate_expiration_date
+        errors.add(:expires_at, 'The access_token is expired') if expires_at < Date.current
+      end
     end
 
     module ClassMethods

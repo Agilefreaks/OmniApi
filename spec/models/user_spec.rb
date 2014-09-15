@@ -77,7 +77,7 @@ describe User do
 
       before do
         user.access_tokens.first.update(expires_at: Date.current - 1.month)
-        user.save
+        user.save(validate: false)
       end
 
       it { should be_nil }
