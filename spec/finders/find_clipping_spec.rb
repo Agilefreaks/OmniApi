@@ -17,7 +17,7 @@ describe FindClipping do
 
       before(:each) { user.clippings.push(clipping) }
 
-      it { should == clipping }
+      its(:content) { is_expected.to eq clipping.content }
     end
 
     context 'when user has more than one clippings' do
@@ -27,7 +27,7 @@ describe FindClipping do
 
       before(:each) { user.clippings.push([first_clipping, second_clipping, last_clipping]) }
 
-      it { should == second_clipping }
+      its(:content) { is_expected.to eq second_clipping.content }
     end
 
     context 'when user has no clipping' do

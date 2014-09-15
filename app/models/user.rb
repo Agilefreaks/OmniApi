@@ -17,14 +17,16 @@ class User
   embeds_many :registered_devices
   accepts_nested_attributes_for :registered_devices
 
-  embeds_many :clippings
-  accepts_nested_attributes_for :clippings
-
   embeds_many :providers
   accepts_nested_attributes_for :providers
 
+  embeds_many :clippings
+  accepts_nested_attributes_for :clippings
+
   embeds_many :events
   accepts_nested_attributes_for :events
+
+  has_many :new_clippings
 
   def active_registered_devices
     registered_devices.active
