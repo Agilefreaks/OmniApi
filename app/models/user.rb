@@ -23,10 +23,8 @@ class User
   embeds_many :clippings
   accepts_nested_attributes_for :clippings
 
-  embeds_many :events
-  accepts_nested_attributes_for :events
-
   has_many :new_clippings
+  has_many :events
 
   def active_registered_devices
     registered_devices.active

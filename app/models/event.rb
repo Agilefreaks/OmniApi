@@ -4,7 +4,7 @@ class Event
 
   field :identifier
 
-  embedded_in :user
+  belongs_to :user
 
   validates_presence_of :identifier
 end
