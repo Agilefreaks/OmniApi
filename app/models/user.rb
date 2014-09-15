@@ -20,10 +20,7 @@ class User
   embeds_many :providers
   accepts_nested_attributes_for :providers
 
-  embeds_many :clippings
-  accepts_nested_attributes_for :clippings
-
-  has_many :new_clippings
+  has_many :clippings
   has_many :events
 
   def active_registered_devices

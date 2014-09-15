@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe Clipping do
-  it { should be_embedded_in :user }
+  it { should belong_to :user }
 end

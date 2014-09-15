@@ -1,6 +1,6 @@
 class ClippingFactory
   def create(token, content)
-    User.find_by_token(token).new_clippings.create(content: content, type: get_type(content))
+    User.find_by_token(token).clippings.create(content: content, type: get_type(content))
   end
 
   private

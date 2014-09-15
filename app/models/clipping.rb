@@ -12,5 +12,5 @@ class Clipping
   field :content, type: String
   field :type, type: Symbol
 
-  embedded_in :user
+  belongs_to :user
 end
