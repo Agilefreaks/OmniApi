@@ -20,10 +20,10 @@ describe API::Resources::Users do
     let(:params_for_ion) { { email: 'ion@user.com', first_name: 'Ion' } }
     let(:params_for_gheo) { { email: 'gheo@user.com', first_name: 'Gheo' } }
 
-    subject {
+    subject do
       post '/api/v1/users', params_for_ion.to_json, options
       post '/api/v1/users', params_for_gheo.to_json, options
-    }
+    end
 
     it 'will create user' do
       expect { subject }.to change(User, :count).by(2)
