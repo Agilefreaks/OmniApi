@@ -11,7 +11,7 @@ module API
           authenticate!
         end
 
-        desc 'Create a event.', ParamsHelper.auth_headers
+        desc 'Create a event.', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
           requires :type, type: Symbol, values: [:incoming_call, :incoming_sms]
@@ -33,7 +33,7 @@ module API
           present event, with: presenters[event.class], as: :event
         end
 
-        desc 'Get event.', ParamsHelper.auth_headers
+        desc 'Get event.', ParamsHelper.omni_headers
         get do
           event = FindEvent.for(@current_token.token)
           present event, with: presenters[event.class], as: :event

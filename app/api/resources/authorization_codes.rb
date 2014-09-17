@@ -6,7 +6,7 @@ module API
           authenticate_client!
         end
 
-        desc 'Create an authorization code.', ParamsHelper.auth_headers
+        desc 'Create an authorization code.', ParamsHelper.omni_headers
         params do
           requires :user_access_token, type: String, desc: 'Identifies the user that will get a authorization code.'
         end
@@ -15,7 +15,7 @@ module API
           present GetAuthorizationCode.for(declared_params[:user_access_token]), with: API::Entities::AuthorizationCode
         end
 
-        desc 'Get an authorization code', ParamsHelper.auth_headers
+        desc 'Get an authorization code', ParamsHelper.omni_headers
         params do
           requires :emails, type: Array, desc: 'A list of emails.'
         end

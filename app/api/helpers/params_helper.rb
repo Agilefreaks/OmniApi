@@ -10,19 +10,35 @@ module ParamsHelper
   end
 
   def merge_access_token(params)
-    params.merge(access_token: @current_token.token)
+    params = params.merge(access_token: @current_token.token)
+    params = params.merge(client_version: headers['Client-Version']) unless headers['Client-Version'].nil?
+
+    params
   end
 
   def auth_headers
     {
-      headers: {
-        'Authorization' => {
-          description: 'The authorization token.',
-          required: true
-        }
+      'Authorization' => {
+        description: 'The authorization token.',
+        required: true
       }
     }
   end
 
-  module_function :auth_headers
+  def client_version_headers
+    {
+      'Client-Version' => {
+        description: 'The client version.',
+        required: false
+      }
+    }
+  end
+
+  def omni_headers
+    {
+      headers: auth_headers.merge(client_version_headers)
+    }
+  end
+
+  module_function :omni_headers, :auth_headers, :client_version_headers
 end

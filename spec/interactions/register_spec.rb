@@ -4,7 +4,7 @@ describe Register do
   describe 'execute' do
     include_context :with_authentificated_user
 
-    subject { Register.device(access_token: access_token.token, identifier: 'Tu La', name: 'Tu mem') }
+    subject { Register.device(access_token: access_token.token, identifier: 'Tu La', name: 'Tu mem', client_version: '42') }
 
     shared_examples :registered_device do
       its(:user) { should == user }
@@ -12,6 +12,8 @@ describe Register do
       its(:identifier) { should == 'Tu La' }
 
       its(:name) { should == 'Tu mem' }
+
+      its(:client_version) { should == '42' }
     end
 
     context 'when user has a device with the same identifier' do

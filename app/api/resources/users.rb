@@ -14,7 +14,7 @@ module API
           end
         end
 
-        desc 'Fetch a user.', ParamsHelper.auth_headers
+        desc 'Fetch a user.', ParamsHelper.omni_headers
         params do
           requires :email, type: String, desc: 'The Email of the user.'
         end
@@ -27,7 +27,7 @@ module API
           present users, with: API::Entities::User
         end
 
-        desc 'Create a new user.', ParamsHelper.auth_headers
+        desc 'Create a new user.', ParamsHelper.omni_headers
         params do
           requires :email, type: String, desc: 'The Email of the user.'
           optional :first_name, type: String
@@ -37,7 +37,7 @@ module API
           present UserFactory.new.create(@current_client, declared_params), with: API::Entities::User
         end
 
-        desc 'Update a new user.', ParamsHelper.auth_headers
+        desc 'Update a new user.', ParamsHelper.omni_headers
         params do
           requires :email, type: String, desc: 'The Email of the user.'
           optional :first_name, type: String

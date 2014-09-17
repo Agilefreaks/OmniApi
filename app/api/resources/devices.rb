@@ -6,7 +6,7 @@ module API
           authenticate!
         end
 
-        desc 'Register a device', ParamsHelper.auth_headers
+        desc 'Register a device', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
           optional :name, type: String, desc: 'The name of the device.'
@@ -21,7 +21,7 @@ module API
           present register_device, with: API::Entities::RegisteredDevice
         end
 
-        desc 'Unregister a device.', ParamsHelper.auth_headers
+        desc 'Unregister a device.', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
         end
@@ -31,7 +31,7 @@ module API
           end
         end
 
-        desc 'Activate.', ParamsHelper.auth_headers
+        desc 'Activate.', ParamsHelper.omni_headers
         params do
           requires :registration_id, type: String, desc: 'The registration id for the push notification service.'
           requires :identifier, type: String, desc: 'The unique device identifier.'
@@ -44,7 +44,7 @@ module API
           present ActivateDevice.with(merged_params), with: Entities::RegisteredDevice
         end
 
-        desc 'Deactivate.', ParamsHelper.auth_headers
+        desc 'Deactivate.', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'The unique device identifier.'
         end
@@ -52,12 +52,12 @@ module API
           present DeactivateDevice.with(merged_params), with: Entities::RegisteredDevice
         end
 
-        desc 'Get all registered devices for the user', ParamsHelper.auth_headers
+        desc 'Get all registered devices for the user', ParamsHelper.omni_headers
         get do
           present @current_user.registered_devices, with: Entities::RegisteredDevice
         end
 
-        desc 'Call the number.', ParamsHelper.auth_headers
+        desc 'Call the number.', ParamsHelper.omni_headers
         params do
           requires :phone_number, type: String, desc: 'The phone number to dial.'
         end
@@ -65,12 +65,12 @@ module API
           Call.with(merged_params)
         end
 
-        desc 'End an incoming call.', ParamsHelper.auth_headers
+        desc 'End an incoming call.', ParamsHelper.omni_headers
         post '/end_call' do
           EndCall.with(merged_params)
         end
 
-        desc 'Send sms.', ParamsHelper.auth_headers
+        desc 'Send sms.', ParamsHelper.omni_headers
         params do
           requires :phone_number, type: String, desc: 'The phone number to dial.'
           requires :content, type: String, desc: 'The content of the sms.'

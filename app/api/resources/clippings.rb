@@ -6,7 +6,7 @@ module API
           authenticate!
         end
 
-        desc 'Create a clipping.', ParamsHelper.auth_headers
+        desc 'Create a clipping.', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Source device identifier.'
           requires :content, type: String, desc: 'Content for the clipping.'
@@ -15,7 +15,7 @@ module API
           present CreateClipping.with(merged_params), with: API::Entities::Clipping
         end
 
-        desc 'Get latest clipping.', ParamsHelper.auth_headers
+        desc 'Get latest clipping.', ParamsHelper.omni_headers
         get '/last' do
           present FindClipping.for(@current_token.token), with: API::Entities::Clipping
         end

@@ -8,6 +8,7 @@ class RegisteredDevice
   field :name, type: String
   field :identifier, type: String
   field :provider, type: Symbol
+  field :client_version, type: String
 
   embedded_in :user
 
