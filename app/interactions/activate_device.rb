@@ -1,25 +1,35 @@
 class ActivateDevice
-  def self.with(params)
-    ActivateDevice.new(params[:access_token],
-                       params[:identifier],
-                       params[:registration_id],
-                       params[:provider] || :gcm).execute
+  class ActivateParams
+    attr_reader :access_token, :identifier, :registration_id, :provider, :client_version
+
+    def initialize(params)
+      @access_token = params[:access_token]
+      @identifier = params[:identifier]
+      @registration_id = params[:registration_id]
+      @provider = params[:provider] || :gcm
+      @client_version = params[:client_version]
+    end
   end
 
-  attr_reader :access_token, :identifier, :registration_id, :provider
+  def self.with(params)
+    ActivateDevice.new(ActivateParams.new(params)).execute
+  end
 
-  def initialize(access_token, identifier, registration_id, provider)
-    @access_token = access_token
-    @identifier = identifier
-    @registration_id = registration_id
-    @provider = provider
+  attr_reader :activate_params
+
+  def initialize(activate_params)
+    @activate_params = activate_params
   end
 
   def execute
-    user = User.find_by_token(@access_token)
+    user = User.find_by_token(@activate_params.access_token)
 
-    registered_device = user.registered_devices.find_by(identifier: @identifier)
-    registered_device.update_attributes(registration_id: @registration_id, provider: @provider)
+    registered_device = user.registered_devices.find_by(identifier: @activate_params.identifier)
+    registered_device.update_attributes(
+      registration_id: @activate_params.registration_id,
+      provider: @activate_params.provider,
+      client_version: @activate_params.client_version
+    )
 
     registered_device
   end

@@ -40,9 +40,10 @@ describe API::Resources::Devices do
       expect(ActivateDevice).to receive(:with)
                                 .with(access_token: access_token.token,
                                       identifier: 'sony tv',
+                                      client_version: '42',
                                       registration_id: '42',
                                       provider: nil)
-      put '/api/v1/devices/activate', params.to_json, options
+      put '/api/v1/devices/activate', params.to_json, options.merge('HTTP_CLIENT_VERSION' => '42')
     end
   end
 
