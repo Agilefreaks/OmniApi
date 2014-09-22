@@ -29,4 +29,25 @@ describe API::Resources::Users do
       expect { subject }.to change(User, :count).by(2)
     end
   end
+
+  describe 'PUT /users' do
+    let!(:user) { Fabricate(:user, email: 'a@user.com') }
+    let(:params) { { email: 'a@user.com', first_name: 'Ion', last_name: 'din Deal' } }
+
+    subject do
+      put '/api/v1/users', params.to_json, options
+      user.reload
+    end
+
+    before do
+      access_token = GenerateOauthToken.build_access_token_for(user, client.id)
+      access_token.update_attribute(:expires_at, Date.current)
+    end
+
+    its(:first_name) { is_expected.to eq 'Ion' }
+
+    its(:last_name) { is_expected.to eq 'din Deal' }
+
+    context 'when the access_token is expiring'
+  end
 end

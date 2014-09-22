@@ -37,7 +37,7 @@ module API
           present UserFactory.new.create(@current_client, declared_params), with: API::Entities::User
         end
 
-        desc 'Update a new user.', ParamsHelper.omni_headers
+        desc 'Update a existing user.', ParamsHelper.omni_headers
         params do
           requires :email, type: String, desc: 'The Email of the user.'
           optional :first_name, type: String
