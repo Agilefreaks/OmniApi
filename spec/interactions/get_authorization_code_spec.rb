@@ -2,31 +2,25 @@ require 'spec_helper'
 
 describe GetAuthorizationCode do
   describe :for do
-    let(:user) { Fabricate(:user) }
-    let(:token) { user.access_tokens.last.token }
+    let!(:user) { Fabricate(:user, email: 'igot@this.fe') }
 
-    before do
-      GenerateOauthToken.build_access_token_for(user, '43')
-    end
-
-    subject { GetAuthorizationCode.for(token) }
+    subject { GetAuthorizationCode.for(email) }
 
     context 'when the user has an authorization code' do
+      let(:email) { 'igot@this.fe' }
       let(:authorization_code) { user.authorization_codes.create }
 
-      before do
-        authorization_code.reload
-      end
-
-      it { is_expected.to eq authorization_code }
+      its(:code) { is_expected.to eq authorization_code.code }
     end
 
     context 'when the user has no authorization code' do
+      let(:email) { 'igot@this.fe' }
+
       it { should_not be_nil }
     end
 
-    context 'when wrong access_token' do
-      let(:token) { 'other' }
+    context 'when wrong email' do
+      let(:email) { 'tutu@durara.du' }
 
       it 'will throw a document not found error' do
         expect { subject }.to raise_error(Mongoid::Errors::DocumentNotFound)

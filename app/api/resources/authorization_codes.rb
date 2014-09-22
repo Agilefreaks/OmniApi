@@ -8,11 +8,11 @@ module API
 
         desc 'Create an authorization code.', ParamsHelper.omni_headers
         params do
-          requires :user_access_token, type: String, desc: 'Identifies the user that will get a authorization code.'
+          requires :email, type: String, desc: 'Identifies the user that will get a authorization code.'
         end
         post do
           AuthorizationService.verify(:authorization_codes, :create, @current_token)
-          present GetAuthorizationCode.for(declared_params[:user_access_token]), with: API::Entities::AuthorizationCode
+          present GetAuthorizationCode.for(declared_params[:email]), with: API::Entities::AuthorizationCode
         end
 
         desc 'Get an authorization code', ParamsHelper.omni_headers

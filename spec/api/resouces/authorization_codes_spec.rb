@@ -5,12 +5,12 @@ describe API::Resources::Users do
     include_context :with_authenticated_web_client
 
     let(:authorization_code) { AuthorizationCode.new }
-    let(:params) { { user_access_token: '42' } }
+    let(:params) { { email: 'come@home.com' } }
 
     subject { post 'api/v1/authorization_codes', params.to_json, options }
 
     before do
-      allow(GetAuthorizationCode).to receive(:for).with('42').and_return(authorization_code)
+      allow(GetAuthorizationCode).to receive(:for).with('come@home.com').and_return(authorization_code)
     end
 
     it 'will return the existing one' do

@@ -1,7 +1,7 @@
 class GetAuthorizationCode
   class << self
-    def for(user_access_token)
-      GetAuthorizationCode.new.execute_with_access_token(user_access_token)
+    def for(email)
+      GetAuthorizationCode.new.execute_with_access_token(email)
     end
 
     def for_emails(emails)
@@ -9,8 +9,8 @@ class GetAuthorizationCode
     end
   end
 
-  def execute_with_access_token(user_access_token)
-    user = User.find_by_token(user_access_token)
+  def execute_with_access_token(email)
+    user = User.find_by(email: email)
 
     fail Mongoid::Errors::DocumentNotFound.new(User, nil) unless user
 
