@@ -79,9 +79,7 @@ staging:
         - 10.70.174.72:27017
         - 10.70.174.73:27017
       options:
-        read: :secondary
-        write:
-          w: :majority
+        read: secondary_preferred
   options:
     raise_not_found_error: true
     use_utc: true
@@ -96,9 +94,7 @@ production:
         - 10.70.174.72:27017
         - 10.70.174.73:27017
       options:
-        read: :secondary
-        write:
-          w: :majority
+        read: secondary_preferred
   options:
     raise_not_found_error: true
     use_utc: true
