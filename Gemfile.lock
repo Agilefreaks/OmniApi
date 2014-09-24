@@ -37,7 +37,7 @@ GEM
     capistrano-rvm (0.1.1)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capistrano3-puma (0.7.0)
+    capistrano3-puma (0.8.0)
       capistrano (~> 3.0)
       puma (>= 2.6)
     celluloid (0.16.0)
@@ -54,7 +54,7 @@ GEM
     docile (1.1.5)
     equalizer (0.0.9)
     fabrication (2.11.3)
-    ffi (1.9.3)
+    ffi (1.9.4)
     formatador (0.2.5)
     gcm (0.0.8)
       httparty

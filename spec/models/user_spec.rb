@@ -151,4 +151,28 @@ describe User do
       it { should == [] }
     end
   end
+
+  describe :authorization_codes_index do
+    before do
+      User.create(email: 'user1@gmail.com', authorization_codes: [AuthorizationCode.new(code: '123', active: true)])
+    end
+
+    it 'will not work or users with different email when both codes are active' do
+      expect do
+        User.create(email: 'user2@gmail.com', authorization_codes: [AuthorizationCode.new(code: '123', active: true)])
+      end.to raise_error(Exception)
+    end
+
+    it 'will create users with inactive authorization codes' do
+      expect do
+        User.create(email: 'user2@gmail.com', authorization_codes: [AuthorizationCode.new(code: '123', active: false)])
+      end.to change(User, :count).by(1)
+    end
+
+    it 'will create users with active authorization codes but different codes' do
+      expect do
+        User.create(email: 'user2@gmail.com', authorization_codes: [AuthorizationCode.new(code: '321', active: true)])
+      end.to change(User, :count).by(1)
+    end
+  end
 end
