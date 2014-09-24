@@ -4,7 +4,7 @@ lock '3.2.1'
 set :application, 'OmniApi'
 set :repo_url, 'git@github.com:Agilefreaks/OmniApi.git'
 
-set :rvm_ruby_version, 'ruby-2.1.2@omniapi'
+set :rvm_ruby_version, 'ruby-2.1.3@omniapi'
 
 namespace :deploy do
 
