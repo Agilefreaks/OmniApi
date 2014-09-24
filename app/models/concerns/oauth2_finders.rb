@@ -5,8 +5,8 @@ module Concerns
     included do
       embeds_many :access_tokens
 
-      index({ 'access_tokens.token' => 1 }, { unique: true, drop_dups: true, sparse: true })
-      index({ 'access_tokens.refresh_token.token' => 1 }, { unique: true, drop_dups: true, sparse: true })
+      index({ 'access_tokens.token' => 1 }, { unique: true, sparse: true })
+      index({ 'access_tokens.refresh_token.token' => 1 }, { unique: true, sparse: true })
     end
 
     module ClassMethods
