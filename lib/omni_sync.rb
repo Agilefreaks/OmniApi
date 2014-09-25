@@ -10,16 +10,19 @@ class OmniSync
   end
 
   def send_notification(registration_ids, options = {})
-    post_body = { registration_ids: registration_ids }.merge(options)
+    post_body = { registration_ids: '' }.merge(options)
 
-    params = {
-      body: post_body.to_json,
-      headers: {
-        'Authorization' => "#{@api_key}",
-        'Content-Type' => 'application/json'
+    registration_ids.each do |rid|
+      params = {
+        body: post_body.to_json,
+        headers: {
+          'Authorization' => "#{@api_key}",
+          'Content-Type' => 'application/json',
+          'Ws-Synctoken' => rid
+        }
       }
-    }
 
-    self.class.post('/api/v1/notify', params)
+      self.class.post('/api/v1/notify', params)
+    end
   end
 end
