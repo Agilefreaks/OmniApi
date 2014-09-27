@@ -8,7 +8,7 @@ pidfile '/var/www/omniapi/shared/tmp/pids/puma.pid'
 state_path '/var/www/omniapi/shared/tmp/pids/puma.state'
 stdout_redirect '/var/www/omniapi/shared/log/puma_access.log', '/var/www/omniapi/shared/log/puma_error.log', true
 
-threads 0, 4
+threads 0, 2
 
 bind 'unix:/var/www/omniapi/shared/tmp/sockets/puma.sock'
 workers 2
