@@ -14,7 +14,7 @@ class Configuration
                    when 'development'
                      'http://localhost:9293'
                    when 'staging'
-                     'http://syncstaging.omnipasteapp.com'
+                     'https://syncstaging.omnipasteapp.com'
                    else
                      'https://sync.omnipasteapp.com'
                    end
