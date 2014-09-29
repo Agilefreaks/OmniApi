@@ -3,5 +3,5 @@ set :branch, 'production'
 
 set :rails_env, 'production'
 
-role :app, %w(deploy@5.10.81.84)
-role :web, %w(deploy@5.10.81.84)
+role :app, %w(deploy@apiproduction01.omnipasteapp.com deploy@apiproduction02.omnipasteapp.com)
+role :web, %w(deploy@apiproduction01.omnipasteapp.com deploy@apiproduction02.omnipasteapp.com)
