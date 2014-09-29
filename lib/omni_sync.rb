@@ -9,8 +9,10 @@ class OmniSync
     @api_key = api_key
   end
 
+  # rubocop:disable MethodLength
   def send_notification(registration_ids, options = {})
     post_body = { registration_ids: '' }.merge(options)
+
     registration_ids.each do |rid|
       params = {
         body: post_body.to_json,
