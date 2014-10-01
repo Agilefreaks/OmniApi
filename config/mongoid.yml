@@ -77,7 +77,7 @@ staging:
       hosts:
         - 10.133.248.161:27017
         - 10.133.248.158:27017
-        - 178.62.225.47:27017
+        - 10.133.248.159:27017
       options:
         read: secondary_preferred
   options:
@@ -92,7 +92,7 @@ production:
       hosts:
         - 10.133.248.161:27017
         - 10.133.248.158:27017
-        - 178.62.225.47:27017
+        - 10.133.248.159:27017
       options:
         read: secondary_preferred
   options:
