@@ -1,6 +1,6 @@
 namespace :authorization_codes do
   desc 'active but not user, expired'
-  task :expired_active_count => :environment do
+  task expired_active_count: :environment do
     # User.where(authorization_codes:
     #              { '$elemMatch' =>
     #                  { code: code, active: true, :expires_at.lt => Time.now.utc }
@@ -8,7 +8,7 @@ namespace :authorization_codes do
   end
 
   desc 'remove not active'
-  task :remove_expired => :environment do
+  task remove_expired: :environment do
     User.all.each do |u|
       u.authorization_codes.unscoped.where(active: false).destroy
     end
