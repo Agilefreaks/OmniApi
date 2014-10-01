@@ -75,7 +75,7 @@ staging:
     default:
       database: omnipaste_staging
       hosts:
-        - 178.62.225.50:27017
+        - 10.133.248.161:27017
         - 178.62.225.46:27017
         - 178.62.225.47:27017
       options:
@@ -90,7 +90,7 @@ production:
     default:
       database: omnipaste
       hosts:
-        - 178.62.225.50:27017
+        - 10.133.248.161:27017
         - 178.62.225.46:27017
         - 178.62.225.47:27017
       options:
