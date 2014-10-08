@@ -1,5 +1,6 @@
 class OmniSync
   include HTTParty
+  debug_output $stdout
 
   base_uri Configuration.omni_sync_url
 
