@@ -10,10 +10,9 @@ module Concerns
       field :client_id, type: BSON::ObjectId
 
       validates_presence_of :token
-      validate :validate_expiration_date
 
-      def validate_expiration_date
-        errors.add(:expires_at, 'The access_token is expired') if expires_at < Date.current
+      def is_expired?
+        expires_at > Time.now.utc
       end
     end
 
@@ -22,7 +21,7 @@ module Concerns
         builder_token = new
         builder_token.token = token || SecureRandom.base64(bytes)
         builder_token.client_id = client_id
-        builder_token.expires_at = Date.current + DEFAULT_EXPIRATION_TIME
+        builder_token.expires_at = Time.now.utc + DEFAULT_EXPIRATION_TIME
         builder_token
       end
     end

@@ -11,19 +11,19 @@ shared_examples :oauth_token do
 
   it { should validate_presence_of(:token) }
 
-  describe :validators do
+  describe :is_expired? do
     subject(:access_token) { TestToken.new(token: '42', expires_at: expires_at) }
 
     context 'when expired_at before today' do
-      let(:expires_at) { Date.current - 1.day }
+      let(:expires_at) { Time.now.utc - 1.day }
 
-      its(:valid?) { is_expected.to be_falsey }
+      its(:is_expired?) { is_expected.to be_falsey }
     end
 
     context 'when expired_at after today' do
-      let(:expires_at) { Date.current + 1.day }
+      let(:expires_at) { Time.now.utc + 1.day }
 
-      its(:valid?) { is_expected.to be_truthy }
+      its(:is_expired?) { is_expected.to be_truthy }
     end
   end
 
