@@ -77,7 +77,7 @@ describe User do
       let(:token) { access_token.token }
 
       before do
-        user.access_tokens.first.update(expires_at: Date.current - 1.month)
+        user.access_tokens.first.update(expires_at: Time.now.utc - 1.month)
         user.save(validate: false)
       end
 

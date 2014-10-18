@@ -8,7 +8,7 @@ describe AccessToken do
   it { should embed_one(:refresh_token) }
 
   describe :to_bearer_token do
-    let(:access_token) { AccessToken.new(token: '42', expires_at: Date.current + 1.month) }
+    let(:access_token) { AccessToken.new(token: '42', expires_at: Time.now.utc + 1.month) }
 
     subject { access_token.to_bearer_token }
 

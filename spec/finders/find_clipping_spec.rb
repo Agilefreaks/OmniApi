@@ -22,7 +22,7 @@ describe FindClipping do
 
     context 'when user has more than one clippings' do
       let(:first_clipping) { Clipping.new(created_at: 1.day.ago, content: 'first content') }
-      let(:second_clipping) { Clipping.new(created_at: Date.today, content: 'second content') }
+      let(:second_clipping) { Clipping.new(created_at: Time.now.utc, content: 'second content') }
       let(:last_clipping) { Clipping.new(created_at: 1.week.ago, content: 'latest content') }
 
       before(:each) { user.clippings.push([first_clipping, second_clipping, last_clipping]) }

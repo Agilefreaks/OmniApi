@@ -44,7 +44,7 @@ class GenerateOauthToken
       req.invalid_grant! unless user
 
       token = user.access_tokens.where('refresh_token.token' => req.refresh_token).first
-      token.update_attribute(:expires_at, Date.today + Concerns::OAuth2Token::DEFAULT_EXPIRATION_TIME)
+      token.update_attribute(:expires_at, Time.now.utc + Concerns::OAuth2Token::DEFAULT_EXPIRATION_TIME)
       token
     end
   end

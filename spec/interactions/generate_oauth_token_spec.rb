@@ -66,11 +66,11 @@ describe :GenerateOauthToken do
 
       context 'if access_token is expired' do
         before do
-          access_token.expires_at = Date.today - 2.months
+          access_token.expires_at = Time.now.utc - 2.months
           user.save
         end
 
-        its(:expires_at) { should >= Date.today }
+        its(:expires_at) { should >= Time.now.utc }
       end
 
       its(:client_id) { should == '42' }

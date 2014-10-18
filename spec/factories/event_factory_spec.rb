@@ -35,6 +35,10 @@ describe EventFactory do
         expect(event).to be_kind_of(IncomingSmsEvent)
       end
 
+      it 'will save the event' do
+        expect { subject }.to change(IncomingSmsEvent, :count).by(1)
+      end
+
       its(:identifier) { should == '42' }
 
       its(:phone_number) { should == '0745857479' }

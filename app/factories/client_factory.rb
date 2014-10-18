@@ -20,7 +20,7 @@ class ClientFactory
         c._id = id unless id.nil?
       end
       access_token = AccessToken.build
-      access_token.expires_at = Date.current + 1.year
+      access_token.expires_at = Time.now.utc + 1.year
       access_token.scopes = ScopesRepository.get(group)
       client.access_tokens.push(access_token)
       client.save

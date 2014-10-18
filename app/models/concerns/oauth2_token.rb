@@ -6,7 +6,7 @@ module Concerns
 
     included do
       field :token, type: String
-      field :expires_at, type: Date
+      field :expires_at, type: Time
       field :client_id, type: BSON::ObjectId
 
       validates_presence_of :token

@@ -30,10 +30,10 @@ shared_examples :oauth_token do
   describe :build do
     subject { TestToken.build('42') }
 
-    its(:token) { should_not be_nil }
+    its(:token) { is_expected.not_to be_nil }
 
-    its(:expires_at) { should == Date.current + Concerns::OAuth2Token::DEFAULT_EXPIRATION_TIME }
+    its(:'expires_at.to_i') { is_expected.to eq (Time.now.utc + Concerns::OAuth2Token::DEFAULT_EXPIRATION_TIME).to_i }
 
-    its(:client_id) { should == '42' }
+    its(:client_id) { is_expected.to eq '42' }
   end
 end

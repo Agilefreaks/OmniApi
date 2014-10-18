@@ -41,7 +41,7 @@ describe API::Resources::Users do
 
     before do
       access_token = GenerateOauthToken.build_access_token_for(user, client.id)
-      access_token.update_attribute(:expires_at, Date.current)
+      access_token.update_attribute(:expires_at, Time.now.utc)
     end
 
     its(:first_name) { is_expected.to eq 'Ion' }

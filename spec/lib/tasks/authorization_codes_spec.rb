@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'authorization_codes' do
   before do
-    load File.expand_path('../../../lib/tasks/authorization_codes.rake', __FILE__)
+    load File.expand_path('../../../../lib/tasks/authorization_codes.rake', __FILE__)
     Rake::Task.define_task(:environment)
   end
 

@@ -11,7 +11,6 @@ class EventFactory
     event_klass = type.to_s.split('_').map(&:capitalize).join.concat('Event').constantize
     event = event_klass.new(params)
     user.events.push(event)
-    user.save
 
     event
   end

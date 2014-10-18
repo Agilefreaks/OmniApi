@@ -40,3 +40,7 @@ if ENV['RACK_ENV'] == 'development' || ENV['RACK_ENV'] == 'test'
 end
 
 load 'mongoid/tasks/database.rake'
+
+# Load all rake tasks
+Dir[File.expand_path(File.join('../lib/tasks/*.rake'), __FILE__)].each { |f| load f }
+

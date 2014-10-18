@@ -16,7 +16,7 @@ class Client
     next if access_tokens.size > 0
 
     access_token = AccessToken.build
-    access_token.expires_at = Date.current + 1.year
+    access_token.expires_at = Time.now.utc + 1.year
     access_tokens.push(AccessToken.build)
   end
 
