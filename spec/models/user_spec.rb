@@ -118,6 +118,17 @@ describe User do
     end
   end
 
+  describe :authorization_code do
+    before :each do
+      user.authorization_codes.create
+      @authorization_code = user.authorization_codes.create
+    end
+
+    subject { user.authorization_code }
+
+    it { is_expected.to eq @authorization_code }
+  end
+
   describe :active_registered_devices do
     let(:user) { Fabricate(:user) }
     let!(:active_registered_device) { user.registered_devices.create(registration_id: '42') }

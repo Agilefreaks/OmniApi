@@ -14,6 +14,10 @@ module Concerns
       save
     end
 
+    def authorization_code
+      authorization_codes.order_by(created_at: 1).last
+    end
+
     module ClassMethods
       def find_by_code(code)
         User.where(authorization_codes:

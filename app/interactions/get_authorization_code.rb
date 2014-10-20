@@ -14,7 +14,7 @@ class GetAuthorizationCode
 
     fail Mongoid::Errors::DocumentNotFound.new(User, nil) unless user
 
-    user.authorization_codes.first || user.authorization_codes.create
+    user.authorization_code || user.authorization_codes.create
   end
 
   def execute_with_emails(emails)
