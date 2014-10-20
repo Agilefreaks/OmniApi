@@ -1,7 +1,7 @@
 namespace :users do
   class UsersOutput
     def self.puts(string)
-      Kernel::puts string
+      Kernel.puts string
     end
   end
 

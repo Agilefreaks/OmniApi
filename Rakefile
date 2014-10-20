@@ -43,4 +43,3 @@ load 'mongoid/tasks/database.rake'
 
 # Load all rake tasks
 Dir[File.expand_path(File.join('../lib/tasks/*.rake'), __FILE__)].each { |f| load f }
-

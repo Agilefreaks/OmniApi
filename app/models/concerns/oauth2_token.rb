@@ -11,7 +11,7 @@ module Concerns
 
       validates_presence_of :token
 
-      def is_expired?
+      def expired?
         expires_at > Time.now.utc
       end
     end
