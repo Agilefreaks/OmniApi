@@ -31,7 +31,6 @@ class GenerateOauthToken
       user = User.find_by_code(req.code)
       req.invalid_grant! unless user
 
-      # remove authorization code
       user.invalidate_authorization_code(req.code)
 
       GenerateOauthToken.build_access_token_for(user, client.id)

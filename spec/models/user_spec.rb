@@ -21,7 +21,13 @@ describe User do
     context 'with valid code' do
       let(:code) { '42' }
 
-      it { should == user }
+      it { is_expected.to eq user }
+    end
+
+    context 'with code contain trailing/starting spaces' do
+      let(:code) { '  42 ' }
+
+      it { is_expected.to eq user }
     end
 
     context 'with invalid code' do

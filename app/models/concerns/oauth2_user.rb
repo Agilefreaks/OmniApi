@@ -22,7 +22,7 @@ module Concerns
       def find_by_code(code)
         User.where(authorization_codes:
                      { '$elemMatch' =>
-                         { code: code, active: true, :expires_at.gt => Time.now.utc }
+                         { code: code.strip, active: true, :expires_at.gt => Time.now.utc }
                      }).first
       end
     end
