@@ -29,7 +29,10 @@ class GenerateOauthToken
   class AuthorizationCode
     def self.create(client, req)
       user = User.find_by_code(req.code)
-      req.invalid_grant! unless user
+      if user.nil?
+        NewRelic::Agent.add_custom_parameters(req.env)
+        NewRelic::Agent.notice_error(req.invalid_grant!)
+      end
 
       user.invalidate_authorization_code(req.code)
 
