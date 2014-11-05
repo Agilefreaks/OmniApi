@@ -22,12 +22,12 @@ describe API::Resources::Users do
   describe 'GET /authorization_codes' do
     include_context :with_authenticated_android_client
 
-    let(:params) { { emails: %w(spread@wings.com take@yourtime.com love@thesky.com) } }
+    let(:params) { %w(spread@wings.com take@yourtime.com love@thesky.com) }
 
-    subject { get "api/v1/authorization_codes?#{params.to_query}", {}, options }
+    subject { get "api/v1/authorization_codes?#{params.to_query(:emails)}", {}, options }
 
     before do
-      allow(GetAuthorizationCode).to receive(:for_emails).with(params[:emails]).and_return(authorization_code)
+      allow(GetAuthorizationCode).to receive(:for_emails).with(params).and_return(authorization_code)
     end
 
     context 'when there is a authorization code' do
