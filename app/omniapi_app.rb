@@ -12,7 +12,7 @@ module OmniApi
         )
     end
 
-    # rubocop:disable MethodLength
+    # rubocop:disable MethodLength, AbcSize
     def self.instance
       @instance ||= Rack::Builder.new do
         use Rack::Cors do
@@ -22,7 +22,7 @@ module OmniApi
           end
         end
 
-        use Rack::Static, urls: ['/apidoc'], root: 'public' if ENV['RACK_ENV'] != 'production'
+        use Rack::Static, urls: ['/apidoc'], root: 'public' unless ENV['RACK_ENV'] == 'production'
         use Rack::OAuth2::Server::Resource::Bearer, 'Omni API' do |req|
           AccessToken.verify(req.access_token) || req.invalid_token!
         end

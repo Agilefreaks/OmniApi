@@ -8,8 +8,8 @@ module API
 
         helpers do
           def check_access_token(user)
-            access_token = user.access_tokens.where(client_id: @current_client.id).first ||
-              GenerateOauthToken.build_access_token_for(user, @current_client.id)
+            access_token =  user.access_tokens.where(client_id: @current_client.id).first ||
+                            GenerateOauthToken.build_access_token_for(user, @current_client.id)
             access_token.touch
           end
         end

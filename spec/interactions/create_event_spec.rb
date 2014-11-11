@@ -30,7 +30,7 @@ describe CreateEvent do
 
       it 'will create a new notification for the user' do
         expect(event_factory).to receive(:create)
-                                 .with(:incoming_call, phone_number: '0745857479', identifier: '42')
+          .with(:incoming_call, phone_number: '0745857479', identifier: '42')
         subject
       end
 
@@ -46,10 +46,7 @@ describe CreateEvent do
 
       it 'will create a new notification for the user' do
         expect(event_factory).to receive(:create)
-                                 .with(:incoming_sms,
-                                       phone_number: '0745857479',
-                                       content: 'content',
-                                       identifier: '42')
+          .with(:incoming_sms, phone_number: '0745857479', content: 'content', identifier: '42')
         subject
       end
 

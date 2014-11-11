@@ -10,12 +10,11 @@ describe API::Resources::Devices do
 
     context 'when identifier is not nil' do
       it 'will call Register.device with the correct params' do
+        expected_params = {
+          access_token: access_token.token, identifier: 'Omega prime', name: 'The truck', client_version: '42'
+        }
         expect(Register).to receive(:device)
-                            .with(access_token: access_token.token,
-                                  identifier: 'Omega prime',
-                                  name: 'The truck',
-                                  client_version: '42')
-                            .and_return(RegisteredDevice.new)
+          .with(expected_params).and_return(RegisteredDevice.new)
         subject
       end
     end
@@ -31,7 +30,7 @@ describe API::Resources::Devices do
   describe "DELETE 'api/v1/devices/:identifier'" do
     it 'will call Unregister device with the correct params' do
       expect(Unregister).to receive(:device)
-                            .with(access_token: access_token.token, identifier: 'sony tv')
+        .with(access_token: access_token.token, identifier: 'sony tv')
       delete '/api/v1/devices/sony%20tv', nil, options
     end
   end
@@ -40,12 +39,13 @@ describe API::Resources::Devices do
     let(:params) { { registration_id: '42', identifier: 'sony tv' } }
 
     it 'will call ActivateDevice with the correct params' do
+      expected_params = { access_token: access_token.token,
+                          identifier: 'sony tv',
+                          client_version: '42',
+                          registration_id: '42',
+                          provider: nil }
       expect(ActivateDevice).to receive(:with)
-                                .with(access_token: access_token.token,
-                                      identifier: 'sony tv',
-                                      client_version: '42',
-                                      registration_id: '42',
-                                      provider: nil)
+        .with(expected_params)
       put '/api/v1/devices/activate', params.to_json, options.merge('HTTP_CLIENT_VERSION' => '42')
     end
   end
@@ -55,7 +55,7 @@ describe API::Resources::Devices do
 
     it 'will call Unregister device with the correct params' do
       expect(DeactivateDevice).to receive(:with)
-                                  .with(access_token: access_token.token, identifier: 'sony tv')
+        .with(access_token: access_token.token, identifier: 'sony tv')
       put '/api/v1/devices/deactivate', params.to_json, options
     end
   end

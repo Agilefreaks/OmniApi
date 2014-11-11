@@ -15,9 +15,9 @@ class ClientFactory
     private
 
     def create_client(id = nil, name, group)
-      client = Client.new do |c|
+      client = ::Client.new do |c|
         c.name = name
-        c._id = id unless id.nil?
+        c._id = id
       end
       access_token = AccessToken.build
       access_token.expires_at = Time.now.utc + 1.year

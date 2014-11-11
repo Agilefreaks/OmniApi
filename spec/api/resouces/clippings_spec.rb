@@ -9,7 +9,7 @@ describe API::Resources::Clippings do
     it 'will call create with the correct params on the factory' do
       allow(CreateClipping).to receive(:with).and_return(Clipping.new)
       expect(CreateClipping).to receive(:with)
-                                .with(access_token: access_token.token, content: 'content', identifier: 'identifier')
+        .with(access_token: access_token.token, content: 'content', identifier: 'identifier')
 
       post '/api/v1/clippings', params.to_json, options
     end
