@@ -6,18 +6,32 @@ module API
           authenticate!
         end
 
+        after do
+          route_method = routes[0].route_method
+          route_namespace = routes[0].route_namespace.tr('/', '')
+          route_path = routes[0].route_path.split('/')[4]
+          method = "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
+
+          TrackingService.send(
+            method.to_sym,
+            email: @current_user.email,
+            params: merged_params) if TrackingService.respond_to? method
+        end
+
         desc 'Create a clipping.', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Source device identifier.'
           requires :content, type: String, desc: 'Content for the clipping.'
         end
         post '/' do
-          present CreateClipping.with(merged_params), with: API::Entities::Clipping
+          clipping = CreateClipping.with(merged_params)
+          present clipping, with: API::Entities::Clipping
         end
 
         desc 'Get latest clipping.', ParamsHelper.omni_headers
         get '/last' do
-          present FindClipping.for(@current_token.token), with: API::Entities::Clipping
+          clipping = FindClipping.for(@current_token.token)
+          present clipping, with: API::Entities::Clipping
         end
       end
     end

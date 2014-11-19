@@ -11,6 +11,17 @@ module API
           authenticate!
         end
 
+        after do
+          route_method = routes[0].route_method
+          route_namespace = routes[0].route_namespace.tr('/', '')
+          route_path = routes[0].route_path.split('/')[4]
+          method = "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
+          TrackingService.send(
+            method.to_sym,
+            email: @current_user.email,
+            params: merged_params) if TrackingService.respond_to? method
+        end
+
         desc 'Create a event.', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
@@ -26,7 +37,6 @@ module API
           end
         end
         post '/' do
-
           type = params[:type]
           event_params = { identifier: params[:identifier], type: type, type => params[type].to_hash.symbolize_keys! }
           event_params = merge_access_token(event_params)

@@ -22,6 +22,8 @@ gem 'gcm'
 gem 'newrelic_rpm'
 gem 'newrelic-grape'
 
+gem 'mixpanel-ruby'
+
 group :development, :test do
   gem 'pry'
   gem 'rb-fsevent'
