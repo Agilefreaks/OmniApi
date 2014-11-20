@@ -17,10 +17,12 @@ module API
           requires :type, type: Symbol, values: [:incoming_call, :incoming_sms]
           optional :incoming_call, type: Hash do
             optional :phone_number, type: String, desc: 'The source phone number.'
+            optional :contact_name, type: String, desc: 'The name of the contact.'
           end
           optional :incoming_sms, type: Hash do
             optional :phone_number, type: String, desc: 'The source phone number.'
             optional :content, type: String, desc: 'The content of the sms.'
+            optional :contact_name, type: String, desc: 'The name of the contact.'
           end
         end
         post '/' do
