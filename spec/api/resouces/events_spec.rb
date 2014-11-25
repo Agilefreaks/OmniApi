@@ -40,7 +40,8 @@ describe API::Resources::Events do
     before do
       expect(FindEvent).to receive(:for).with(access_token.token).and_return(event)
     end
-  context 'with IncomingSmsEvent event' do
+
+    context 'with IncomingSmsEvent event' do
       let(:event) { IncomingSmsEvent.new(content: 'some content', contact_name: 'Falling Star', phone_number: '123') }
 
       it 'will present IncomingSmsEvent' do
