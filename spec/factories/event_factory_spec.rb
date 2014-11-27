@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe EventFactory do
-  include_context :with_authentificated_user
+  include_context :with_authenticated_user
 
   let(:factory) { EventFactory.new(access_token.token) }
 

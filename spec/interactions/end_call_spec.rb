@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe :EndCall do
   describe :with do
-    include_context :with_authentificated_user
+    include_context :with_authenticated_user
 
     let(:end_call) { EndCall.new(access_token.token) }
     let(:notification_service) { double(:notification_service) }

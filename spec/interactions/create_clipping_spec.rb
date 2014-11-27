@@ -4,7 +4,7 @@ describe CreateClipping do
   let(:service) { CreateClipping.new(access_token: access_token.token, content: 'some content', identifier: '42') }
 
   describe :with do
-    include_context :with_authentificated_user
+    include_context :with_authenticated_user
 
     let(:clipping_factory) { double(ClippingFactory) }
     let(:notification_service) { double(NotificationService) }

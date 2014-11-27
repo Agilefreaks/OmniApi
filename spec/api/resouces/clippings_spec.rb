@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe API::Resources::Clippings do
-  include_context :with_authentificated_user
+  include_context :with_authenticated_user
 
   describe "POST 'api/v1/clippings'" do
     let(:params) { { content: 'content', identifier: 'identifier' } }

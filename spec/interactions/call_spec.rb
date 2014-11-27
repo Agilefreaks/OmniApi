@@ -4,7 +4,7 @@ describe Call do
   let(:call) { Call.new(access_token.token, phone_number) }
 
   describe :with do
-    include_context :with_authentificated_user
+    include_context :with_authenticated_user
 
     let(:notification_service) { double(:notification_service) }
     let(:phone_number) { '898989' }

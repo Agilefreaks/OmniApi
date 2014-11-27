@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ActivateDevice do
   describe 'with' do
-    include_context :with_authentificated_user
+    include_context :with_authenticated_user
 
     # rubocop:disable LineLength
     subject { ActivateDevice.with(access_token: access_token.token, identifier: 'flute', registration_id: '42', provider: :omni_sync, client_version: '42') }

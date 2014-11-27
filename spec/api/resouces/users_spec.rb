@@ -4,13 +4,26 @@ describe API::Resources::Users do
   include_context :with_authenticated_client
 
   describe 'GET /users' do
-    let(:params) { { email: 'some@email.com' } }
-
     subject { get '/api/v1/users', params, options }
 
-    context 'with no user' do
-      it 'will do something' do
-        subject
+    context 'with email' do
+      let(:params) { { email: 'some@email.com' } }
+
+      context 'with no user' do
+        it 'will return status OK' do
+          subject
+          expect(last_response.status).to eq 200
+        end
+      end
+    end
+
+    context 'with no params' do
+      include_context :with_authenticated_user
+
+      let(:params) { {} }
+
+      it 'will return status ok' do
+        get '/api/v1/users', nil, options
         expect(last_response.status).to eq 200
       end
     end

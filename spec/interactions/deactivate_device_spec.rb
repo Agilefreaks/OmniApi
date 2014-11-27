@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe DeactivateDevice do
   describe 'with' do
-    include_context :with_authentificated_user
+    include_context :with_authenticated_user
 
     subject { DeactivateDevice.with(access_token: access_token.token, identifier: 'violin') }
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CreateEvent do
-  include_context :with_authentificated_user
+  include_context :with_authenticated_user
 
   describe :with do
     let(:event_factory) { double(EventFactory) }

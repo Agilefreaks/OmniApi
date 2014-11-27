@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Register do
   describe 'execute' do
-    include_context :with_authentificated_user
+    include_context :with_authenticated_user
 
     # rubocop:disable LineLength
     subject { Register.device(access_token: access_token.token, identifier: 'Tu La', name: 'Tu mem', client_version: '42') }

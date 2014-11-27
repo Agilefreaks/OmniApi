@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe API::Resources::Events do
-  include_context :with_authentificated_user
+  include_context :with_authenticated_user
 
   describe 'POST /api/v1/events' do
     subject { post '/api/v1/events', params.to_json, options }

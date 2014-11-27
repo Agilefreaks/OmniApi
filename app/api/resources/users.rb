@@ -2,10 +2,6 @@ module API
   module Resources
     class Users < Grape::API
       resource :users do
-        before do
-          authenticate_client!
-        end
-
         helpers do
           def check_access_token(user)
             access_token =  user.access_tokens.where(client_id: @current_client.id).first ||
@@ -15,10 +11,18 @@ module API
         end
 
         desc 'Fetch a user.', ParamsHelper.omni_headers
+        get do
+          authenticate!
+          present @current_user, with: API::Entities::User
+        end
+
+        desc 'Fetch a user.', ParamsHelper.omni_headers
         params do
           requires :email, type: String, desc: 'The Email of the user.'
         end
         get do
+          authenticate_client!
+
           users = User.where(email: declared_params[:email])
           users.each do |user|
             check_access_token(user)
@@ -34,6 +38,7 @@ module API
           optional :last_name, type: String
         end
         post do
+          authenticate_client!
           present UserFactory.new.create(@current_client, declared_params), with: API::Entities::User
         end
 
@@ -44,6 +49,8 @@ module API
           optional :last_name, type: String
         end
         put do
+          authenticate_client!
+
           user = User.find_by(email: declared_params[:email])
           user.update(declared_params)
           check_access_token(user)

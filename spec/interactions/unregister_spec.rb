@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Unregister do
   describe :execute do
-    include_context :with_authentificated_user
+    include_context :with_authenticated_user
 
     let(:identifier) { '132' }
 

@@ -4,7 +4,7 @@ describe ClippingFactory do
   let(:factory) { ClippingFactory.new }
 
   describe 'create' do
-    include_context :with_authentificated_user
+    include_context :with_authenticated_user
 
     subject { factory.create(access_token.token, content) }
 

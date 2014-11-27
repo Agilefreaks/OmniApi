@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe API::Resources::Devices do
-  include_context :with_authentificated_user
+  include_context :with_authenticated_user
 
   describe "POST 'api/v1/devices'" do
     subject { post '/api/v1/devices', params.to_json, options.merge('HTTP_CLIENT_VERSION' => '42') }
