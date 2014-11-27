@@ -8,27 +8,32 @@ module API
                             GenerateOauthToken.build_access_token_for(user, @current_client.id)
             access_token.touch
           end
-        end
 
-        desc 'Fetch a user.', ParamsHelper.omni_headers
-        get do
-          authenticate!
-          present @current_user, with: API::Entities::User
+          def fetch_user_with_email(email)
+            authenticate_client!
+
+            users = User.where(email: email)
+            users.each do |user|
+              check_access_token(user)
+            end
+
+            users
+          end
+
+          def fetch_user
+            authenticate!
+            @current_user
+          end
         end
 
         desc 'Fetch a user.', ParamsHelper.omni_headers
         params do
-          requires :email, type: String, desc: 'The Email of the user.'
+          optional :email, type: String, desc: 'The Email of the user.'
         end
         get do
-          authenticate_client!
+          result = declared_params[:email].to_s.empty? ? fetch_user : fetch_user_with_email(declared_params[:email])
 
-          users = User.where(email: declared_params[:email])
-          users.each do |user|
-            check_access_token(user)
-          end
-
-          present users, with: API::Entities::User
+          present result, with: API::Entities::User
         end
 
         desc 'Create a new user.', ParamsHelper.omni_headers
