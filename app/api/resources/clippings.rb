@@ -11,11 +11,9 @@ module API
           route_namespace = routes[0].route_namespace.tr('/', '')
           route_path = routes[0].route_path.split('/')[4]
           method = "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
+          params = { email: @current_user.email, identifier: merged_params[:identifier] }
 
-          TrackingService.send(
-            method.to_sym,
-            email: @current_user.email,
-            params: merged_params) if TrackingService.respond_to? method
+          TrackingService.track_clippings(@current_user.email, method.to_sym, params)
         end
 
         desc 'Create a clipping.', ParamsHelper.omni_headers

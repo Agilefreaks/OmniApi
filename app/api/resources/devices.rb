@@ -11,10 +11,14 @@ module API
           route_namespace = routes[0].route_namespace.tr('/', '')
           route_path = routes[0].route_path.split('/')[4]
           method = "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
-          TrackingService.send(
-            method.to_sym,
-            email: @current_user.email,
-            params: merged_params) if TrackingService.respond_to? method
+          params =
+            {
+              email: @current_user.email,
+              device_type: merged_params[:provider],
+              identifier: merged_params[:identifier]
+            }
+
+          TrackingService.track_devices(@current_user.email, method.to_sym, params)
         end
 
         desc 'Register a device', ParamsHelper.omni_headers
