@@ -41,6 +41,7 @@ module API
           requires :email, type: String, desc: 'The Email of the user.'
           optional :first_name, type: String
           optional :last_name, type: String
+          optional :image_url, type: String, desc: 'The users image url'
         end
         post do
           authenticate_client!
@@ -52,6 +53,7 @@ module API
           requires :email, type: String, desc: 'The Email of the user.'
           optional :first_name, type: String
           optional :last_name, type: String
+          optional :image_url, type: String, desc: 'The users image url'
         end
         put do
           authenticate_client!

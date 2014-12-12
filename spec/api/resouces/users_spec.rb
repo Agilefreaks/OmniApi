@@ -45,7 +45,7 @@ describe API::Resources::Users do
 
   describe 'PUT /users' do
     let!(:user) { Fabricate(:user, email: 'a@user.com') }
-    let(:params) { { email: 'a@user.com', first_name: 'Ion', last_name: 'din Deal' } }
+    let(:params) { { email: 'a@user.com', first_name: 'Ion', last_name: 'din Deal', image_url: 'http://some.image' } }
 
     subject do
       put '/api/v1/users', params.to_json, options
@@ -60,6 +60,8 @@ describe API::Resources::Users do
     its(:first_name) { is_expected.to eq 'Ion' }
 
     its(:last_name) { is_expected.to eq 'din Deal' }
+
+    its(:image_url) { is_expected.to eq 'http://some.image' }
 
     context 'when the access_token is expiring'
   end
