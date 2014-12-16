@@ -72,7 +72,14 @@ module API
           optional :identifier, desc: 'If this is provided we will only return this device'
         end
         get do
-          present @current_user.registered_devices, with: Entities::RegisteredDevice
+          identifier = merged_params[:identifier]
+          result = if identifier.nil?
+                     @current_user.registered_devices
+                   else
+                     @current_user.registered_devices.find_by(identifier: identifier)
+                   end
+
+          present result, with: Entities::RegisteredDevice
         end
 
         desc 'Call the number.', ParamsHelper.omni_headers

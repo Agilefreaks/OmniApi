@@ -79,7 +79,27 @@ describe API::Resources::Devices do
       it 'will return all registered devices for the user' do
         subject
 
-        expect(JSON.parse(last_response.body).size).to eq(1)
+        expect(JSON.parse(last_response.body).size).to eq(2)
+      end
+    end
+
+    context 'with a identifier' do
+      context 'with an existing identifier' do
+        let(:params) { { identifier: 'HTC One' } }
+
+        it 'will return the device' do
+          subject
+          expect(JSON.parse(last_response.body)['name']).to eq 'My phone'
+        end
+      end
+
+      context 'with an invalid identifier' do
+        let(:params) { { identifier: 'HTC Two' } }
+
+        it 'will return 404' do
+          subject
+          expect(last_response).to be_not_found
+        end
       end
     end
   end
