@@ -29,7 +29,7 @@ describe API::Resources::Devices do
     end
   end
 
-  describe "DELETE 'api/v1/devices/:identifier'" do
+  describe "DELETE 'api/v1/devices'" do
     it 'will call Unregister device with the correct params' do
       expect(Unregister).to receive(:device).with(access_token: access_token.token, identifier: 'sony tv')
       delete '/api/v1/devices', { identifier: 'sony tv' }.to_json, options
