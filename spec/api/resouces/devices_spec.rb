@@ -11,10 +11,12 @@ describe API::Resources::Devices do
     context 'when identifier is not nil' do
       it 'will call Register.device with the correct params' do
         expected_params = {
-          access_token: access_token.token, identifier: 'Omega prime', name: 'The truck', client_version: '42'
+          access_token: access_token.token,
+          identifier: 'Omega prime',
+          name: 'The truck',
+          client_version: '42'
         }
-        expect(Register).to receive(:device)
-          .with(expected_params).and_return(RegisteredDevice.new)
+        expect(Register).to receive(:device).with(expected_params).and_return(RegisteredDevice.new)
         subject
       end
     end
@@ -29,8 +31,7 @@ describe API::Resources::Devices do
 
   describe "DELETE 'api/v1/devices/:identifier'" do
     it 'will call Unregister device with the correct params' do
-      expect(Unregister).to receive(:device)
-        .with(access_token: access_token.token, identifier: 'sony tv')
+      expect(Unregister).to receive(:device).with(access_token: access_token.token, identifier: 'sony tv')
       delete '/api/v1/devices/sony%20tv', nil, options
     end
   end
@@ -44,8 +45,7 @@ describe API::Resources::Devices do
                           client_version: '42',
                           registration_id: '42',
                           provider: nil }
-      expect(ActivateDevice).to receive(:with)
-        .with(expected_params)
+      expect(ActivateDevice).to receive(:with).with(expected_params)
       put '/api/v1/devices/activate', params.to_json, options.merge('HTTP_CLIENT_VERSION' => '42')
     end
   end
@@ -54,23 +54,33 @@ describe API::Resources::Devices do
     let(:params) { { identifier: 'sony tv' } }
 
     it 'will call Unregister device with the correct params' do
-      expect(DeactivateDevice).to receive(:with)
-        .with(access_token: access_token.token, identifier: 'sony tv')
+      expect(DeactivateDevice).to receive(:with).with(access_token: access_token.token, identifier: 'sony tv')
       put '/api/v1/devices/deactivate', params.to_json, options
     end
   end
 
   describe "GET 'api/v1/devices'" do
-    let(:devices) { [Fabricate(:registered_device, user: user, identifier: 'sony tv', name: 'sony tv')] }
+    let(:devices) do
+      [
+        Fabricate(:registered_device, user: user, identifier: 'sony tv', name: 'sony tv'),
+        Fabricate(:registered_device, user: user, identifier: 'HTC One', name: 'My phone')
+      ]
+    end
+
+    subject { get '/api/v1/devices', params, options }
 
     before do
       user.registered_devices = devices
     end
 
-    it 'will return all registered devices for the user' do
-      get '/api/v1/devices', '', options
+    context 'with no identifier' do
+      let(:params) { '' }
 
-      expect(JSON.parse(last_response.body).size).to eq(1)
+      it 'will return all registered devices for the user' do
+        subject
+
+        expect(JSON.parse(last_response.body).size).to eq(1)
+      end
     end
   end
 

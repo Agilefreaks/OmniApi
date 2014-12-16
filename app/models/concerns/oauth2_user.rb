@@ -6,7 +6,7 @@ module Concerns
       embeds_many :authorization_codes
 
       index({ 'authorization_codes.code' => 1, 'authorization_codes.active' => 1 },
-            { unique: true, sparse: true })
+            unique: true, sparse: true)
     end
 
     def invalidate_authorization_code(code)

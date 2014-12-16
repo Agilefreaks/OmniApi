@@ -21,7 +21,7 @@ module API
           TrackingService.track_devices(@current_user.email, method.to_sym, params)
         end
 
-        desc 'Register a device', ParamsHelper.omni_headers
+        desc 'Create a device', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
           optional :name, type: String, desc: 'The name of the device.'
@@ -36,7 +36,7 @@ module API
           present register_device, with: API::Entities::RegisteredDevice
         end
 
-        desc 'Unregister a device.', ParamsHelper.omni_headers
+        desc 'Delete a device.', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
         end
@@ -67,7 +67,10 @@ module API
           present DeactivateDevice.with(merged_params), with: Entities::RegisteredDevice
         end
 
-        desc 'Get all registered devices for the user', ParamsHelper.omni_headers
+        desc 'Get registered devices for the user', ParamsHelper.omni_headers
+        params do
+          optional :identifier, desc: 'If this is provided we will only return this device'
+        end
         get do
           present @current_user.registered_devices, with: Entities::RegisteredDevice
         end

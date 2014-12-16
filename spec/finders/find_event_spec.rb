@@ -4,11 +4,13 @@ describe FindEvent do
   describe :for do
     include_context :with_authenticated_user
 
-    let!(:event1) { user.events.create(identifier: 'Phone') }
-    let!(:event2) { user.events.create(identifier: 'TV') }
+    before do
+      user.events.create(identifier: 'Phone')
+      user.events.create(identifier: 'TV')
+    end
 
     subject { FindEvent.for(access_token.token) }
 
-    it { should == event2 }
+    its(:identifier) { should == 'TV' }
   end
 end

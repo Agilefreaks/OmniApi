@@ -7,7 +7,6 @@ set :repo_url, 'git@github.com:Agilefreaks/OmniApi.git'
 set :rvm_ruby_version, 'ruby-2.1.5@omniapi'
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -26,7 +25,6 @@ namespace :deploy do
       # end
     end
   end
-
 end
 
 after 'deploy:updated', 'newrelic:notice_deployment'

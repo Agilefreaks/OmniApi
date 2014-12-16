@@ -45,6 +45,5 @@ describe AuthorizationCode do
 
       its(:count) { should == 1 }
     end
-
   end
 end

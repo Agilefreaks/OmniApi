@@ -44,7 +44,7 @@ end
 
 group :test do
   gem 'rspec'
-  gem 'rspec-spies'
+  gem 'rspec-mocks'
   gem 'rspec-its'
   gem 'json_spec'
   gem 'rack-test'
@@ -52,5 +52,5 @@ group :test do
   gem 'database_cleaner'
   gem 'simplecov'
   gem 'simplecov-teamcity-summary', github: 'balauru/simplecov-teamcity-summary'
-  gem 'mongoid-rspec'
+  gem 'mongoid-rspec', '~> 2.0.0.rc1'
 end

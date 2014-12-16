@@ -77,6 +77,5 @@ describe :GenerateOauthToken do
 
       its('refresh_token.token') { should eq 'refresh' }
     end
-
   end
 end
