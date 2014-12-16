@@ -40,10 +40,8 @@ module API
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
         end
-        route_param :identifier do
-          delete '/' do
-            Unregister.device(merged_params)
-          end
+        delete '/' do
+          Unregister.device(merged_params)
         end
 
         desc 'Activate.', ParamsHelper.omni_headers
