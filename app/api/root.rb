@@ -21,6 +21,7 @@ module API
   require 'resources/clippings'
   require 'resources/authorization_codes'
   require 'resources/events'
+  require 'resources/sync'
 
   class Root < Grape::API
     version 'v1', using: :path, vendor: 'OmniApi', cascade: false
@@ -41,6 +42,7 @@ module API
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
     mount Resources::Events
+    mount Resources::Sync
 
     base_paths = {
       'development' => 'http://localhost:9292',
