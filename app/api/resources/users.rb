@@ -75,7 +75,7 @@ module API
             requires :device_identifier, type: String, desc: 'The device identifier that requires the contacts.'
           end
           get do
-            present GetContactList.for(merged_params), with: Entities::ContactList
+            present FindContactList.for(merged_params), with: Entities::ContactList
           end
 
           desc 'Post a list of contacts.', ParamsHelper.omni_headers
