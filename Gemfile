@@ -3,7 +3,7 @@ ruby '2.1.5'
 
 gem 'puma'
 
-gem 'grape', '~> 0.8'
+gem 'grape', '~> 0.9'
 gem 'grape-entity'
 gem 'grape-swagger'
 
