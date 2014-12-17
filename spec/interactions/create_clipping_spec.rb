@@ -6,20 +6,20 @@ describe CreateClipping do
   let(:service) { CreateClipping.new(access_token: access_token.token, content: 'some content', identifier: '42') }
 
   describe :with do
-    let(:clipping_factory) { double(ClippingFactory) }
+    let(:clipping_builder) { double(ClippingBuilder) }
     let(:notification_service) { double(NotificationService) }
     let(:clipping) { Clipping.new }
 
     before :each do
-      service.clipping_factory = clipping_factory
+      service.clipping_builder = clipping_builder
       service.notification_service = notification_service
 
-      allow(clipping_factory).to receive(:create).and_return(clipping)
+      allow(clipping_builder).to receive(:build).and_return(clipping)
       allow(notification_service).to receive(:notify)
     end
 
     it 'will call ClippingFactory#create' do
-      expect(clipping_factory).to receive(:create).with(access_token.token, 'some content')
+      expect(clipping_builder).to receive(:build).with(access_token.token, 'some content')
       service.create
     end
 

@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe ClippingFactory do
-  let(:factory) { ClippingFactory.new }
+describe ClippingBuilder do
+  let(:builder) { ClippingBuilder.new }
 
-  describe 'create' do
+  describe :build do
     include_context :with_authenticated_user
 
-    subject { factory.create(access_token.token, content) }
+    subject { builder.build(access_token.token, content) }
 
     context 'when content is string' do
       let(:content) { 'some' }

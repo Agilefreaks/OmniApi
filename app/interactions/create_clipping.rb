@@ -4,7 +4,7 @@ class CreateClipping
   end
 
   attr_reader :access_token, :content, :identifier
-  attr_accessor :clipping_factory, :notification_service
+  attr_accessor :clipping_builder, :notification_service
 
   def initialize(args)
     @access_token = args[:access_token]
@@ -13,10 +13,10 @@ class CreateClipping
   end
 
   def create
-    @clipping_factory ||= ClippingFactory.new
+    @clipping_builder ||= ClippingBuilder.new
     @notification_service ||= NotificationService.new
 
-    clipping = @clipping_factory.create(@access_token, @content)
+    clipping = @clipping_builder.build(@access_token, @content)
     @notification_service.notify(clipping, @identifier)
 
     clipping
