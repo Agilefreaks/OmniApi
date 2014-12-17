@@ -7,6 +7,7 @@ class RegisteredDevice
   field :registration_id, type: String
   field :name, type: String
   field :identifier, type: String
+  field :public_key, type: String
   field :provider, type: Symbol
   field :client_version, type: String
 

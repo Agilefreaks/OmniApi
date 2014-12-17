@@ -43,8 +43,7 @@ describe API::Resources::Devices do
       expected_params = { access_token: access_token.token,
                           identifier: 'sony tv',
                           client_version: '42',
-                          registration_id: '42',
-                          provider: nil }
+                          registration_id: '42' }
       expect(ActivateDevice).to receive(:with).with(expected_params)
       put '/api/v1/devices/activate', params.to_json, options.merge('HTTP_CLIENT_VERSION' => '42')
     end
@@ -56,6 +55,40 @@ describe API::Resources::Devices do
     it 'will call Unregister device with the correct params' do
       expect(DeactivateDevice).to receive(:with).with(access_token: access_token.token, identifier: 'sony tv')
       put '/api/v1/devices/deactivate', params.to_json, options
+    end
+  end
+
+  describe "PUT 'api/v1/devices'" do
+    let(:required_params) { { identifier: 'sony tv' } }
+
+    subject { put '/api/v1/devices', params.to_json, options }
+
+    before do
+      user.registered_devices.create(identifier: 'sony tv', name: 'the name of the tv')
+    end
+
+    context 'with public_key and name' do
+      let(:params) { required_params.merge(name: 'some name', public_key: '42') }
+
+      it 'will update the name and public_key' do
+        subject
+        user.reload
+        device = user.registered_devices.first
+        expect(device.name).to eq 'some name'
+        expect(device.public_key).to eq '42'
+      end
+    end
+
+    context 'with only the public_key' do
+      let(:params) { required_params.merge(public_key: '42') }
+
+      it 'will update the name and public_key' do
+        subject
+        user.reload
+        device = user.registered_devices.first
+        expect(device.name).to eq 'the name of the tv'
+        expect(device.public_key).to eq '42'
+      end
     end
   end
 

@@ -2,7 +2,7 @@ module ParamsHelper
   extend Grape::API::Helpers
 
   def declared_params
-    declared(params)
+    declared(params, include_missing: false)
   end
 
   def merged_params

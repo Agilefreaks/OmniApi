@@ -65,6 +65,19 @@ module API
           present DeactivateDevice.with(merged_params), with: Entities::RegisteredDevice
         end
 
+        desc 'Update existing device', ParamsHelper.omni_headers
+        params do
+          requires :identifier, type: String, desc: 'The unique device identifier.'
+          optional :name, type: String, desc: 'The name of the device.'
+          optional :public_key, type: String, desc: 'The devices public key.'
+        end
+        put '/' do
+          rd = @current_user.registered_devices.find_by(identifier: declared_params[:identifier])
+          rd.update_attributes(declared_params)
+
+          present rd, with: Entities::RegisteredDevice
+        end
+
         desc 'Get registered devices for the user', ParamsHelper.omni_headers
         params do
           optional :identifier, desc: 'If this is provided we will only return this device'
