@@ -45,7 +45,7 @@ module API
         end
         post do
           authenticate_client!
-          present UserFactory.new.create(@current_client, declared_params), with: API::Entities::User
+          present UserBuilder.new.build(@current_client, declared_params), with: API::Entities::User
         end
 
         desc 'Update a existing user.', ParamsHelper.omni_headers

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe UserFactory do
-  describe :create do
+describe UserBuilder do
+  describe :build do
     let(:client) { Client.new }
-    subject { UserFactory.new.create(client, email: 'some@email.com') }
+    subject { UserBuilder.new.build(client, email: 'some@email.com') }
 
     its(:new_record?) { should == false }
 

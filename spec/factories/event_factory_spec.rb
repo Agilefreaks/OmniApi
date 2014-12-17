@@ -3,10 +3,10 @@ require 'spec_helper'
 describe EventFactory do
   include_context :with_authenticated_user
 
-  let(:builder) { EventFactory.new(access_token.token) }
+  let(:factory) { EventFactory.new(access_token.token) }
 
   describe :create do
-    subject { builder.create(type, params) }
+    subject { factory.create(type, params) }
 
     context 'for incoming call' do
       let(:type) { :incoming_call }
