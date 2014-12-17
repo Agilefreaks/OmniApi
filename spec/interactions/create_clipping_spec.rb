@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe CreateClipping do
+  include_context :with_authenticated_user
+
   let(:service) { CreateClipping.new(access_token: access_token.token, content: 'some content', identifier: '42') }
 
   describe :with do
-    include_context :with_authenticated_user
-
     let(:clipping_factory) { double(ClippingFactory) }
     let(:notification_service) { double(NotificationService) }
     let(:clipping) { Clipping.new }

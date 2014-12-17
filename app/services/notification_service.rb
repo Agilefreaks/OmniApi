@@ -65,6 +65,11 @@ class NotificationService
     send_notification(model.user, source_identifier, options)
   end
 
+  def contact_list(model, source_identifier)
+    options = { data: { registration_id: 'other', provider: 'contacts' } }
+    send_notification(model.user, source_identifier, options)
+  end
+
   def send_notification(user, source_identifier, options)
     devices_to_notify = user.active_registered_devices.where(:identifier.ne => source_identifier)
 

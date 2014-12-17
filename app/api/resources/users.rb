@@ -72,7 +72,7 @@ module API
 
           desc 'Get all contacts.', ParamsHelper.omni_headers
           params do
-            requires :device_identifier, type: String, desc: 'The device identifier that requires the contacts.'
+            requires :identifier, type: String, desc: 'The device identifier that requires the contacts.'
           end
           get do
             present FindContactList.for(merged_params), with: Entities::ContactList
@@ -80,7 +80,7 @@ module API
 
           desc 'Post a list of contacts.', ParamsHelper.omni_headers
           params do
-            requires :device_identifier, type: String, desc: 'The device identifier that requires the contacts.'
+            requires :identifier, type: String, desc: 'The device identifier that requires the contacts.'
             requires :contacts, type: String, desc: 'The contacts array encoded.'
           end
           post do
