@@ -20,6 +20,9 @@ class User
   embeds_many :providers
   accepts_nested_attributes_for :providers
 
+  embeds_many :contact_lists
+  accepts_nested_attributes_for :contact_lists
+
   has_many :clippings
   has_many :events
 

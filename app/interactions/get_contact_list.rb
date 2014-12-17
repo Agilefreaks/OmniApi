@@ -1,0 +1,2 @@
+class GetContactList
+end

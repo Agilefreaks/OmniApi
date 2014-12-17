@@ -3,13 +3,14 @@ require 'spec_helper'
 describe User do
   let(:user) { Fabricate(:user) }
 
-  it { should embed_many(:access_tokens) }
-  it { should embed_many(:authorization_codes) }
-  it { should embed_many(:registered_devices) }
-  it { should embed_many(:providers) }
+  it { is_expected.to embed_many(:access_tokens) }
+  it { is_expected.to embed_many(:authorization_codes) }
+  it { is_expected.to embed_many(:registered_devices) }
+  it { is_expected.to embed_many(:providers) }
+  it { is_expected.to embed_many(:contact_lists) }
 
-  it { should have_many(:clippings) }
-  it { should have_many(:events) }
+  it { is_expected.to have_many(:clippings) }
+  it { is_expected.to have_many(:events) }
 
   describe :find_by_code do
     before do

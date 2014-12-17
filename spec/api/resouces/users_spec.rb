@@ -65,4 +65,49 @@ describe API::Resources::Users do
 
     context 'when the access_token is expiring'
   end
+
+  describe :contacts do
+    include_context :with_authenticated_user
+
+    describe "POST '/users/contacts'" do
+      let(:params) { { device_identifier: 'ubuntu', contacts: 'an encrypted list of contacts' } }
+
+      subject { post '/api/v1/users/contacts', params.to_json, options }
+
+      it 'will call CreateContactList' do
+        with_params = {
+          access_token: access_token.token,
+          device_identifier: 'ubuntu',
+          contacts: 'an encrypted list of contacts'
+        }
+        expect(CreateContactList).to receive(:with).with(with_params)
+
+        subject
+      end
+    end
+
+    describe "GET '/users/contacts'" do
+      let(:params) { { device_identifier: 'ubuntu' } }
+
+      subject { get '/api/v1/users/contacts', params, options }
+
+      before :each do
+        allow(GetContactList).to receive(:for).and_return(contact_list)
+      end
+
+      context 'when there is a contact list available' do
+        let(:contact_list) { Fabricate(:contact_list, contacts: 'gibberish', device_identifier: 'ubuntu', user: user) }
+
+        it 'will call GetContactList with the correct params' do
+          expect(GetContactList).to receive(:for).with(access_token: access_token.token, device_identifier: 'ubuntu')
+          subject
+        end
+
+        it 'will return the content in contacts field' do
+          subject
+          expect(JSON.parse(last_response.body)['contacts']).to eq('gibberish')
+        end
+      end
+    end
+  end
 end
