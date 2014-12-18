@@ -54,7 +54,7 @@ GEM
     gcm (0.0.9)
       httparty
       json
-    grape (0.8.0)
+    grape (0.9.0)
       activesupport
       builder
       hashie (>= 2.1.0)
@@ -132,7 +132,7 @@ GEM
     newrelic-grape (2.0.0)
       grape
       newrelic_rpm
-    newrelic_rpm (3.9.8.273)
+    newrelic_rpm (3.9.7.266)
     optionable (0.2.0)
     origin (2.1.1)
     parser (2.2.0.pre.8)
@@ -224,7 +224,7 @@ DEPENDENCIES
   database_cleaner
   fabrication
   gcm
-  grape (= 0.8)
+  grape (~> 0.9)
   grape-entity
   grape-swagger
   growl
@@ -238,7 +238,7 @@ DEPENDENCIES
   mongoid (= 4.0.0)
   mongoid-rspec (~> 2.0.0.rc1)
   newrelic-grape
-  newrelic_rpm
+  newrelic_rpm (= 3.9.7.266)
   pry
   puma
   rack-cors

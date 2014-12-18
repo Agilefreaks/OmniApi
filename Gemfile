@@ -3,7 +3,7 @@ ruby '2.1.5'
 
 gem 'puma'
 
-gem 'grape', '0.8'
+gem 'grape', '~> 0.9'
 gem 'grape-entity'
 gem 'grape-swagger'
 
@@ -19,7 +19,7 @@ gem 'rack-oauth2'
 
 gem 'gcm'
 
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '3.9.7.266'
 gem 'newrelic-grape'
 
 gem 'mixpanel-ruby'
