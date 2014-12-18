@@ -3,7 +3,7 @@ ruby '2.1.5'
 
 gem 'puma'
 
-gem 'grape', '~> 0.9'
+gem 'grape', '0.8'
 gem 'grape-entity'
 gem 'grape-swagger'
 
@@ -36,7 +36,7 @@ group :development, :test do
   gem 'guard-rubocop'
 
   # deploy
-  gem 'capistrano', '~> 3.2', require: false
+  gem 'capistrano', '~> 3.3', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano3-puma', require: false
@@ -51,6 +51,6 @@ group :test do
   gem 'fabrication'
   gem 'database_cleaner'
   gem 'simplecov'
-  gem 'simplecov-teamcity-summary', github: 'balauru/simplecov-teamcity-summary'
+  gem 'simplecov-teamcity-summary'
   gem 'mongoid-rspec', '~> 2.0.0.rc1'
 end

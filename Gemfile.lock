@@ -1,10 +1,3 @@
-GIT
-  remote: git://github.com/balauru/simplecov-teamcity-summary.git
-  revision: 16e0f288ef4da1ac3cdbe786f4482c740ac3d3da
-  specs:
-    simplecov-teamcity-summary (0.1.0)
-      simplecov
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -61,7 +54,7 @@ GEM
     gcm (0.0.9)
       httparty
       json
-    grape (0.9.0)
+    grape (0.8.0)
       activesupport
       builder
       hashie (>= 2.1.0)
@@ -109,7 +102,7 @@ GEM
     json_spec (1.1.4)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
-    listen (2.8.3)
+    listen (2.8.4)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -200,6 +193,8 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    simplecov-teamcity-summary (0.1.1)
+      simplecov
     slop (3.6.0)
     sshkit (1.6.1)
       colorize (>= 0.7.0)
@@ -222,14 +217,14 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  capistrano (~> 3.2)
+  capistrano (~> 3.3)
   capistrano-bundler
   capistrano-rvm
   capistrano3-puma
   database_cleaner
   fabrication
   gcm
-  grape (~> 0.9)
+  grape (= 0.8)
   grape-entity
   grape-swagger
   growl
@@ -257,4 +252,4 @@ DEPENDENCIES
   rspec-mocks
   rubocop
   simplecov
-  simplecov-teamcity-summary!
+  simplecov-teamcity-summary
