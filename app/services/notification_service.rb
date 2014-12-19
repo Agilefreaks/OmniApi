@@ -54,7 +54,7 @@ class NotificationService
         {
           registration_id: 'other',
           phone_action: 'sms_message',
-          id: model.id,
+          id: model.id.to_s,
           provider: 'phone'
         }
     }

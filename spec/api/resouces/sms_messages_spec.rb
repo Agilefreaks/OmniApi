@@ -4,13 +4,15 @@ describe API::Resources::SmsMessages do
   include_context :with_authenticated_user
 
   describe "POST 'api/v1/sms_messages'" do
+    subject { post '/api/v1/sms_messages', params.to_json, options }
+
     context 'with phone number and content' do
       let(:params) { { phone_number: '898989', content: 'I am hot!' } }
 
       it 'will call SendSms with correct params' do
         params[:access_token] = access_token.token
         expect(SendSmsMessage).to receive(:with).with(params)
-        post '/api/v1/sms_messages', params.to_json, options
+        subject
       end
     end
 
@@ -20,8 +22,21 @@ describe API::Resources::SmsMessages do
       it 'will call SendSms with correct params' do
         params[:access_token] = access_token.token
         expect(SendSmsMessage).to receive(:with).with(params)
-        post '/api/v1/sms_messages', params.to_json, options
+        subject
       end
+    end
+  end
+
+  describe "GET 'api/v1/sms_messages/:id'" do
+    subject { get '/api/v1/sms_messages/5494468a63616c6cfb000000', '', options }
+
+    before do
+      Fabricate(:sms_message, user: user, id: BSON::ObjectId.from_string('5494468a63616c6cfb000000'))
+    end
+
+    it 'will return the sms message' do
+      subject
+      expect(last_response).to be_ok
     end
   end
 end

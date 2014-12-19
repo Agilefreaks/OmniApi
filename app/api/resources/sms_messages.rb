@@ -19,6 +19,16 @@ module API
         post do
           SendSmsMessage.with(merged_params)
         end
+
+        desc 'Get sms', ParamsHelper.omni_headers
+        params do
+          requires :id, type: String, desc: 'Sms Message id.'
+        end
+        route_param :id do
+          get do
+            present @current_user.sms_messages.find(declared_params[:id]), with: API::Entities::SmsMessage
+          end
+        end
       end
     end
   end

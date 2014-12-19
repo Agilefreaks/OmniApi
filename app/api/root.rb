@@ -12,6 +12,7 @@ module API
   require 'entities/incoming_call_event'
   require 'entities/incoming_sms_event'
   require 'entities/contact_list'
+  require 'entities/sms_message'
 
   # resources
   require 'resources/oauth2'

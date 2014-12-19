@@ -1,0 +1,1 @@
+Fabricator(:sms_message)
