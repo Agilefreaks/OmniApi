@@ -156,8 +156,9 @@ describe API::Resources::Devices do
   describe "POST 'api/v1/devices/sms'" do
     let(:params) { { phone_number: '898989', content: 'I am hot!' } }
 
-    it 'will call Call.device with the correct params' do
-      expect(Sms).to receive(:with).with(access_token: access_token.token, phone_number: '898989', content: 'I am hot!')
+    it 'will call SendSmsMessage with the correct params' do
+      params[:access_token] = access_token.token
+      expect(SendSmsMessage).to receive(:with).with(params)
       post '/api/v1/devices/sms', params.to_json, options
     end
   end

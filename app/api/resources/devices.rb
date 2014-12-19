@@ -112,7 +112,7 @@ module API
           requires :content, type: String, desc: 'The content of the sms.'
         end
         post '/sms' do
-          Sms.with(merged_params)
+          SendSmsMessage.with(merged_params)
         end
       end
     end

@@ -11,6 +11,7 @@ describe User do
 
   it { is_expected.to have_many(:clippings) }
   it { is_expected.to have_many(:events) }
+  it { is_expected.to have_many(:sms_messages) }
 
   describe :find_by_code do
     before do

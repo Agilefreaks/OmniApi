@@ -22,6 +22,7 @@ module API
   require 'resources/authorization_codes'
   require 'resources/events'
   require 'resources/sync'
+  require 'resources/sms_messages'
 
   class Root < Grape::API
     version 'v1', using: :path, vendor: 'OmniApi', cascade: false
@@ -43,6 +44,7 @@ module API
     mount Resources::AuthorizationCodes
     mount Resources::Events
     mount Resources::Sync
+    mount Resources::SmsMessages
 
     base_paths = {
       'development' => 'http://localhost:9292',
