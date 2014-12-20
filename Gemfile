@@ -14,7 +14,7 @@ gem 'rake'
 
 gem 'json'
 
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', require: 'rack/cors'
 gem 'rack-oauth2'
 
 gem 'gcm'
