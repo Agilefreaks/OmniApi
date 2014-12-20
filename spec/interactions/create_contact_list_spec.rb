@@ -3,7 +3,8 @@ require 'spec_helper'
 describe CreateContactList do
   include_context :with_authenticated_user
 
-  let(:service) { CreateContactList.new(access_token: access_token.token, identifier: '42', contacts: 'some') }
+  let(:params) { { access_token: access_token.token, source_identifier: '43', identifier: '42', contacts: 'some' } }
+  let(:service) { CreateContactList.new(params) }
 
   describe :create do
     let(:contact_list_builder) { double(ContactListBuilder) }
@@ -26,7 +27,7 @@ describe CreateContactList do
     end
 
     it 'will call notify with the correct params' do
-      expect(notification_service).to receive(:notify).with(contact_list, '42')
+      expect(notification_service).to receive(:notify).with(contact_list, '43')
       subject
     end
   end

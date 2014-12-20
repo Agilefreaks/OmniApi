@@ -79,7 +79,7 @@ class NotificationService
   end
 
   def contact_list(model, source_identifier)
-    options = { data: { registration_id: 'other', provider: 'contacts', source_identifier: source_identifier } }
+    options = { data: { registration_id: 'other', provider: 'contacts', identifier: model.identifier } }
     send_notification(model.user, source_identifier, options)
   end
 

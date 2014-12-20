@@ -104,8 +104,10 @@ describe NotificationService do
   describe :contact_list do
     let(:model) { Fabricate(:contact_list, user: user, identifier: '42', contacts: 'contacts') }
 
-    it_behaves_like :notification_provider, :gcm, data: { registration_id: 'other', provider: 'contacts' }
-    it_behaves_like :notification_provider, :omni_sync, data: { registration_id: 'other', provider: 'contacts' }
+    it_behaves_like :notification_provider, :gcm,
+                    data: { registration_id: 'other', provider: 'contacts', identifier: '42' }
+    it_behaves_like :notification_provider, :omni_sync,
+                    data: { registration_id: 'other', provider: 'contacts', identifier: '42' }
   end
 
   describe :call do

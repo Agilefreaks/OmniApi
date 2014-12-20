@@ -12,7 +12,8 @@ module API
           optional :identifier, type: String, desc: 'The source device identifier.'
         end
         post do
-          NotificationService.new.notify(ContactList.new(user: @current_user), declared_params[:identifier])
+          contact_list = ContactList.new(user: @current_user, identifier: declared_params[:identifier])
+          NotificationService.new.notify(contact_list, declared_params[:identifier])
           body(false)
         end
       end

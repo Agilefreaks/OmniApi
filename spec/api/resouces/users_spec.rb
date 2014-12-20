@@ -70,16 +70,12 @@ describe API::Resources::Users do
     include_context :with_authenticated_user
 
     describe "POST '/users/contacts'" do
-      let(:params) { { identifier: 'ubuntu', contacts: 'an encrypted list of contacts' } }
+      let(:params) { { source_identifier: 'nexus', identifier: 'ubuntu', contacts: 'an encrypted list of contacts' } }
 
       subject { post '/api/v1/users/contacts', params.to_json, options }
 
       it 'will call CreateContactList' do
-        with_params = {
-          access_token: access_token.token,
-          identifier: 'ubuntu',
-          contacts: 'an encrypted list of contacts'
-        }
+        with_params = params.merge(access_token: access_token.token)
         expect(CreateContactList).to receive(:with).with(with_params)
 
         subject

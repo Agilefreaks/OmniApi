@@ -80,6 +80,7 @@ module API
 
           desc 'Post a list of contacts.', ParamsHelper.omni_headers
           params do
+            requires :source_identifier, type: String, desc: 'The device that sourced the contacts.'
             requires :identifier, type: String, desc: 'The device identifier that requires the contacts.'
             requires :contacts, type: String, desc: 'The contacts array encoded.'
           end
