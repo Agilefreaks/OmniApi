@@ -18,6 +18,7 @@ module API
         end
         post do
           SendSmsMessage.with(merged_params)
+          body(false)
         end
 
         desc 'Get sms', ParamsHelper.omni_headers
