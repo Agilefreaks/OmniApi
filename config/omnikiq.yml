@@ -1,0 +1,10 @@
+development:
+  redis_namespace: default
+  redis_url: redis://localhost:6379
+
+staging:
+  redis_namespace: staging
+  redis_url: redis://10.133.201.189:6379
+
+production:
+  redis_namespace: production

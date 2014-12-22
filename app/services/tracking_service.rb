@@ -1,5 +1,3 @@
-require 'mixpanel-ruby'
-
 class TrackingService
   ACTIVATION_EVENT = 'Device activation'
   DEACTIVATION_EVENT = 'Device deactivated'
@@ -34,21 +32,11 @@ class TrackingService
     post_sync: SYNC_REQUEST
   }
 
-  class NullObject
-    def method_missing(*_args, &_block)
-      self
-    end
-  end
-
-  def self.tracker
-    @tracker = if TrackConfig.test_mode
-                 NullObject.new
-               else
-                 Mixpanel::Tracker.new(TrackConfig.api_key)
-               end
-  end
-
   def self.track(email, event, params = {})
-    tracker.track(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
+    OmniKiq::Trackers::MixpanelEvents.perform_async(email,
+                                                    TRACKED_EVENTS[event],
+                                                    params) unless TRACKED_EVENTS[event].nil?
+    OmniKiq::Trackers::MixpanelPeople.perform_async(email,
+                                                    last_seen: DateTime.now)
   end
 end

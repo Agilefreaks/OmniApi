@@ -1,6 +1,5 @@
 require 'api/root'
 require 'rack/oauth2'
-require 'mixpanel-ruby'
 
 module OmniApi
   class App
