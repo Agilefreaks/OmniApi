@@ -1,11 +1,13 @@
 require_relative 'concerns/oauth2_user'
 require_relative 'concerns/oauth2_finders'
+require_relative 'concerns/sometimes'
 
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include Concerns::OAuth2User
   include Concerns::OAuth2Finders
+  include Concerns::Sometimes
 
   field :first_name, type: String
   field :last_name, type: String

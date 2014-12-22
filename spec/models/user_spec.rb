@@ -13,6 +13,10 @@ describe User do
   it { is_expected.to have_many(:events) }
   it { is_expected.to have_many(:sms_messages) }
 
+  it { is_expected.to have_field(:via_omnipaste) }
+
+  its(:via_omnipaste) { is_expected.to eq true }
+
   describe :find_by_code do
     before do
       user.authorization_codes.create(code: 42)

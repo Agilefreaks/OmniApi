@@ -196,6 +196,7 @@ GEM
     simplecov-teamcity-summary (0.1.1)
       simplecov
     slop (3.6.0)
+    sometimes (0.0.2)
     sshkit (1.6.1)
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
@@ -253,3 +254,4 @@ DEPENDENCIES
   rubocop
   simplecov
   simplecov-teamcity-summary
+  sometimes

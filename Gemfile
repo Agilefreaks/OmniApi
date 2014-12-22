@@ -24,6 +24,8 @@ gem 'newrelic-grape'
 
 gem 'mixpanel-ruby'
 
+gem 'sometimes'
+
 group :development, :test do
   gem 'pry'
   gem 'rb-fsevent'
