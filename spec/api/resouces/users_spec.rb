@@ -70,7 +70,7 @@ describe API::Resources::Users do
     include_context :with_authenticated_user
 
     describe "POST '/users/contacts'" do
-      let(:params) { { source_identifier: 'nexus', identifier: 'ubuntu', contacts: 'an encrypted list of contacts' } }
+      let(:params) { { identifier: 'nexus', destination_identifier: 'ubuntu', contacts: 'an encrypted list of contacts' } }
 
       subject { post '/api/v1/users/contacts', params.to_json, options }
 

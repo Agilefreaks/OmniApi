@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CreateContactList do
   include_context :with_authenticated_user
 
-  let(:params) { { access_token: access_token.token, source_identifier: '43', identifier: '42', contacts: 'some' } }
+  let(:params) { { access_token: access_token.token, identifier: '43', destination_identifier: '42', contacts: 'some' } }
   let(:service) { CreateContactList.new(params) }
 
   describe :create do
