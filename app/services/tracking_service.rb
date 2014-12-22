@@ -33,7 +33,7 @@ class TrackingService
     get_events: GET_EVENT,
     post_userscontacts_contacts: POST_CONTACTS,
     get_userscontacts_contacts: GET_CONTACTS,
-    post_sync: SYNC_REQUEST,
+    post_sync: SYNC_REQUEST
   }
 
   def self.tracker
