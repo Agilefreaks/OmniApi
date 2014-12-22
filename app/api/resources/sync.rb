@@ -6,6 +6,12 @@ module API
           authenticate!
         end
 
+        after do
+          params = { email: @current_user.email, identifier: merged_params[:identifier], what: merged_params[:what] }
+
+          TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+        end
+
         desc 'Create a sync request', ParamsHelper.omni_headers
         params do
           optional :what, type: Symbol, values: [:contacts, :other], desc: 'What to sync?'

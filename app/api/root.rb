@@ -2,6 +2,7 @@ module API
   # helpers
   require 'helpers/authentication_helper'
   require 'helpers/params_helper'
+  require 'helpers/route_helper'
 
   # entities
   require 'entities/provider'
@@ -36,6 +37,7 @@ module API
 
     helpers AuthenticationHelper
     helpers ParamsHelper
+    helpers RouteHelper
 
     mount Resources::OAuth2
     mount Resources::Version
