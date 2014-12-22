@@ -5,16 +5,20 @@ describe Register do
     include_context :with_authenticated_user
 
     # rubocop:disable LineLength
-    subject { Register.device(access_token: access_token.token, identifier: 'Tu La', name: 'Tu mem', client_version: '42') }
+    let(:params) { { access_token: access_token.token, identifier: 'Tu La', name: 'Tu mem', client_version: '42', public_key: 'public' } }
+
+    subject { Register.device(params) }
 
     shared_examples :registered_device do
-      its(:user) { should == user }
+      its(:user) { is_expected.to eq user }
 
-      its(:identifier) { should == 'Tu La' }
+      its(:identifier) { is_expected.to eq 'Tu La' }
 
-      its(:name) { should == 'Tu mem' }
+      its(:name) { is_expected.to eq 'Tu mem' }
 
-      its(:client_version) { should == '42' }
+      its(:client_version) { is_expected.to eq '42' }
+
+      its(:public_key) { is_expected.to eq 'public' }
     end
 
     context 'when user has a device with the same identifier' do

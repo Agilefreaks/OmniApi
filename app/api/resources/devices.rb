@@ -25,6 +25,7 @@ module API
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'
           optional :name, type: String, desc: 'The name of the device.'
+          optional :public_key, type: String, desc: 'The public key of the device.'
         end
         post '/' do
           register_device = Register.device(merged_params)
