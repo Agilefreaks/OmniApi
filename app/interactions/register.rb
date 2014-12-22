@@ -25,9 +25,10 @@ class Register
     user = User.find_by_token(@register_params.token)
 
     registered_device = user.registered_devices.find_or_initialize_by(identifier: @register_params.identifier)
-    registered_device.name = @register_params.name
-    registered_device.public_key = @register_params.public_key;
-    registered_device.client_version = @register_params.client_version
+    registered_device.update_attributes(
+      name: @register_params.name,
+      public_key: @register_params.public_key,
+      client_version: @register_params.client_version)
     user.registered_devices.push(registered_device) if registered_device.new_record?
     user.save
 
