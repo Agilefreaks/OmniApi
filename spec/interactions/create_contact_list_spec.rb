@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CreateContactList do
   include_context :with_authenticated_user
 
-  let(:params) { { access_token: access_token.token, identifier: '43', destination_identifier: '42', contacts: 'some' } }
+  let(:params) { { access_token: access_token.token, identifier: '43', destination_identifier: '42', contacts: 'e' } }
   let(:service) { CreateContactList.new(params) }
 
   describe :create do
@@ -22,7 +22,7 @@ describe CreateContactList do
     subject { service.create }
 
     it 'will call build on builder with the correct params' do
-      expect(contact_list_builder).to receive(:build).with(access_token.token, '42', 'some')
+      expect(contact_list_builder).to receive(:build).with(access_token.token, '42', 'e')
       subject
     end
 
