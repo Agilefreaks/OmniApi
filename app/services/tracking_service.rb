@@ -1,4 +1,4 @@
-require 'mixpanel-ruby'
+require 'mixpanel-sidekiq'
 
 class TrackingService
   ACTIVATION_EVENT = 'Device activation'
@@ -34,21 +34,7 @@ class TrackingService
     post_sync: SYNC_REQUEST
   }
 
-  class NullObject
-    def method_missing(*_args, &_block)
-      self
-    end
-  end
-
-  def self.tracker
-    @tracker = if TrackConfig.test_mode
-                 NullObject.new
-               else
-                 Mixpanel::Tracker.new(TrackConfig.api_key)
-               end
-  end
-
   def self.track(email, event, params = {})
-    tracker.track(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
+    MixpanelSidekiq::MixpanelTracker.perform_async(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
   end
 end

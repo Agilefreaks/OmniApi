@@ -22,7 +22,7 @@ gem 'gcm'
 gem 'newrelic_rpm'
 gem 'newrelic-grape'
 
-gem 'mixpanel-ruby'
+gem 'mixpanel-sidekiq', github: 'levelboy/mixpanel-sidekiq'
 
 gem 'sometimes'
 

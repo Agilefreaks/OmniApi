@@ -28,3 +28,7 @@ Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__))
 
 # boot up the app
 require File.expand_path('../../app/omniapi_app.rb', __FILE__)
+
+Sidekiq.configure_client do |config|
+  config.redis = { url: 'redis://localhost:6379', :namespace => 'Omnipaste', :size => 5 }
+end
