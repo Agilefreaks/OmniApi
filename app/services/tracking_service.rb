@@ -4,6 +4,7 @@ class TrackingService
   TRACKING_API_KEY = 'd4a302f695330322fe4c44bc302f3780'
 
   ACTIVATION_EVENT = 'Device activation'
+  DEACTIVATION_EVENT = 'Device deactivated'
   REGISTRATION_EVENT = 'Device registration'
   CALL_EVENT = 'Call'
   END_INCOMING_CALL_EVENT = 'End incoming call'
@@ -12,40 +13,34 @@ class TrackingService
   GET_CLIPPING = 'Get clipping'
   NEW_EVENT = 'New event'
   GET_EVENT = 'Get event'
+  GET_CONTACTS = 'Get contacts'
+  POST_CONTACTS = 'Send contacts'
+  SYNC_REQUEST = 'Sync request'
   WINDOWS = 'Windows'
   ANDROID = 'Android'
   DEVICE_TYPE = { gcm: ANDROID, omni_sync: WINDOWS }
 
-  TRACKED_DEVICES = {
+  TRACKED_EVENTS = {
     put_devices_activate: ACTIVATION_EVENT,
+    put_devices_deactivate: DEACTIVATION_EVENT,
     post_devices: REGISTRATION_EVENT,
     post_devices_call: CALL_EVENT,
-    post_devices_end_call: END_INCOMING_CALL_EVENT
-  }
-
-  TRACKED_CLIPPINGS = {
+    post_devices_end_call: END_INCOMING_CALL_EVENT,
+    post_devices_sms: SEND_SMS,
     post_clippings: NEW_CLIPPING,
-    get_clippings_last: GET_CLIPPING
-  }
-
-  TRACKED_EVENTS = {
+    get_clippings_last: GET_CLIPPING,
     post_events: NEW_EVENT,
-    get_events: GET_EVENT
+    get_events: GET_EVENT,
+    post_userscontacts_contacts: POST_CONTACTS,
+    get_userscontacts_contacts: GET_CONTACTS,
+    post_sync: SYNC_REQUEST
   }
 
   def self.tracker
     @tracker ||= Mixpanel::Tracker.new(TRACKING_API_KEY)
   end
 
-  def self.track_devices(email, event, params = {})
-    tracker.track(email, TRACKED_DEVICES[event], params) unless TRACKED_DEVICES[event].nil?
-  end
-
-  def self.track_clippings(email, event, params = {})
-    tracker.track(email, TRACKED_CLIPPINGS[event], params) unless TRACKED_CLIPPINGS[event].nil?
-  end
-
-  def self.track_events(email, event, params = {})
+  def self.track(email, event, params = {})
     tracker.track(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
   end
 end

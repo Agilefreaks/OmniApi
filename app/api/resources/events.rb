@@ -12,13 +12,9 @@ module API
         end
 
         after do
-          route_method = routes[0].route_method
-          route_namespace = routes[0].route_namespace.tr('/', '')
-          route_path = routes[0].route_path.split('/')[4]
-          method = "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
           params = { email: @current_user.email, identifier: merged_params[:identifier], type: merged_params[:type] }
 
-          TrackingService.track_events(@current_user.email, method.to_sym, params)
+          TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
         end
 
         desc 'Create a event.', ParamsHelper.omni_headers

@@ -70,6 +70,16 @@ module API
             authenticate!
           end
 
+          after do
+            params =
+              {
+                email: @current_user.email,
+                identifier: merged_params[:identifier]
+              }
+            puts params.inspect
+            TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+          end
+
           desc 'Get all contacts.', ParamsHelper.omni_headers
           params do
             requires :identifier, type: String, desc: 'The device identifier that requires the contacts.'
