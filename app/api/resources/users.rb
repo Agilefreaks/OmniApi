@@ -76,7 +76,6 @@ module API
                 email: @current_user.email,
                 identifier: merged_params[:identifier]
               }
-            puts params.inspect
             TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
           end
 
