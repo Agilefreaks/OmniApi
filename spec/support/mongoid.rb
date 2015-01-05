@@ -3,12 +3,14 @@ require 'database_cleaner'
 RSpec.configure do |config|
   config.include Mongoid::Matchers
 
-  config.before :each do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.start
+  config.before(:suite) do
+    DatabaseCleaner[:mongoid].strategy = :truncation
+    DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.after do
-    DatabaseCleaner.clean
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 end

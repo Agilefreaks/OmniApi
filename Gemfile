@@ -3,7 +3,7 @@ ruby '2.1.5'
 
 gem 'puma'
 
-gem 'grape', '~> 0.9'
+gem 'grape', '~> 0.10.1'
 gem 'grape-entity'
 gem 'grape-swagger'
 
@@ -51,7 +51,7 @@ group :test do
   gem 'json_spec'
   gem 'rack-test'
   gem 'fabrication'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '1.3.0'
   gem 'simplecov'
   gem 'simplecov-teamcity-summary'
   gem 'mongoid-rspec', '~> 2.0.0.rc1'

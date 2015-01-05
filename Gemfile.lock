@@ -1,14 +1,14 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (4.1.8)
-      activesupport (= 4.1.8)
+    activemodel (4.2.0)
+      activesupport (= 4.2.0)
       builder (~> 3.1)
-    activesupport (4.1.8)
-      i18n (~> 0.6, >= 0.6.9)
+    activesupport (4.2.0)
+      i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
-      thread_safe (~> 0.1)
+      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     ast (2.0.0)
     astrolabe (1.3.0)
@@ -54,7 +54,7 @@ GEM
     gcm (0.0.9)
       httparty
       json
-    grape (0.9.0)
+    grape (0.10.1)
       activesupport
       builder
       hashie (>= 2.1.0)
@@ -67,11 +67,11 @@ GEM
     grape-entity (0.4.4)
       activesupport
       multi_json (>= 1.3.2)
-    grape-swagger (0.8.0)
-      grape
+    grape-swagger (0.9.0)
+      grape (>= 0.8.0)
       grape-entity
     growl (1.0.3)
-    guard (2.10.4)
+    guard (2.10.5)
       formatador (>= 0.2.4)
       listen (~> 2.7)
       lumberjack (~> 1.0)
@@ -82,7 +82,7 @@ GEM
       bundler (~> 1.0)
       guard (~> 2.2)
       guard-compat (~> 1.1)
-    guard-compat (1.1.0)
+    guard-compat (1.2.0)
     guard-rspec (4.5.0)
       guard (~> 2.1)
       guard-compat (~> 1.1)
@@ -95,8 +95,8 @@ GEM
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    httpclient (2.5.3.3)
-    i18n (0.6.11)
+    httpclient (2.6.0.1)
+    i18n (0.7.0)
     ice_nine (0.11.1)
     json (1.8.1)
     json_spec (1.1.4)
@@ -119,7 +119,7 @@ GEM
       mongoid (~> 4.0.0)
       rake
       rspec (~> 3.0)
-    moped (2.0.2)
+    moped (2.0.3)
       bson (~> 2.2)
       connection_pool (~> 2.0)
       optionable (~> 0.2.0)
@@ -135,7 +135,7 @@ GEM
     newrelic_rpm (3.9.7.266)
     optionable (0.2.0)
     origin (2.1.1)
-    parser (2.2.0.pre.8)
+    parser (2.2.0.1)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
     powerpack (0.0.9)
@@ -145,16 +145,16 @@ GEM
       slop (~> 3.4)
     puma (2.10.2)
       rack (>= 1.1, < 2.0)
-    rack (1.5.2)
+    rack (1.6.0)
     rack-accept (0.4.5)
       rack (>= 0.4)
-    rack-cors (0.2.9)
+    rack-cors (0.3.1)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
-    rack-oauth2 (1.0.8)
+    rack-oauth2 (1.0.9)
       activesupport (>= 2.3)
       attr_required (>= 0.0.5)
-      httpclient (>= 2.2.0.2)
+      httpclient (>= 2.4)
       multi_json (>= 1.3.6)
       rack (>= 1.1)
     rack-test (0.6.2)
@@ -187,7 +187,7 @@ GEM
       powerpack (~> 0.0.6)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
-    ruby-progressbar (1.7.0)
+    ruby-progressbar (1.7.1)
     simplecov (0.9.1)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
@@ -207,7 +207,7 @@ GEM
       hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    virtus (1.0.3)
+    virtus (1.0.4)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
@@ -222,10 +222,10 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rvm
   capistrano3-puma
-  database_cleaner
+  database_cleaner (= 1.3.0)
   fabrication
   gcm
-  grape (~> 0.9)
+  grape (~> 0.10.1)
   grape-entity
   grape-swagger
   growl
