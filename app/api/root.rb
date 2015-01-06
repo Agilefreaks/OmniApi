@@ -5,7 +5,6 @@ module API
   require 'helpers/route_helper'
 
   require 'root_v1'
-  require 'root_v2'
 
   class Root < Grape::API
     format :json
@@ -20,6 +19,5 @@ module API
     helpers RouteHelper
 
     mount RootV1 => '/api/v1'
-    mount RootV2 => '/api/v2'
   end
 end

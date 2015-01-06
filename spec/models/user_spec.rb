@@ -6,6 +6,7 @@ describe User do
   it { is_expected.to embed_many(:access_tokens) }
   it { is_expected.to embed_many(:authorization_codes) }
   it { is_expected.to embed_many(:registered_devices) }
+  it { is_expected.to embed_many(:devices) }
   it { is_expected.to embed_many(:providers) }
   it { is_expected.to embed_many(:contact_lists) }
 

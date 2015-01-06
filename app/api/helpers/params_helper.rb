@@ -1,19 +1,21 @@
 module ParamsHelper
   extend Grape::API::Helpers
 
-  def declared_params
-    declared(params, include_missing: false)
+  def declared_params(include_missing = true)
+    declared(params, include_missing: include_missing)
   end
 
-  def merged_params
-    merge_access_token(declared_params)
+  def merged_params(include_missing = true)
+    result = merge_access_token(declared_params(include_missing))
+    merge_client_version(result) || result
   end
 
   def merge_access_token(params)
-    params = params.merge(access_token: @current_token.token)
-    params = params.merge(client_version: headers['Client-Version']) unless headers['Client-Version'].nil?
+    params.merge(access_token: @current_token.token)
+  end
 
-    params
+  def merge_client_version(params)
+    params.merge(client_version: headers['Client-Version']) unless headers['Client-Version'].nil?
   end
 
   def auth_headers

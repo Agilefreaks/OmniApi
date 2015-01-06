@@ -17,7 +17,7 @@ module API
           mutually_exclusive :content, :content_list
         end
         post do
-          SendSmsMessage.with(merged_params)
+          SendSmsMessage.with(merged_params(false))
           body(false)
         end
 

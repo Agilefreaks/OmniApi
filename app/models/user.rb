@@ -16,6 +16,9 @@ class User
 
   validates_uniqueness_of :email
 
+  embeds_many :devices
+  accepts_nested_attributes_for :devices
+
   embeds_many :registered_devices
   accepts_nested_attributes_for :registered_devices
 

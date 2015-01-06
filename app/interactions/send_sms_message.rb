@@ -18,7 +18,7 @@ class SendSmsMessage
 
     sms_message = user.sms_messages.create(@params)
 
-    # TODO: remove this code once the new android version has rolled out to all user
+    # TODO: remove this code once the version 63 has rolled out to all user
     if sms_message.phone_number_list.empty?
       @notification_service.sms(sms_message)
     else

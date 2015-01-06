@@ -1,6 +1,7 @@
 module API
   module Resources
     class Devices < Grape::API
+      desc 'Deprecated, please see users/devices'
       resources :devices do
         before do
           authenticate!
@@ -24,7 +25,7 @@ module API
           optional :public_key, type: String, desc: 'The public key of the device.'
         end
         post '/' do
-          register_device = Register.device(merged_params)
+          register_device = Register.device(merged_params(false))
 
           unless register_device.valid?
             error!(register_device.errors.full_messages, '400')
@@ -51,7 +52,7 @@ module API
                    desc: 'The push notification provider, it defaults to :gcm if none provided.'
         end
         put 'activate' do
-          present ActivateDevice.with(merged_params), with: Entities::RegisteredDevice
+          present ActivateDevice.with(merged_params(false)), with: Entities::RegisteredDevice
         end
 
         desc 'Deactivate.', ParamsHelper.omni_headers
@@ -70,7 +71,7 @@ module API
         end
         put '/' do
           rd = @current_user.registered_devices.find_by(identifier: declared_params[:identifier])
-          rd.update_attributes(declared_params)
+          rd.update_attributes(declared_params(false))
 
           present rd, with: Entities::RegisteredDevice
         end

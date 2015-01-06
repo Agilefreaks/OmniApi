@@ -3,6 +3,7 @@ module API
   require 'entities/provider'
   require 'entities/user'
   require 'entities/registered_device'
+  require 'entities/device'
   require 'entities/clipping'
   require 'entities/authorization_code'
   require 'entities/incoming_call_event'
@@ -13,7 +14,7 @@ module API
   # resources
   require 'resources/oauth2'
   require 'resources/version'
-  require 'resources/users'
+  require 'resources/users/api'
   require 'resources/devices'
   require 'resources/clippings'
   require 'resources/authorization_codes'
@@ -25,7 +26,7 @@ module API
     mount Resources::OAuth2
     mount Resources::Version
     mount Resources::Devices
-    mount Resources::Users
+    mount Resources::Users::Api
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
     mount Resources::Events
@@ -33,8 +34,8 @@ module API
     mount Resources::SmsMessages
 
     base_paths = {
-      'development' => 'http://localhost:9292',
-      'staging' => 'https://apistaging.omnipasteapp.com'
+      'development' => 'http://localhost:9292/api/v1',
+      'staging' => 'https://apistaging.omnipasteapp.com/api/v1'
     }
 
     add_swagger_documentation(
