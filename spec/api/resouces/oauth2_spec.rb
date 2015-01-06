@@ -10,7 +10,7 @@ describe API::Resources::OAuth2 do
 
     context 'and it has a valid params' do
       before :each do
-        post '/api/v1/oauth2/token', valid_params
+        post '/api/v1/oauth2/token.json', valid_params
       end
 
       its(:status) { should == 200 }

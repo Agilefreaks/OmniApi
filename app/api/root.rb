@@ -30,6 +30,7 @@ module API
     version 'v1', using: :path, vendor: 'OmniApi', cascade: false
     prefix 'api'
     format :json
+    content_type :json, 'application/json'
 
     rescue_from Mongoid::Errors::DocumentNotFound do
       rack_response({ error: { message: "We didn't find what we were looking for" } }.to_json, 404)
