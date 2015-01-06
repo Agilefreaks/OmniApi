@@ -6,12 +6,14 @@ describe User do
   it { is_expected.to embed_many(:access_tokens) }
   it { is_expected.to embed_many(:authorization_codes) }
   it { is_expected.to embed_many(:registered_devices) }
+  it { is_expected.to embed_many(:devices) }
   it { is_expected.to embed_many(:providers) }
   it { is_expected.to embed_many(:contact_lists) }
 
   it { is_expected.to have_many(:clippings) }
   it { is_expected.to have_many(:events) }
   it { is_expected.to have_many(:sms_messages) }
+  it { is_expected.to have_many(:phone_calls) }
 
   it { is_expected.to have_field(:via_omnipaste) }
 

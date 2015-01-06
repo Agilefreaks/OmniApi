@@ -1,0 +1,1 @@
+Fabricator(:phone_call)

@@ -1,7 +1,7 @@
 module API
   module Entities
-    class Event < Grape::Entity
-      expose :id, :identifier
+    class Event < BaseEntity
+      expose :identifier
       expose :_type, as: :type
     end
   end

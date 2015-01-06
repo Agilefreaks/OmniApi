@@ -1,8 +1,8 @@
-require_relative 'timestamps'
+require_relative 'base_entity'
 
 module API
   module Entities
-    class SmsMessage < Timestamps
+    class SmsMessage < BaseEntity
       expose :phone_number, if: ->(message, _options) { message.phone_number_list.empty? }
       expose :phone_number_list, unless: ->(message, _options) { message.phone_number_list.empty? }
       expose :content, if: ->(message, _options) { message.content_list.empty? }

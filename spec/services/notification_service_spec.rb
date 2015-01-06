@@ -24,16 +24,6 @@ describe NotificationService do
         service.notify(clipping, source_identifier)
       end
     end
-
-    context 'when model is PhoneNumber' do
-      let(:phone_number) { PhoneNumber.new }
-
-      it 'will call phone_number and pass model' do
-        allow(service).to receive(:phone_number)
-        expect(service).to receive(:phone_number).with(phone_number, source_identifier)
-        service.notify(phone_number, source_identifier)
-      end
-    end
   end
 
   shared_examples :notification_provider do |provider, hash|
@@ -53,6 +43,18 @@ describe NotificationService do
 
       it 'will call send_notification with the correct params' do
         expect(send(provider)).to receive(:send_notification).with(%w(43 44), hash).once
+        service.notify(model, source_identifier)
+      end
+    end
+
+    context 'when user has devices' do
+      before do
+        Fabricate(:device, user: user, name: 'nexus 4', provider: provider, registration_id: 'registration1')
+        Fabricate(:device, user: user, name: 'nexus 5', provider: provider, registration_id: 'registration2')
+      end
+
+      it 'will call send_notification with the devices' do
+        expect(send(provider)).to receive(:send_notification).with(%w(registration1 registration2), hash)
         service.notify(model, source_identifier)
       end
     end
@@ -111,7 +113,7 @@ describe NotificationService do
   end
 
   describe :call do
-    let(:model) { PhoneNumber.new(user: user, content: '123') }
+    let(:model) { PhoneCall.new(user: user, number: '123') }
 
     it_behaves_like :interaction_notification_provider, :call, :gcm,
                     data: { registration_id: 'other', phone_number: '123', phone_action: 'call', provider: 'phone' }
@@ -119,8 +121,8 @@ describe NotificationService do
                     data: { registration_id: 'other', phone_number: '123', phone_action: 'call', provider: 'phone' }
   end
 
-  describe :call do
-    let(:model) { PhoneNumber.new(user: user) }
+  describe :end_call do
+    let(:model) { PhoneCall.new(user: user) }
 
     it_behaves_like :interaction_notification_provider, :end_call, :gcm,
                     data: { registration_id: 'other', phone_action: 'end_call', provider: 'phone' }

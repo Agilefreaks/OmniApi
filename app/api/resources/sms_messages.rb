@@ -6,6 +6,10 @@ module API
           authenticate!
         end
 
+        after do
+          track
+        end
+
         desc 'Create an sms message', ParamsHelper.omni_headers
         params do
           optional :phone_number, type: String, desc: 'The phone number to dial.'
@@ -17,7 +21,7 @@ module API
           mutually_exclusive :content, :content_list
         end
         post do
-          SendSmsMessage.with(merged_params)
+          SendSmsMessage.with(merged_params(false))
           body(false)
         end
 

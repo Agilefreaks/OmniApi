@@ -1,1 +1,3 @@
-Fabricator(:incoming_call_event, from: :event)
+Fabricator(:incoming_call_event) do
+  identifier 'identifier'
+end

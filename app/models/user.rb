@@ -16,6 +16,9 @@ class User
 
   validates_uniqueness_of :email
 
+  embeds_many :devices
+  accepts_nested_attributes_for :devices
+
   embeds_many :registered_devices
   accepts_nested_attributes_for :registered_devices
 
@@ -28,9 +31,14 @@ class User
   has_many :clippings
   has_many :events
   has_many :sms_messages
+  has_many :phone_calls
 
   def active_registered_devices
     registered_devices.active
+  end
+
+  def active_devices
+    devices.active
   end
 
   def self.find_by_provider_or_email(email, provider)

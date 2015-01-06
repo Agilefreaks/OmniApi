@@ -1,20 +1,14 @@
 module API
   module Resources
     class Devices < Grape::API
+      desc 'Deprecated, please see users/devices'
       resources :devices do
         before do
           authenticate!
         end
 
         after do
-          params =
-            {
-              email: @current_user.email,
-              device_type: merged_params[:provider],
-              identifier: merged_params[:identifier]
-            }
-
-          TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+          track
         end
 
         desc 'Create a device', ParamsHelper.omni_headers
@@ -24,7 +18,7 @@ module API
           optional :public_key, type: String, desc: 'The public key of the device.'
         end
         post '/' do
-          register_device = Register.device(merged_params)
+          register_device = Register.device(merged_params(false))
 
           unless register_device.valid?
             error!(register_device.errors.full_messages, '400')
@@ -51,7 +45,7 @@ module API
                    desc: 'The push notification provider, it defaults to :gcm if none provided.'
         end
         put 'activate' do
-          present ActivateDevice.with(merged_params), with: Entities::RegisteredDevice
+          present ActivateDevice.with(merged_params(false)), with: Entities::RegisteredDevice
         end
 
         desc 'Deactivate.', ParamsHelper.omni_headers
@@ -70,7 +64,7 @@ module API
         end
         put '/' do
           rd = @current_user.registered_devices.find_by(identifier: declared_params[:identifier])
-          rd.update_attributes(declared_params)
+          rd.update_attributes(declared_params(false))
 
           present rd, with: Entities::RegisteredDevice
         end
@@ -90,7 +84,7 @@ module API
           present result, with: Entities::RegisteredDevice
         end
 
-        desc 'Call the number.', ParamsHelper.omni_headers
+        desc 'Deprecated, use post phone_calls with state initiate', ParamsHelper.omni_headers
         params do
           requires :phone_number, type: String, desc: 'The phone number to dial.'
         end
@@ -98,12 +92,12 @@ module API
           Call.with(merged_params)
         end
 
-        desc 'End an incoming call.', ParamsHelper.omni_headers
+        desc 'Deprecated, use patch phone_calls with state end_call', ParamsHelper.omni_headers
         post '/end_call' do
           EndCall.with(merged_params)
         end
 
-        desc 'Send sms.', ParamsHelper.omni_headers
+        desc 'Deprecated, use sms_messages endpoint.', ParamsHelper.omni_headers
         params do
           requires :phone_number, type: String, desc: 'The phone number to dial.'
           requires :content, type: String, desc: 'The content of the sms.'

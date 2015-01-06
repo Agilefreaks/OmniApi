@@ -4,7 +4,7 @@ describe API::Resources::Users do
   describe 'POST /authorization_codes' do
     include_context :with_authenticated_web_client
 
-    let(:authorization_code) { AuthorizationCode.new }
+    let(:authorization_code) { AuthorizationCode.new(created_at: Time.now.utc, updated_at: Time.now.utc) }
     let(:params) { { email: 'come@home.com' } }
 
     subject { post 'api/v1/authorization_codes', params.to_json, options }
@@ -31,7 +31,7 @@ describe API::Resources::Users do
     end
 
     context 'when there is a authorization code' do
-      let(:authorization_code) { AuthorizationCode.new }
+      let(:authorization_code) { AuthorizationCode.new(created_at: Time.now.utc, updated_at: Time.now.utc) }
 
       it 'will return the authorization code' do
         subject

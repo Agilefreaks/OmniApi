@@ -7,7 +7,7 @@ describe API::Resources::Clippings do
     let(:params) { { content: 'content', identifier: 'identifier' } }
 
     it 'will call create with the correct params on the factory' do
-      allow(CreateClipping).to receive(:with).and_return(Clipping.new)
+      allow(CreateClipping).to receive(:with).and_return(Fabricate(:clipping))
       with_params = { access_token: access_token.token, content: 'content', identifier: 'identifier' }
       expect(CreateClipping).to receive(:with).with(with_params)
 
@@ -16,7 +16,7 @@ describe API::Resources::Clippings do
   end
 
   describe "GET 'api/v1/clippings/last'" do
-    let(:clipping) { Clipping.new(content: 'content') }
+    let(:clipping) { Fabricate(:clipping, content: 'content') }
 
     it 'calls FindClipping for with correct argument' do
       allow(FindClipping).to receive(:for).with(access_token.token).and_return(clipping)
