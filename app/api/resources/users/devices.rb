@@ -8,14 +8,7 @@ module API
           end
 
           after do
-            params =
-              {
-                email: @current_user.email,
-                device_type: merged_params[:provider],
-                identifier: merged_params[:identifier]
-              }
-
-            TrackingService.track(@current_user.email, TrackHelper.method_name(routes).to_sym, params)
+            track
           end
 
           desc 'Create a device', ParamsHelper.omni_headers

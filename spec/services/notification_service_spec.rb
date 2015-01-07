@@ -24,16 +24,6 @@ describe NotificationService do
         service.notify(clipping, source_identifier)
       end
     end
-
-    context 'when model is PhoneNumber' do
-      let(:phone_number) { PhoneNumber.new }
-
-      it 'will call phone_number and pass model' do
-        allow(service).to receive(:phone_number)
-        expect(service).to receive(:phone_number).with(phone_number, source_identifier)
-        service.notify(phone_number, source_identifier)
-      end
-    end
   end
 
   shared_examples :notification_provider do |provider, hash|
@@ -111,7 +101,7 @@ describe NotificationService do
   end
 
   describe :call do
-    let(:model) { PhoneNumber.new(user: user, content: '123') }
+    let(:model) { PhoneCall.new(user: user, number: '123') }
 
     it_behaves_like :interaction_notification_provider, :call, :gcm,
                     data: { registration_id: 'other', phone_number: '123', phone_action: 'call', provider: 'phone' }
@@ -119,8 +109,8 @@ describe NotificationService do
                     data: { registration_id: 'other', phone_number: '123', phone_action: 'call', provider: 'phone' }
   end
 
-  describe :call do
-    let(:model) { PhoneNumber.new(user: user) }
+  describe :end_call do
+    let(:model) { PhoneCall.new(user: user) }
 
     it_behaves_like :interaction_notification_provider, :end_call, :gcm,
                     data: { registration_id: 'other', phone_action: 'end_call', provider: 'phone' }

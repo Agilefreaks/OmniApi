@@ -8,12 +8,7 @@ module API
           end
 
           after do
-            params =
-              {
-                email: @current_user.email,
-                identifier: merged_params[:identifier]
-              }
-            TrackingService.track(@current_user.email, TrackHelper.method_name(routes).to_sym, params)
+            track
           end
 
           desc 'Get all contacts.', ParamsHelper.omni_headers

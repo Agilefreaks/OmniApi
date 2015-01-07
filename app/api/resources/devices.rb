@@ -8,7 +8,7 @@ module API
         end
 
         after do
-          TrackHelper.track
+          track
         end
 
         desc 'Create a device', ParamsHelper.omni_headers
@@ -84,7 +84,7 @@ module API
           present result, with: Entities::RegisteredDevice
         end
 
-        desc 'Call the number.', ParamsHelper.omni_headers
+        desc 'Deprecated, use post phone_calls with state initiate', ParamsHelper.omni_headers
         params do
           requires :phone_number, type: String, desc: 'The phone number to dial.'
         end
@@ -92,7 +92,7 @@ module API
           Call.with(merged_params)
         end
 
-        desc 'End an incoming call.', ParamsHelper.omni_headers
+        desc 'Deprecated, use patch phone_calls with state end_call', ParamsHelper.omni_headers
         post '/end_call' do
           EndCall.with(merged_params)
         end

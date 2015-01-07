@@ -12,7 +12,7 @@ module API
         end
 
         after do
-          TrackHelper.track({ type: merged_params[:type] })
+          track(type: merged_params[:type])
         end
 
         desc 'Create a event.', ParamsHelper.omni_headers

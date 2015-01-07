@@ -14,7 +14,7 @@ describe Call do
     end
 
     it 'will send a call notification with the correct params' do
-      expect(notification_service).to receive(:call).with(an_instance_of(PhoneNumber), '')
+      expect(notification_service).to receive(:call).with(an_instance_of(PhoneCall), '')
       call.execute
     end
   end

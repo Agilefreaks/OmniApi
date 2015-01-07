@@ -13,6 +13,7 @@ describe User do
   it { is_expected.to have_many(:clippings) }
   it { is_expected.to have_many(:events) }
   it { is_expected.to have_many(:sms_messages) }
+  it { is_expected.to have_many(:phone_calls) }
 
   it { is_expected.to have_field(:via_omnipaste) }
 

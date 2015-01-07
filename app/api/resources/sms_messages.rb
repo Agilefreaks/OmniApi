@@ -7,7 +7,7 @@ module API
         end
 
         after do
-          TrackHelper.track
+          track
         end
 
         desc 'Create an sms message', ParamsHelper.omni_headers

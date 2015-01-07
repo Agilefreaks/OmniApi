@@ -1,6 +1,6 @@
 module API
   module Entities
-    class ContactList < Timestamps
+    class ContactList < BaseEntity
       expose :contacts
     end
   end

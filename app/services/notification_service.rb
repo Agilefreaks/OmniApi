@@ -17,7 +17,7 @@ class NotificationService
       data:
         {
           registration_id: 'other',
-          phone_action: 'call', phone_number: model.content,
+          phone_action: 'call', phone_number: model.number,
           provider: 'phone'
         }
     }

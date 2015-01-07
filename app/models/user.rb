@@ -31,6 +31,7 @@ class User
   has_many :clippings
   has_many :events
   has_many :sms_messages
+  has_many :phone_calls
 
   def active_registered_devices
     registered_devices.active

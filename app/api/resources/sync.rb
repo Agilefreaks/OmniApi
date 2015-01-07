@@ -7,7 +7,7 @@ module API
         end
 
         after do
-          TrackHelper.track({ what: merged_params[:what] })
+          track(what: merged_params[:what])
         end
 
         desc 'Create a sync request', ParamsHelper.omni_headers

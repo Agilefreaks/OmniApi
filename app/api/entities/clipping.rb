@@ -1,7 +1,7 @@
 module API
   module Entities
-    class Clipping < Grape::Entity
-      expose :id, :content, :type, :created_at
+    class Clipping < BaseEntity
+      expose :content, :type
     end
   end
 end
