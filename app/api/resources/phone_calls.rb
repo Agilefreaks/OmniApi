@@ -36,6 +36,16 @@ module API
             present EndCall.with(merged_params(false)), with: API::Entities::PhoneCall
           end
         end
+
+        desc 'Get a phone call.'
+        params do
+          requires :id, type: String, desc: 'The phone call id.'
+        end
+        route_param :id do
+          get do
+            present @current_user.phone_calls.find(declared_params[:id]), with: API::Entities::PhoneCall
+          end
+        end
       end
     end
   end

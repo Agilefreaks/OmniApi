@@ -27,4 +27,17 @@ describe API::Resources::PhoneCalls do
       subject
     end
   end
+
+  describe "GET 'api/v1/phone_calls/[:id]'" do
+    let(:phone_call) { Fabricate(:phone_call, user: user, number: '123') }
+    let(:params) { { state: :end_call } }
+
+    before do
+      get "/api/v1/phone_calls/#{phone_call.id}", '', options
+    end
+
+    subject { JSON.parse(last_response.body) }
+
+    its(['number']) { is_expected.to eq '123' }
+  end
 end
