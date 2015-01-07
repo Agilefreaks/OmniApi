@@ -11,10 +11,21 @@ module API
             track
           end
 
+          helpers do
+            params :shared do
+              optional :name, type: String, desc: 'The name of the device.'
+              optional :registration_id, type: String, desc: 'The registration id.'
+              optional :provider,
+                       type: Symbol,
+                       values: [:gcm, :omni_sync],
+                       desc: 'The push notification provider, it defaults to :gcm if none provided.'
+              optional :public_key, type: String, desc: 'The public key.'
+            end
+          end
+
           desc 'Create a device', ParamsHelper.omni_headers
           params do
-            optional :name, type: String, desc: 'The name of the device.'
-            optional :public_key, type: String, desc: 'The public key of the device.'
+            use :shared
           end
           post '/' do
             device = DeviceBuilder.new.build(@current_token.token, merge_client_version(declared_params))
@@ -33,6 +44,20 @@ module API
 
           desc 'Get all devices.', ParamsHelper.omni_headers
           get do
+            # migration from registered_devices
+            if @current_user.devices.empty?
+              # copy over registered_devices
+              @current_user.registered_devices.each do |rd|
+                @current_user.devices.create do |device|
+                  device.name = rd.name
+                  device.provider = rd.provider
+                  device.registration_id = rd.registration_id
+                  device.client_version = rd.client_version
+                  device.public_key = rd.public_key
+                end
+              end
+            end
+
             present @current_user.devices, with: API::Entities::Device
           end
 
@@ -49,9 +74,7 @@ module API
           desc 'Update existing device.', ParamsHelper.omni_headers
           params do
             requires :id, type: String, desc: 'Device id.'
-            optional :name, type: String, desc: 'The name of the device.'
-            optional :registration_id, type: String, desc: 'The registration id.'
-            optional :public_key, type: String, desc: 'The devices public key.'
+            use :shared
           end
           route_param :id do
             put do
@@ -65,13 +88,7 @@ module API
           desc 'Patch a existing device.', ParamsHelper.omni_headers
           params do
             requires :id, type: String, desc: 'Device id.'
-            optional :name, type: String, desc: 'The name of the device.'
-            optional :registration_id, type: String, desc: 'The registration id.'
-            optional :provider,
-                     type: Symbol,
-                     values: [:gcm, :omni_sync],
-                     desc: 'The push notification provider, it defaults to :gcm if none provided.'
-            optional :public_key, type: String, desc: 'The public key.'
+            use :shared
           end
           route_param :id do
             patch do

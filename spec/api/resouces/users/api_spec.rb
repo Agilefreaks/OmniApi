@@ -134,15 +134,28 @@ describe API::Resources::Users::Api do
     end
 
     describe "GET 'api/v1/users/devices'" do
-      before do
-        Fabricate(:device, user: user, name: 'Existing device')
-        Fabricate(:device, user: user, name: 'Existing device')
-        get '/api/v1/users/devices', '', options
-      end
-
       subject { JSON.parse(last_response.body) }
 
-      its(:size) { is_expected.to eq 2 }
+      context 'when the user has devices' do
+        before do
+          Fabricate(:device, user: user, name: 'Existing device')
+          Fabricate(:device, user: user, name: 'Existing device')
+          get '/api/v1/users/devices', '', options
+        end
+
+        its(:size) { is_expected.to eq 2 }
+      end
+
+      context 'when the user has old registered_devices' do
+        before do
+          Fabricate(:registered_device, user: user, identifier: 'Existing device 1')
+          Fabricate(:registered_device, user: user, identifier: 'Existing device 2')
+          Fabricate(:registered_device, user: user, identifier: 'Existing device 3')
+          get '/api/v1/users/devices', '', options
+        end
+
+        its(:size) { is_expected.to eq 3 }
+      end
     end
 
     describe "DELETE 'api/v1/users/devices/:id'" do
