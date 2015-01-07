@@ -8,14 +8,7 @@ module API
         end
 
         after do
-          params =
-            {
-              email: @current_user.email,
-              device_type: merged_params[:provider],
-              identifier: merged_params[:identifier]
-            }
-
-          TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+          TrackHelper.track
         end
 
         desc 'Create a device', ParamsHelper.omni_headers
@@ -104,7 +97,7 @@ module API
           EndCall.with(merged_params)
         end
 
-        desc 'Send sms.', ParamsHelper.omni_headers
+        desc 'Deprecated, use sms_messages endpoint.', ParamsHelper.omni_headers
         params do
           requires :phone_number, type: String, desc: 'The phone number to dial.'
           requires :content, type: String, desc: 'The content of the sms.'

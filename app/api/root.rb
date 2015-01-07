@@ -2,7 +2,7 @@ module API
   # helpers
   require 'helpers/authentication_helper'
   require 'helpers/params_helper'
-  require 'helpers/route_helper'
+  require 'helpers/track_helper'
 
   require 'root_v1'
 
@@ -16,7 +16,7 @@ module API
 
     helpers AuthenticationHelper
     helpers ParamsHelper
-    helpers RouteHelper
+    helpers TrackHelper
 
     mount RootV1 => '/api/v1'
   end

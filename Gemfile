@@ -19,7 +19,7 @@ gem 'rack-oauth2'
 
 gem 'gcm'
 
-gem 'newrelic_rpm', '3.9.7.266'
+gem 'newrelic_rpm'
 gem 'newrelic-grape'
 
 gem 'mixpanel-ruby'

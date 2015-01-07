@@ -12,9 +12,7 @@ module API
         end
 
         after do
-          params = { email: @current_user.email, identifier: merged_params[:identifier], type: merged_params[:type] }
-
-          TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+          TrackHelper.track({ type: merged_params[:type] })
         end
 
         desc 'Create a event.', ParamsHelper.omni_headers

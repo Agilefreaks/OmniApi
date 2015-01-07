@@ -15,7 +15,7 @@ module API
                 identifier: merged_params[:identifier]
               }
 
-            TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+            TrackingService.track(@current_user.email, TrackHelper.method_name(routes).to_sym, params)
           end
 
           desc 'Create a device', ParamsHelper.omni_headers

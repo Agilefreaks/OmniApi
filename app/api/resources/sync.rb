@@ -7,9 +7,7 @@ module API
         end
 
         after do
-          params = { email: @current_user.email, identifier: merged_params[:identifier], what: merged_params[:what] }
-
-          TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+          TrackHelper.track({ what: merged_params[:what] })
         end
 
         desc 'Create a sync request', ParamsHelper.omni_headers

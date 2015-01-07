@@ -13,7 +13,7 @@ module API
                 email: @current_user.email,
                 identifier: merged_params[:identifier]
               }
-            TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+            TrackingService.track(@current_user.email, TrackHelper.method_name(routes).to_sym, params)
           end
 
           desc 'Get all contacts.', ParamsHelper.omni_headers

@@ -7,9 +7,7 @@ module API
         end
 
         after do
-          params = { email: @current_user.email, identifier: merged_params[:identifier] }
-
-          TrackingService.track(@current_user.email, RouteHelper.method_name(routes).to_sym, params)
+          TrackHelper.track
         end
 
         desc 'Create a clipping.', ParamsHelper.omni_headers

@@ -6,6 +6,10 @@ module API
           authenticate!
         end
 
+        after do
+          TrackHelper.track
+        end
+
         desc 'Create an sms message', ParamsHelper.omni_headers
         params do
           optional :phone_number, type: String, desc: 'The phone number to dial.'

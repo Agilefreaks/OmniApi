@@ -132,7 +132,7 @@ GEM
     newrelic-grape (2.0.0)
       grape
       newrelic_rpm
-    newrelic_rpm (3.9.7.266)
+    newrelic_rpm (3.9.9.275)
     optionable (0.2.0)
     origin (2.1.1)
     parser (2.2.0.1)
@@ -239,7 +239,7 @@ DEPENDENCIES
   mongoid (= 4.0.0)
   mongoid-rspec (~> 2.0.0.rc1)
   newrelic-grape
-  newrelic_rpm (= 3.9.7.266)
+  newrelic_rpm
   pry
   puma
   rack-cors
