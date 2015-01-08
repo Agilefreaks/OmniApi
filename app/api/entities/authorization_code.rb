@@ -1,7 +1,6 @@
 module API
   module Entities
-    class AuthorizationCode < Grape::Entity
-      expose(:id) { |authorization_code, _options| authorization_code.id.to_s }
+    class AuthorizationCode < BaseEntity
       expose :code
     end
   end

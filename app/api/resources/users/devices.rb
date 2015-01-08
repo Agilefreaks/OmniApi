@@ -49,7 +49,7 @@ module API
               # copy over registered_devices
               @current_user.registered_devices.each do |rd|
                 @current_user.devices.create do |device|
-                  device.name = rd.name
+                  device.name = rd.identifier
                   device.provider = rd.provider
                   device.registration_id = rd.registration_id
                   device.client_version = rd.client_version
