@@ -8,11 +8,11 @@ class NotificationService
     }
   end
 
-  def notify(model, source_identifier)
-    send(model.class.to_s.underscore.to_sym, model, source_identifier)
+  def notify(model, source_device_id)
+    send(model.class.to_s.underscore.to_sym, model, source_device_id)
   end
 
-  def call(model, source_identifier)
+  def call(model, source_device_id)
     options = {
       data:
         {
@@ -21,10 +21,10 @@ class NotificationService
           provider: 'phone'
         }
     }
-    send_notification(model.user, source_identifier, options)
+    send_notification(model.user, source_device_id, options)
   end
 
-  def end_call(model, source_identifier)
+  def end_call(model, source_device_id)
     options = {
       data:
         {
@@ -33,10 +33,10 @@ class NotificationService
           provider: 'phone'
         }
     }
-    send_notification(model.user, source_identifier, options)
+    send_notification(model.user, source_device_id, options)
   end
 
-  def sms(model, source_identifier = '')
+  def sms(model, source_device_id = '')
     options = {
       data:
         {
@@ -45,10 +45,10 @@ class NotificationService
           provider: 'phone'
         }
     }
-    send_notification(model.user, source_identifier, options)
+    send_notification(model.user, source_device_id, options)
   end
 
-  def sms_message(model, source_identifier = '')
+  def sms_message(model, source_device_id = '')
     options = {
       data:
         {
@@ -58,33 +58,36 @@ class NotificationService
           provider: 'phone'
         }
     }
-    send_notification(model.user, source_identifier, options)
+    send_notification(model.user, source_device_id, options)
   end
 
   private
 
-  def clipping(model, source_identifier)
+  def clipping(model, source_device_id)
     options = { data: { registration_id: 'other', provider: 'clipboard' } }
-    send_notification(model.user, source_identifier, options)
+    send_notification(model.user, source_device_id, options)
   end
 
-  def incoming_call_event(model, source_identifier)
+  def incoming_call_event(model, source_device_id)
     options = { data: { registration_id: 'other', provider: 'notification' } }
-    send_notification(model.user, source_identifier, options)
+    send_notification(model.user, source_device_id, options)
   end
 
-  def incoming_sms_event(model, source_identifier)
+  def incoming_sms_event(model, source_device_id)
     options = { data: { registration_id: 'other', provider: 'notification' } }
-    send_notification(model.user, source_identifier, options)
+    send_notification(model.user, source_device_id, options)
   end
 
-  def contact_list(model, source_identifier)
+  def contact_list(model, source_device_id)
     options = { data: { registration_id: 'other', provider: 'contacts', identifier: model.identifier } }
-    send_notification(model.user, source_identifier, options)
+    send_notification(model.user, source_device_id, options)
   end
 
-  def send_notification(user, source_identifier, options)
-    devices_to_notify = user.active_registered_devices.where(:identifier.ne => source_identifier)
+  def send_notification(user, source_device_id, options)
+    devices_to_notify = user.active_registered_devices.where(:identifier.ne => source_device_id)
+    devices_to_notify += if BSON::ObjectId.legal?(source_device_id)
+      user.active_devices.where(:_id.ne => BSON::ObjectId.from_string(source_device_id))
+    end || user.active_devices
 
     grouped_providers = {}
     devices_to_notify.each do |device|
