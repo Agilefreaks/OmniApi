@@ -42,19 +42,19 @@ describe API::Resources::Events do
     end
 
     context 'with IncomingSmsEvent event' do
-      let(:event) { IncomingSmsEvent.new(content: 'some content', contact_name: 'Falling Star', phone_number: '123') }
+      let(:event) { Fabricate(:incoming_sms_event, content: 'content', contact_name: 'Star', phone_number: '123') }
 
       it 'will present IncomingSmsEvent' do
         subject
-        expect(JSON.parse(last_response.body)['content']).to eq 'some content'
-        expect(JSON.parse(last_response.body)['contact_name']).to eq 'Falling Star'
+        expect(JSON.parse(last_response.body)['content']).to eq 'content'
+        expect(JSON.parse(last_response.body)['contact_name']).to eq 'Star'
         expect(JSON.parse(last_response.body)['phone_number']).to eq '123'
         expect(JSON.parse(last_response.body)['type']).to eq 'IncomingSmsEvent'
       end
     end
 
     context 'with IncomingCallEvent' do
-      let(:event) { IncomingCallEvent.new }
+      let(:event) { Fabricate(:incoming_call_event, phone_number: '123') }
 
       it 'will present IncomingCallEvent' do
         subject

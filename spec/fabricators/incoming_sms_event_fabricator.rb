@@ -1,1 +1,3 @@
-Fabricator(:incoming_sms_event, from: :event)
+Fabricator(:incoming_sms_event) do
+  identifier 'sms identifier'
+end

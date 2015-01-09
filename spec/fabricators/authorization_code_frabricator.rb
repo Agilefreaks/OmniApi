@@ -1,0 +1,1 @@
+Fabricator(:authorization_code)
