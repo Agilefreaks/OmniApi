@@ -85,9 +85,7 @@ class NotificationService
 
   def send_notification(user, source_device_id, options)
     devices_to_notify = user.active_registered_devices.where(:identifier.ne => source_device_id)
-    devices_to_notify += if BSON::ObjectId.legal?(source_device_id)
-      user.active_devices.where(:_id.ne => BSON::ObjectId.from_string(source_device_id))
-    end || user.active_devices
+    devices_to_notify += filtered_active_devices(user, source_device_id)
 
     grouped_providers = {}
     devices_to_notify.each do |device|
@@ -97,6 +95,14 @@ class NotificationService
 
     grouped_providers.each do |key, values|
       @providers[key].send_notification(values, options)
+    end
+  end
+
+  def filtered_active_devices(user, source_device_id)
+    if BSON::ObjectId.legal?(source_device_id)
+      user.active_devices.where(:_id.ne => BSON::ObjectId.from_string(source_device_id))
+    else
+      user.active_devices
     end
   end
 end

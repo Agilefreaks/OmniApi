@@ -46,6 +46,18 @@ describe NotificationService do
         service.notify(model, source_identifier)
       end
     end
+
+    context 'when user has devices' do
+      before do
+        Fabricate(:device, user: user, name: 'nexus 4', provider: provider, registration_id: 'registration1')
+        Fabricate(:device, user: user, name: 'nexus 5', provider: provider, registration_id: 'registration2')
+      end
+
+      it 'will call send_notification with the devices' do
+        expect(send(provider)).to receive(:send_notification).with(%w(registration1 registration2), hash)
+        service.notify(model, source_identifier)
+      end
+    end
   end
 
   shared_examples :interaction_notification_provider do |interaction, provider, hash|
