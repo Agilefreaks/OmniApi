@@ -83,10 +83,12 @@ describe NotificationService do
   end
 
   describe :clipping do
-    let(:model) { Clipping.new(user: user) }
+    let(:model) { Clipping.new(user: user, id: BSON::ObjectId.from_string('5494468a63616c6cfb000000')) }
 
-    it_behaves_like :notification_provider, :gcm, data: { registration_id: 'other', provider: 'clipboard' }
-    it_behaves_like :notification_provider, :omni_sync, data: { registration_id: 'other', provider: 'clipboard' }
+    it_behaves_like :notification_provider, :gcm,
+                    data: { registration_id: 'other', provider: 'clipboard', id: '5494468a63616c6cfb000000' }
+    it_behaves_like :notification_provider, :omni_sync,
+                    data: { registration_id: 'other', provider: 'clipboard', id: '5494468a63616c6cfb000000' }
   end
 
   describe :incoming_call_event do

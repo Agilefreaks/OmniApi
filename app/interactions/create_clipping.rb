@@ -3,13 +3,13 @@ class CreateClipping
     CreateClipping.new(params).create
   end
 
-  attr_reader :access_token, :content, :identifier
+  attr_reader :access_token, :content, :device_id
   attr_accessor :clipping_builder, :notification_service
 
   def initialize(args)
     @access_token = args[:access_token]
     @content = args[:content]
-    @identifier = args[:identifier]
+    @device_id = args[:identifier] || args[:device_id]
   end
 
   def create
@@ -17,7 +17,7 @@ class CreateClipping
     @notification_service ||= NotificationService.new
 
     clipping = @clipping_builder.build(@access_token, @content)
-    @notification_service.notify(clipping, @identifier)
+    @notification_service.notify(clipping, @device_id)
 
     clipping
   end

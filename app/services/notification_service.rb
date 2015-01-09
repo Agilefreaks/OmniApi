@@ -64,7 +64,7 @@ class NotificationService
   private
 
   def clipping(model, source_device_id)
-    options = { data: { registration_id: 'other', provider: 'clipboard' } }
+    options = { data: { registration_id: 'other', provider: 'clipboard', id: model.id.to_s } }
     send_notification(model.user, source_device_id, options)
   end
 
