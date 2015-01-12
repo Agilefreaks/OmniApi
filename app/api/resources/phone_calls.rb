@@ -12,14 +12,18 @@ module API
 
         helpers do
           params :shared do
+            optional :phone_number, type: String, desc: 'The phone number.'
+            optional :device_id,
+                     type: String,
+                     desc: 'Device id. Can be the source device id or
+                            the target device id, depending on the value of @state'
+            optional :contact_name, type: String, desc: 'Contact name.'
             optional :state, values: [:initiate, :end_call, :hold, :incoming], type: Symbol, desc: 'State of the call.'
           end
         end
 
-        desc 'Call the number.', ParamsHelper.omni_headers
+        desc 'Create a phone call.', ParamsHelper.omni_headers
         params do
-          requires :phone_number, type: String, desc: 'The phone number to dial.'
-          optional :device_id, type: String, desc: 'Target device id.'
           use :shared
         end
         post do

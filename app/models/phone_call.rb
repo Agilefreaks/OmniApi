@@ -3,6 +3,7 @@ class PhoneCall
   include Mongoid::Timestamps
 
   field :number, type: String
+  field :contact_name, type: String
 
   belongs_to :user
 end
