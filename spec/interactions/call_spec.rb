@@ -8,7 +8,7 @@ describe Call do
 
     let(:params) do
       { access_token: access_token.token,
-        phone_number: '898989',
+        number: '898989',
         contact_name: 'Ion',
         device_id: '42',
         state: state }

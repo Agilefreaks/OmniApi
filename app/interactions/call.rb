@@ -1,10 +1,10 @@
 class Call
   class CallParams
-    attr_accessor :access_token, :phone_number, :contact_name, :device_id, :state
+    attr_accessor :access_token, :number, :contact_name, :device_id, :state
 
     def initialize(params)
       @access_token = params[:access_token]
-      @phone_number = params[:phone_number]
+      @number = params[:number]
       @contact_name = params[:contact_name]
       @device_id = params[:device_id]
       @state = params[:state]
@@ -28,7 +28,7 @@ class Call
 
     @notification_service ||= NotificationService.new
 
-    phone_call = user.phone_calls.create(number: @call_params.phone_number, contact_name: @call_params.contact_name)
+    phone_call = user.phone_calls.create(number: @call_params.number, contact_name: @call_params.contact_name)
     case @call_params.state
     when :initiate
       @notification_service.call(phone_call, @call_params.device_id)
@@ -42,7 +42,7 @@ class Call
 
   def backwards_compatibility
     type = :incoming_call
-    payload = { phone_number: '0745857479'  }
+    payload = { phone_number: @call_params.number  }
     CreateEvent.with(
       access_token: @call_params.access_token,
       type: type, incoming_call: payload,

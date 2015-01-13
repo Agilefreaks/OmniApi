@@ -12,11 +12,11 @@ module API
 
         helpers do
           params :shared do
-            optional :phone_number, type: String, desc: 'The phone number.'
             optional :device_id,
                      type: String,
                      desc: 'Device id. Can be the source device id or
                             the target device id, depending on the value of @state'
+            optional :number, type: String, desc: 'The phone number.'
             optional :contact_name, type: String, desc: 'Contact name.'
             optional :state,
                      values: [:initiate, :end_call, :hold, :incoming],
