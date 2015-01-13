@@ -36,33 +36,20 @@ class NotificationService
     send_notification(model.user, source_device_id, options)
   end
 
-  def sms(model, source_device_id = '')
+  def incoming_sms_message(model, source_device_id)
     options = {
       data:
         {
-          registration_id: 'other',
-          phone_action: 'sms', phone_number: model.phone_number, sms_content: model.content,
-          provider: 'phone'
-        }
-    }
-    send_notification(model.user, source_device_id, options)
-  end
-
-  def sms_message(model, source_device_id = '')
-    options = {
-      data:
-        {
-          registration_id: 'other',
-          phone_action: 'sms_message',
+          type: 'sms_message',
           id: model.id.to_s,
-          provider: 'phone'
+          state: 'incoming'
         }
     }
     send_notification(model.user, source_device_id, options)
   end
 
   def incoming_call(model, source_device_id)
-    options = { data: { id: model.id.to_s, type: 'phone_call', state: 'incoming', provider: 'notification' } }
+    options = { data: { id: model.id.to_s, type: 'phone_call', state: 'incoming' } }
     send_notification(model.user, source_device_id, options)
   end
 

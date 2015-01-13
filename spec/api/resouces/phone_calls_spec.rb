@@ -4,12 +4,18 @@ describe API::Resources::PhoneCalls do
   include_context :with_authenticated_user
 
   describe "POST 'api/v1/phone_calls'" do
-    let(:params) { { phone_number: '898989', device_id: '42', state: :initiate } }
+    let(:params) { { phone_number: '898989', device_id: '42', contact_name: 'contact', state: :initiate } }
 
     subject { post '/api/v1/phone_calls', params.to_json, options }
 
     it 'will call Call with the correct params' do
-      expected_params = { access_token: access_token.token, phone_number: '898989', device_id: '42', state: :initiate }
+      expected_params = {
+        access_token: access_token.token,
+        contact_name: 'contact',
+        phone_number: '898989',
+        device_id: '42',
+        state: :initiate
+      }
       expect(Call).to receive(:with).with(expected_params)
       subject
     end

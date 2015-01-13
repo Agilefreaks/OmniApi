@@ -18,7 +18,11 @@ module API
                      desc: 'Device id. Can be the source device id or
                             the target device id, depending on the value of @state'
             optional :contact_name, type: String, desc: 'Contact name.'
-            optional :state, values: [:initiate, :end_call, :hold, :incoming], type: Symbol, desc: 'State of the call.'
+            optional :state,
+                     values: [:initiate, :end_call, :hold, :incoming],
+                     default: :incoming,
+                     type: Symbol,
+                     desc: 'State of the call.'
           end
         end
 

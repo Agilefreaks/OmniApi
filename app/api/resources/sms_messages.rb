@@ -19,10 +19,24 @@ module API
           optional :content, type: String, desc: 'The content of the sms.'
           optional :content_list, type: Array[String], desc: 'The content of the sms.'
           mutually_exclusive :content, :content_list
+
+          optional :contact_name, type: String, desc: 'The contact name.'
+          optional :contact_name_list, type: Array[String], desc: 'The contact names.'
+          mutually_exclusive :contact_name, :contact_name_list
+
+          optional :device_id,
+                   type: String,
+                   desc: 'Device id. Can be the source device id or
+                            the target device id, depending on the value of @state'
+
+          optional :state,
+                   values: [:initiate, :incoming],
+                   type: Symbol,
+                   default: :incoming,
+                   desc: 'State of the call.'
         end
         post do
-          SendSmsMessage.with(merged_params(false))
-          body(false)
+          present Sms.with(merged_params(false)), with: API::Entities::SmsMessage
         end
 
         desc 'Get sms', ParamsHelper.omni_headers

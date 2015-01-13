@@ -158,7 +158,7 @@ describe API::Resources::Devices do
 
     it 'will call SendSmsMessage with the correct params' do
       params[:access_token] = access_token.token
-      expect(SendSmsMessage).to receive(:with).with(params)
+      expect(Sms).to receive(:with).with(params)
       post '/api/v1/devices/sms', params.to_json, options
     end
   end

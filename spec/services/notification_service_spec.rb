@@ -113,7 +113,6 @@ describe NotificationService do
                       {
                         type: 'phone_call',
                         state: 'incoming',
-                        provider: 'notification',
                         id: '5494468a63616c6cfb000000'
                       }
     it_behaves_like :interaction_notification_provider,
@@ -123,7 +122,6 @@ describe NotificationService do
                       {
                         type: 'phone_call',
                         state: 'incoming',
-                        provider: 'notification',
                         id: '5494468a63616c6cfb000000'
                       }
   end
@@ -133,6 +131,28 @@ describe NotificationService do
 
     it_behaves_like :notification_provider, :gcm, data: { registration_id: 'other', provider: 'notification' }
     it_behaves_like :notification_provider, :omni_sync, data: { registration_id: 'other', provider: 'notification' }
+  end
+
+  describe :incoming_sms_message do
+    let(:model) { SmsMessage.new(id: BSON::ObjectId.from_string('5494468a63616c6cfb000000'),
+                                 user: user,
+                                 phone_number: '911',
+                                 content: 'I have fire in my heart!') }
+
+    it_behaves_like :interaction_notification_provider, :incoming_sms_message, :gcm,
+                    data:
+                      {
+                        type: 'sms_message',
+                        id: '5494468a63616c6cfb000000',
+                        state: 'incoming'
+                      }
+    it_behaves_like :interaction_notification_provider, :incoming_sms_message, :omni_sync,
+                    data:
+                      {
+                        type: 'sms_message',
+                        id: '5494468a63616c6cfb000000',
+                        state: 'incoming'
+                      }
   end
 
   describe :contact_list do
@@ -160,28 +180,5 @@ describe NotificationService do
                     data: { registration_id: 'other', phone_action: 'end_call', provider: 'phone' }
     it_behaves_like :interaction_notification_provider, :end_call, :omni_sync,
                     data: { registration_id: 'other', phone_action: 'end_call', provider: 'phone' }
-  end
-
-  describe :sms do
-    let(:model) { SmsMessage.new(user: user, phone_number: '911', content: 'I have fire in my heart!') }
-
-    it_behaves_like :interaction_notification_provider, :sms, :gcm,
-                    data:
-                      {
-                        registration_id: 'other',
-                        phone_action: 'sms',
-                        provider: 'phone',
-                        phone_number: '911',
-                        sms_content: 'I have fire in my heart!'
-                      }
-    it_behaves_like :interaction_notification_provider, :sms, :omni_sync,
-                    data:
-                      {
-                        registration_id: 'other',
-                        phone_action: 'sms',
-                        provider: 'phone',
-                        phone_number: '911',
-                        sms_content: 'I have fire in my heart!'
-                      }
   end
 end
