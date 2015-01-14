@@ -98,30 +98,29 @@ describe NotificationService do
     it_behaves_like :notification_provider, :omni_sync, data: { registration_id: 'other', provider: 'notification' }
   end
 
-  describe :incoming_call do
+  describe :phone_call do
     let(:model) do
       PhoneCall.new(id: BSON::ObjectId.from_string('5494468a63616c6cfb000000'),
                     number: '123',
                     user: user,
-                    contact_name: 'Ion')
+                    contact_name: 'Ion',
+                    state: :incoming)
     end
 
-    it_behaves_like :interaction_notification_provider,
-                    :incoming_call,
+    it_behaves_like :notification_provider,
                     :gcm,
                     data:
                       {
                         type: 'phone_call',
-                        state: 'incoming',
+                        state: :incoming,
                         id: '5494468a63616c6cfb000000'
                       }
-    it_behaves_like :interaction_notification_provider,
-                    :incoming_call,
+    it_behaves_like :notification_provider,
                     :omni_sync,
                     data:
                       {
                         type: 'phone_call',
-                        state: 'incoming',
+                        state: :incoming,
                         id: '5494468a63616c6cfb000000'
                       }
   end

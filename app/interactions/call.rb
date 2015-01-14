@@ -28,12 +28,17 @@ class Call
 
     @notification_service ||= NotificationService.new
 
-    phone_call = user.phone_calls.create(number: @call_params.number, contact_name: @call_params.contact_name)
+    phone_call = user.phone_calls.create(
+      number: @call_params.number,
+      contact_name: @call_params.contact_name,
+      state: @call_params.state
+    )
+
     case @call_params.state
     when :initiate
-      @notification_service.call(phone_call, @call_params.device_id)
+      @notification_service.notify(phone_call, @call_params.device_id)
     when :incoming
-      @notification_service.incoming_call(phone_call, @call_params.device_id)
+      @notification_service.notify(phone_call, @call_params.device_id)
       backwards_compatibility
     end
 
@@ -42,7 +47,7 @@ class Call
 
   def backwards_compatibility
     type = :incoming_call
-    payload = { phone_number: @call_params.number, contact_name: @params.contact_name  }
+    payload = { phone_number: @call_params.number, contact_name: @call_params.contact_name  }
     CreateEvent.with(
       access_token: @call_params.access_token,
       type: type, incoming_call: payload,

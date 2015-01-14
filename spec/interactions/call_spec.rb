@@ -23,7 +23,7 @@ describe Call do
       let(:state) { :incoming }
 
       it 'will send a incoming call notification with the correct params' do
-        expect(notification_service).to receive(:incoming_call).with(an_instance_of(PhoneCall), '42')
+        expect(notification_service).to receive(:notify).with(an_instance_of(PhoneCall), '42')
         call.execute
       end
     end
@@ -32,7 +32,7 @@ describe Call do
       let(:state) { :initiate }
 
       it 'will send a call notification with the correct params' do
-        expect(notification_service).to receive(:call).with(an_instance_of(PhoneCall), '42')
+        expect(notification_service).to receive(:notify).with(an_instance_of(PhoneCall), '42')
         call.execute
       end
     end

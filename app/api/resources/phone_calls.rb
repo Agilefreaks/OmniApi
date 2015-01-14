@@ -20,7 +20,7 @@ module API
             optional :contact_name, type: String, desc: 'Contact name.'
             optional :state,
                      values: [:initiate, :end_call, :hold, :incoming],
-                     default: :incoming,
+                     default: :end_call,
                      type: Symbol,
                      desc: 'State of the call.'
           end
@@ -34,7 +34,7 @@ module API
           present Call.with(merged_params), with: API::Entities::PhoneCall
         end
 
-        desc 'Patch a call.'
+        desc 'Patch a call.', ParamsHelper.omni_headers
         params do
           requires :id, type: String, desc: 'The phone call id.'
           use :shared
@@ -45,7 +45,7 @@ module API
           end
         end
 
-        desc 'Get a phone call.'
+        desc 'Get a phone call.', ParamsHelper.omni_headers
         params do
           requires :id, type: String, desc: 'The phone call id.'
         end

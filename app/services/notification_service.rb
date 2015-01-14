@@ -48,12 +48,19 @@ class NotificationService
     send_notification(model.user, source_device_id, options)
   end
 
-  def incoming_call(model, source_device_id)
-    options = { data: { id: model.id.to_s, type: 'phone_call', state: 'incoming' } }
-    send_notification(model.user, source_device_id, options)
-  end
-
   private
+
+  def phone_call(model, device_id)
+    options = {
+      data:
+        {
+          type: 'phone_call',
+          id: model.id.to_s,
+          state: model.state
+        }
+    }
+    send_notification(model.user, device_id, options)
+  end
 
   def clipping(model, source_device_id)
     options = { data: { registration_id: 'other', provider: 'clipboard', id: model.id.to_s } }
