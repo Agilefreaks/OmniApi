@@ -42,7 +42,7 @@ class Call
 
   def backwards_compatibility
     type = :incoming_call
-    payload = { phone_number: @call_params.number  }
+    payload = { phone_number: @call_params.number, contact_name: @params.contact_name  }
     CreateEvent.with(
       access_token: @call_params.access_token,
       type: type, incoming_call: payload,

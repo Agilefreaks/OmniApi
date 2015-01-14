@@ -27,7 +27,7 @@ class Sms
     @params = params
   end
 
-  # rubocop:disable MethodLength
+  # rubocop:disable MethodLength, AbcSize
   def execute
     user = User.find_by_token(@params.access_token)
 
@@ -45,6 +45,20 @@ class Sms
     case @params.state
     when :incoming
       @notification_service.incoming_sms_message(sms_message, @params.device_id)
+      backwards_compatibility
     end
+
+    sms_message
+  end
+
+  private
+
+  def backwards_compatibility
+    type = :incoming_sms
+    payload = { phone_number: @params.phone_number, contact_name: @params.contact_name, content: @params.content  }
+    CreateEvent.with(
+      access_token: @params.access_token,
+      type: type, incoming_sms: payload,
+      identifier: @params.device_id)
   end
 end

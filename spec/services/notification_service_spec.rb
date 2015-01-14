@@ -134,10 +134,14 @@ describe NotificationService do
   end
 
   describe :incoming_sms_message do
-    let(:model) { SmsMessage.new(id: BSON::ObjectId.from_string('5494468a63616c6cfb000000'),
-                                 user: user,
-                                 phone_number: '911',
-                                 content: 'I have fire in my heart!') }
+    let(:model) do
+      SmsMessage.new(
+        id: BSON::ObjectId.from_string('5494468a63616c6cfb000000'),
+        user: user,
+        phone_number: '911',
+        content: 'I have fire in my heart!'
+      )
+    end
 
     it_behaves_like :interaction_notification_provider, :incoming_sms_message, :gcm,
                     data:

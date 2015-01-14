@@ -26,7 +26,7 @@ module API
 
           optional :device_id,
                    type: String,
-                   desc: 'Device id. Can be the source device id or
+                   desc: 'Device id. Can be the source device id orr
                             the target device id, depending on the value of @state'
 
           optional :state,
