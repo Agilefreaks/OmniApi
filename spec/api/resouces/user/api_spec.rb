@@ -60,7 +60,7 @@ describe API::Resources::User::Api do
     include_context :with_authenticated_user
 
     describe "POST 'api/v1/user/devices'" do
-      let(:params) { { name: 'The truck' } }
+      let(:params) { { name: 'The truck', public_key: '123' } }
 
       before do
         post '/api/v1/user/devices', params.to_json, options.merge('HTTP_CLIENT_VERSION' => '42')
@@ -69,6 +69,8 @@ describe API::Resources::User::Api do
       subject { JSON.parse(last_response.body) }
 
       its(['name']) { is_expected.to eq 'The truck' }
+
+      its(['public_key']) { is_expected.to eq '123' }
     end
 
     describe "GET 'api/v1/user/devices/:id'" do

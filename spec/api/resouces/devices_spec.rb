@@ -6,7 +6,7 @@ describe API::Resources::Devices do
   describe "POST 'api/v1/devices'" do
     subject { post '/api/v1/devices', params.to_json, options.merge('HTTP_CLIENT_VERSION' => '42') }
 
-    let(:params) { { identifier: 'Omega prime', name: 'The truck' } }
+    let(:params) { { identifier: 'Omega prime', name: 'The truck', public_key: '123' } }
 
     context 'when identifier is not nil' do
       it 'will call Register.device with the correct params' do
@@ -14,6 +14,7 @@ describe API::Resources::Devices do
           access_token: access_token.token,
           identifier: 'Omega prime',
           name: 'The truck',
+          public_key: '123',
           client_version: '42'
         }
         expect(Register).to receive(:device).with(expected_params).and_return(RegisteredDevice.new)

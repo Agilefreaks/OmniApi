@@ -16,6 +16,7 @@ module ParamsHelper
 
   def merge_client_version(params)
     params.merge(client_version: headers['Client-Version']) unless headers['Client-Version'].nil?
+    params
   end
 
   def auth_headers
