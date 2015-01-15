@@ -29,10 +29,14 @@ module API
           optional :contact_name_list, type: Array[String], desc: 'The contact names.'
           mutually_exclusive :contact_name, :contact_name_list
 
+          optional :type,
+                   values: [:incoming, :outgoing],
+                   default: :incoming,
+                   desc: 'Type of the sms_message.'
           optional :state,
-                   values: [:initiate, :incoming],
+                   values: [:sending, :sent, :received],
                    type: Symbol,
-                   default: :initiate,
+                   default: :sent,
                    desc: 'State of the call.'
         end
         post do

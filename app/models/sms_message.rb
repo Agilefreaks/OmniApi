@@ -2,7 +2,6 @@ class SmsMessage
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :state, type: Symbol
   field :phone_number, type: String
   field :contact_name, type: String
   field :content, type: String

@@ -11,7 +11,8 @@ describe Call do
         number: '898989',
         contact_name: 'Ion',
         device_id: '42',
-        state: state }
+        state: state,
+        type: type }
     end
     let(:notification_service) { double(:notification_service) }
 
@@ -19,20 +20,22 @@ describe Call do
       call.notification_service = notification_service
     end
 
-    context 'when state is incoming' do
-      let(:state) { :incoming }
+    context 'when incoming and starting' do
+      let(:type) { :incoming }
+      let(:state) { :starting }
 
       it 'will send a incoming call notification with the correct params' do
-        expect(notification_service).to receive(:notify).with(an_instance_of(PhoneCall), '42')
+        expect(notification_service).to receive(:phone_call_received).with(an_instance_of(PhoneCall), '42')
         call.execute
       end
     end
 
-    context 'when state is initiate' do
-      let(:state) { :initiate }
+    context 'when outgoing and started' do
+      let(:type) { :outgoing }
+      let(:state) { :starting }
 
       it 'will send a call notification with the correct params' do
-        expect(notification_service).to receive(:notify).with(an_instance_of(PhoneCall), '42')
+        expect(notification_service).to receive(:start_phone_call_request).with(an_instance_of(PhoneCall), '42')
         call.execute
       end
     end

@@ -17,6 +17,9 @@ class CreateClipping
     @notification_service ||= NotificationService.new
 
     clipping = @clipping_builder.build(@access_token, @content)
+    @notification_service.clipping_created(clipping, @device_id)
+
+    # TODO: deprecated
     @notification_service.notify(clipping, @device_id)
 
     clipping

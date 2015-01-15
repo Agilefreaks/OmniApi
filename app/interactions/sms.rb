@@ -1,7 +1,12 @@
 class Sms
   class SmsMessageParams
-    attr_accessor :phone_number, :phone_number_list, :content, :content_list, :access_token, :state, :device_id,
-                  :contact_name, :contact_name_list
+    attr_accessor :phone_number, :phone_number_list,
+                  :content, :content_list,
+                  :contact_name, :contact_name_list,
+                  :access_token,
+                  :device_id,
+                  :state,
+                  :type
 
     def initialize(params)
       @phone_number = params[:phone_number]
@@ -11,6 +16,7 @@ class Sms
       @contact_name = params[:contact_name]
       @contact_name_list = params[:contact_name_list]
       @access_token = params[:access_token]
+      @type = params[:type]
       @state = params[:state]
       @device_id = params[:device_id]
     end
@@ -34,7 +40,6 @@ class Sms
     @notification_service ||= NotificationService.new
 
     sms_message = user.sms_messages.create(
-      state: @params.state,
       phone_number: @params.phone_number,
       phone_number_list: @params.phone_number_list || [],
       content: @params.content,
@@ -43,18 +48,21 @@ class Sms
       contact_name_list: @params.contact_name_list || []
     )
 
-    case @params.state
-    when :initiate
-      @notification_service.notify(sms_message, @params.device_id)
-    when :incoming
-      @notification_service.notify(sms_message, @params.device_id)
-      backwards_compatibility
-    end
+    send("#{@params.type}_#{@params.state}", sms_message, @params.device_id)
 
     sms_message
   end
 
   private
+
+  def outgoing_sending(sms_message, device_id)
+    @notification_service.send_sms_message_requested(sms_message, device_id)
+  end
+
+  def incoming_received(sms_message, device_id)
+    @notification_service.sms_message_received(sms_message, device_id)
+    backwards_compatibility
+  end
 
   def backwards_compatibility
     type = :incoming_sms

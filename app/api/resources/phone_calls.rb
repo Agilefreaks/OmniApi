@@ -18,9 +18,14 @@ module API
                             the target device id, depending on the value of @state'
             optional :number, type: String, desc: 'The phone number.'
             optional :contact_name, type: String, desc: 'Contact name.'
+            optional :type,
+                     values: [:incoming, :outgoing],
+                     default: :outgoing,
+                     type: Symbol,
+                     desc: 'Type of the call,'
             optional :state,
-                     values: [:initiate, :end_call, :hold, :incoming],
-                     default: :initiate,
+                     values: [:starting, :started, :ended, :ending],
+                     default: :starting,
                      type: Symbol,
                      desc: 'State of the call.'
           end

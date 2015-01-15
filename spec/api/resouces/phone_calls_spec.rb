@@ -4,7 +4,7 @@ describe API::Resources::PhoneCalls do
   include_context :with_authenticated_user
 
   describe "POST 'api/v1/phone_calls'" do
-    let(:params) { { number: '898989', device_id: '42', contact_name: 'contact', state: :initiate } }
+    let(:params) { { number: '898989', device_id: '42', contact_name: 'contact', type: :incoming, state: :starting } }
 
     subject { post '/api/v1/phone_calls', params.to_json, options }
 
@@ -14,7 +14,8 @@ describe API::Resources::PhoneCalls do
         contact_name: 'contact',
         number: '898989',
         device_id: '42',
-        state: :initiate
+        type: :incoming,
+        state: :starting
       }
       expect(Call).to receive(:with).with(expected_params)
       subject
@@ -23,12 +24,12 @@ describe API::Resources::PhoneCalls do
 
   describe "PATCH 'api/v1/phone_calls/[:id]'" do
     let(:phone_call) { Fabricate(:phone_call, user: user) }
-    let(:params) { { state: :end_call } }
+    let(:params) { { type: :incoming, state: :ended } }
 
     subject { patch "/api/v1/phone_calls/#{phone_call.id}", params.to_json, options }
 
     it 'will call EndCall with the right params' do
-      expected_params = { access_token: access_token.token, id: phone_call.id.to_s, state: :end_call }
+      expected_params = { access_token: access_token.token, id: phone_call.id.to_s, type: :incoming, state: :ended }
       expect(EndCall).to receive(:with).with(expected_params)
       subject
     end

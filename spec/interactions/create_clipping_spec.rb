@@ -17,12 +17,13 @@ describe CreateClipping do
       service.notification_service = notification_service
 
       allow(clipping_builder).to receive(:build).and_return(clipping)
-      allow(notification_service).to receive(:notify)
     end
 
     context 'with identifier' do
       before do
         params.merge!(identifier: '42')
+        allow(notification_service).to receive(:clipping_created)
+        allow(notification_service).to receive(:notify)
         setup
       end
 
@@ -48,6 +49,7 @@ describe CreateClipping do
       end
 
       it 'will call NotificationService#notify' do
+        expect(notification_service).to receive(:clipping_created).with(clipping, '12')
         expect(notification_service).to receive(:notify).with(clipping, '12')
         service.create
       end

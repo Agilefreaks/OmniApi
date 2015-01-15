@@ -8,6 +8,23 @@ class NotificationService
     }
   end
 
+  %w(clipping_created
+     end_phone_call_requested phone_call_received start_phone_call_requested phone_call_ended
+     sms_message_received send_sms_message_request).each do |method_name|
+    define_method(method_name) do |model, device_id|
+      options = {
+        data:
+          {
+            type: method_name,
+            payload: {
+              id: model.id.to_s
+            }
+          }
+      }
+      send_notification(model.user, device_id, options)
+    end
+  end
+
   def notify(model, source_device_id)
     send(model.class.to_s.underscore.to_sym, model, source_device_id)
   end
@@ -38,30 +55,7 @@ class NotificationService
 
   private
 
-  def phone_call(model, device_id)
-    options = {
-      data:
-        {
-          type: 'phone_call',
-          id: model.id.to_s,
-          state: model.state
-        }
-    }
-    send_notification(model.user, device_id, options)
-  end
-
-  def sms_message(model, device_id)
-    options = {
-      data:
-        {
-          type: 'sms_message',
-          id: model.id.to_s,
-          state: model.state
-        }
-    }
-    send_notification(model.user, device_id, options)
-  end
-
+  # TODO: deprecated
   def clipping(model, source_device_id)
     options = { data: { registration_id: 'other', provider: 'clipboard', id: model.id.to_s } }
     send_notification(model.user, source_device_id, options)
