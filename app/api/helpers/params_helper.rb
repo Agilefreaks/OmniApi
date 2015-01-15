@@ -7,7 +7,8 @@ module ParamsHelper
 
   def merged_params(include_missing = true)
     result = merge_access_token(declared_params(include_missing))
-    merge_client_version(result) || result
+    result = merge_client_version(result)
+    result
   end
 
   def merge_access_token(params)
@@ -15,8 +16,7 @@ module ParamsHelper
   end
 
   def merge_client_version(params)
-    params.merge(client_version: headers['Client-Version']) unless headers['Client-Version'].nil?
-    params
+    (params.merge(client_version: headers['Client-Version']) unless headers['Client-Version'].nil?) || params
   end
 
   def auth_headers

@@ -18,7 +18,7 @@ module API
           optional :public_key, type: String, desc: 'The public key of the device.'
         end
         post '/' do
-          register_device = Register.device(merged_params(false))
+          register_device = Register.device(merged_params)
 
           unless register_device.valid?
             error!(register_device.errors.full_messages, '400')

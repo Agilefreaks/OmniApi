@@ -14,8 +14,8 @@ describe API::Resources::Devices do
           access_token: access_token.token,
           identifier: 'Omega prime',
           name: 'The truck',
-          public_key: '123',
-          client_version: '42'
+          client_version: '42',
+          public_key: '123'
         }
         expect(Register).to receive(:device).with(expected_params).and_return(RegisteredDevice.new)
         subject
