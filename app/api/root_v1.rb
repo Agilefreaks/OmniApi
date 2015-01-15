@@ -15,6 +15,9 @@ module API
   # resources
   require 'resources/oauth2'
   require 'resources/version'
+  require 'resources/user/contacts'
+  require 'resources/user/devices'
+  require 'resources/user/api'
   require 'resources/users/api'
   require 'resources/devices'
   require 'resources/clippings'
@@ -28,6 +31,7 @@ module API
     mount Resources::OAuth2
     mount Resources::Version
     mount Resources::Devices
+    mount Resources::User::Api
     mount Resources::Users::Api
     mount Resources::Clippings
     mount Resources::AuthorizationCodes

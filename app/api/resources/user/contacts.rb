@@ -1,6 +1,6 @@
 module API
   module Resources
-    module Users
+    module User
       class Contacts < Grape::API
         resources :contacts do
           before do

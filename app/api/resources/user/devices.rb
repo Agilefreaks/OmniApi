@@ -1,6 +1,6 @@
 module API
   module Resources
-    module Users
+    module User
       class Devices < Grape::API
         resources :devices do
           before do

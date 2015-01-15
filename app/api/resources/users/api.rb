@@ -2,10 +2,7 @@ module API
   module Resources
     module Users
       class Api < Grape::API
-        require_relative 'contacts'
-        require_relative 'devices'
-
-        resource :users do
+        resources :users do
           helpers do
             def check_access_token(user)
               access_token = user.access_tokens.where(client_id: @current_client.id).first ||
@@ -16,7 +13,7 @@ module API
             def fetch_user_with_email(email)
               authenticate_client!
 
-              users = User.where(email: email)
+              users = ::User.where(email: email)
               users.each do |user|
                 check_access_token(user)
               end
@@ -36,7 +33,6 @@ module API
           end
           get do
             result = declared_params[:email].to_s.empty? ? fetch_user : fetch_user_with_email(declared_params[:email])
-
             present result, with: API::Entities::User
           end
 
@@ -62,16 +58,12 @@ module API
           put do
             authenticate_client!
 
-            user = User.find_by(email: declared_params[:email])
+            user = ::User.find_by(email: declared_params[:email])
             user.update(declared_params)
             check_access_token(user)
 
             present user, with: API::Entities::User
           end
-
-          mount API::Resources::Users::Contacts
-
-          mount API::Resources::Users::Devices
         end
       end
     end
