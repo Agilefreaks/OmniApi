@@ -31,6 +31,7 @@ module API
 
           optional :type,
                    values: [:incoming, :outgoing],
+                   type: Symbol,
                    default: :incoming,
                    desc: 'Type of the sms_message.'
           optional :state,

@@ -7,7 +7,7 @@ describe API::Resources::SmsMessages do
     subject { post '/api/v1/sms_messages', params.to_json, options }
 
     context 'with phone number and content' do
-      let(:params) { { phone_number: '898989', content: 'I am hot!', state: :initiate } }
+      let(:params) { { phone_number: '898989', content: 'I am hot!', type: :outgoing, state: :sending } }
 
       it 'will call SendSms with correct params' do
         params[:access_token] = access_token.token
@@ -21,7 +21,8 @@ describe API::Resources::SmsMessages do
         {
           phone_number_list: %w(1234 123141),
           content_list: ['First template', 'Second template'],
-          state: :initiate
+          type: :outgoing,
+          state: :sending
         }
       end
 
