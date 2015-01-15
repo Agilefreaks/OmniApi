@@ -4,7 +4,7 @@ describe API::Resources::PhoneCalls do
   include_context :with_authenticated_user
 
   describe "POST 'api/v1/phone_calls'" do
-    let(:params) { { phone_number: '898989', device_id: '42', contact_name: 'contact', state: :initiate } }
+    let(:params) { { number: '898989', device_id: '42', contact_name: 'contact', state: :initiate } }
 
     subject { post '/api/v1/phone_calls', params.to_json, options }
 
@@ -12,7 +12,7 @@ describe API::Resources::PhoneCalls do
       expected_params = {
         access_token: access_token.token,
         contact_name: 'contact',
-        phone_number: '898989',
+        number: '898989',
         device_id: '42',
         state: :initiate
       }

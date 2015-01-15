@@ -20,7 +20,7 @@ module API
             optional :contact_name, type: String, desc: 'Contact name.'
             optional :state,
                      values: [:initiate, :end_call, :hold, :incoming],
-                     default: :end_call,
+                     default: :initiate,
                      type: Symbol,
                      desc: 'State of the call.'
           end

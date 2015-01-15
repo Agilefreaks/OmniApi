@@ -4,7 +4,14 @@ describe Sms do
   describe :with do
     include_context :with_authenticated_user
 
-    subject { Sms.with(params) }
+    let(:sms) { Sms.new(Sms::SmsMessageParams.new(params)) }
+    let(:notification_service) { double(NotificationService) }
+
+    before do
+      sms.notification_service = notification_service
+    end
+
+    subject { sms.execute }
 
     context 'with phone_number_list and content_list' do
       let(:params) do
@@ -18,12 +25,8 @@ describe Sms do
       end
 
       it 'will create a new sms message' do
+        expect(notification_service).to receive(:notify)
         expect { subject }.to change(user.sms_messages, :count).by(1)
-      end
-
-      it 'will call sms_message on notification service' do
-        expect_any_instance_of(NotificationService).to receive(:incoming_sms_message)
-        subject
       end
     end
   end
