@@ -55,6 +55,8 @@ module API
                   device.client_version = rd.client_version
                   device.public_key = rd.public_key
                 end
+
+                rd.update_attribute(:registration_id, '')
               end
             end
 
