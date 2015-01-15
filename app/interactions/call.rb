@@ -46,7 +46,7 @@ class Call
   end
 
   def outgoing_starting(phone_call, device_id)
-    @notification_service.start_phone_call_request(phone_call, device_id)
+    @notification_service.start_phone_call_requested(phone_call, device_id)
   end
 
   def backwards_compatibility

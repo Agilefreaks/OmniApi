@@ -32,12 +32,10 @@ module API
           optional :type,
                    values: [:incoming, :outgoing],
                    type: Symbol,
-                   default: :incoming,
                    desc: 'Type of the sms_message.'
           optional :state,
                    values: [:sending, :sent, :received],
                    type: Symbol,
-                   default: :sent,
                    desc: 'State of the call.'
         end
         post do

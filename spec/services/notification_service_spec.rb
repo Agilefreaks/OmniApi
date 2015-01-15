@@ -152,7 +152,7 @@ describe NotificationService do
                     }
   end
 
-  %w(sms_message_received send_sms_message_request).each do |event|
+  %w(sms_message_received send_sms_message_requested).each do |event|
     let(:model) { SmsMessage.new(id: BSON::ObjectId.from_string('5424468a63616c6cfb000000'), user: user) }
 
     it_behaves_like :interaction_notification_provider,
