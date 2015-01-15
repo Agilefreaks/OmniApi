@@ -44,11 +44,11 @@ class Sms
     )
 
     case @params.state
-      when :initiate
-        @notification_service.notify(sms_message, @params.device_id)
-      when :incoming
-        @notification_service.notify(sms_message, @params.device_id)
-        backwards_compatibility
+    when :initiate
+      @notification_service.notify(sms_message, @params.device_id)
+    when :incoming
+      @notification_service.notify(sms_message, @params.device_id)
+      backwards_compatibility
     end
 
     sms_message
