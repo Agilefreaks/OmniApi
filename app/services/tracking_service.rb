@@ -1,8 +1,6 @@
 require 'mixpanel-ruby'
 
 class TrackingService
-  TRACKING_API_KEY = 'd4a302f695330322fe4c44bc302f3780'
-
   ACTIVATION_EVENT = 'Device activation'
   DEACTIVATION_EVENT = 'Device deactivated'
   REGISTRATION_EVENT = 'Device registration'
@@ -36,8 +34,18 @@ class TrackingService
     post_sync: SYNC_REQUEST
   }
 
+  class NullObject
+    def method_missing(*_args, &_block)
+      self
+    end
+  end
+
   def self.tracker
-    @tracker ||= Mixpanel::Tracker.new(TRACKING_API_KEY)
+    @tracker = if TrackConfig.test_mode
+                 NullObject.new
+               else
+                 Mixpanel::Tracker.new(TrackConfig.api_key)
+               end
   end
 
   def self.track(email, event, params = {})
