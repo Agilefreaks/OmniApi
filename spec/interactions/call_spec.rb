@@ -35,7 +35,7 @@ describe Call do
       let(:state) { :starting }
 
       it 'will send a call notification with the correct params' do
-        expect(notification_service).to receive(:start_phone_call_request).with(an_instance_of(PhoneCall), '42')
+        expect(notification_service).to receive(:start_phone_call_requested).with(an_instance_of(PhoneCall), '42')
         call.execute
       end
     end
