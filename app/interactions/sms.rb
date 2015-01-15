@@ -34,6 +34,7 @@ class Sms
     @notification_service ||= NotificationService.new
 
     sms_message = user.sms_messages.create(
+      state: @params.state,
       phone_number: @params.phone_number,
       phone_number_list: @params.phone_number_list || [],
       content: @params.content,
@@ -43,9 +44,11 @@ class Sms
     )
 
     case @params.state
-    when :incoming
-      @notification_service.incoming_sms_message(sms_message, @params.device_id)
-      backwards_compatibility
+      when :initiate
+        @notification_service.notify(sms_message, @params.device_id)
+      when :incoming
+        @notification_service.notify(sms_message, @params.device_id)
+        backwards_compatibility
     end
 
     sms_message
@@ -55,7 +58,7 @@ class Sms
 
   def backwards_compatibility
     type = :incoming_sms
-    payload = { phone_number: @params.phone_number, contact_name: @params.contact_name, content: @params.content  }
+    payload = { phone_number: @params.phone_number, contact_name: @params.contact_name, content: @params.content }
     CreateEvent.with(
       access_token: @params.access_token,
       type: type, incoming_sms: payload,

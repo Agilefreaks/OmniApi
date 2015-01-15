@@ -12,6 +12,11 @@ module API
 
         desc 'Create an sms message', ParamsHelper.omni_headers
         params do
+          optional :device_id,
+                   type: String,
+                   desc: 'Device id. Can be the source device id orr
+                            the target device id, depending on the value of @state'
+
           optional :phone_number, type: String, desc: 'The phone number to dial.'
           optional :phone_number_list, type: Array[String], desc: 'The phone number to dial.'
           mutually_exclusive :phone_number, :phone_number_list
@@ -24,15 +29,10 @@ module API
           optional :contact_name_list, type: Array[String], desc: 'The contact names.'
           mutually_exclusive :contact_name, :contact_name_list
 
-          optional :device_id,
-                   type: String,
-                   desc: 'Device id. Can be the source device id orr
-                            the target device id, depending on the value of @state'
-
           optional :state,
                    values: [:initiate, :incoming],
                    type: Symbol,
-                   default: :incoming,
+                   default: :initiate,
                    desc: 'State of the call.'
         end
         post do

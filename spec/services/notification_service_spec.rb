@@ -132,29 +132,30 @@ describe NotificationService do
     it_behaves_like :notification_provider, :omni_sync, data: { registration_id: 'other', provider: 'notification' }
   end
 
-  describe :incoming_sms_message do
+  describe :sms_message do
     let(:model) do
       SmsMessage.new(
         id: BSON::ObjectId.from_string('5494468a63616c6cfb000000'),
         user: user,
         phone_number: '911',
-        content: 'I have fire in my heart!'
+        content: 'I have fire in my heart!',
+        state: :incoming
       )
     end
 
-    it_behaves_like :interaction_notification_provider, :incoming_sms_message, :gcm,
+    it_behaves_like :notification_provider, :gcm,
                     data:
                       {
                         type: 'sms_message',
                         id: '5494468a63616c6cfb000000',
-                        state: 'incoming'
+                        state: :incoming
                       }
-    it_behaves_like :interaction_notification_provider, :incoming_sms_message, :omni_sync,
+    it_behaves_like :notification_provider, :omni_sync,
                     data:
                       {
                         type: 'sms_message',
                         id: '5494468a63616c6cfb000000',
-                        state: 'incoming'
+                        state: :incoming
                       }
   end
 

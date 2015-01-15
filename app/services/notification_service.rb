@@ -36,18 +36,6 @@ class NotificationService
     send_notification(model.user, source_device_id, options)
   end
 
-  def incoming_sms_message(model, source_device_id)
-    options = {
-      data:
-        {
-          type: 'sms_message',
-          id: model.id.to_s,
-          state: 'incoming'
-        }
-    }
-    send_notification(model.user, source_device_id, options)
-  end
-
   private
 
   def phone_call(model, device_id)
@@ -55,6 +43,18 @@ class NotificationService
       data:
         {
           type: 'phone_call',
+          id: model.id.to_s,
+          state: model.state
+        }
+    }
+    send_notification(model.user, device_id, options)
+  end
+
+  def sms_message(model, device_id)
+    options = {
+      data:
+        {
+          type: 'sms_message',
           id: model.id.to_s,
           state: model.state
         }
