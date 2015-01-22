@@ -17,12 +17,8 @@ module TrackHelper
 
     route_method = routes[0].route_method
     route_namespace = routes[0].route_namespace.split(':')[0].tr('/', '')
-    route_path = extra_route_settings.nil? ? routes[0].route_path.split('/')[4] : extra_route_settings[:action]
+    route_action = extra_route_settings[:action] unless extra_route_settings.nil?
 
-
-    route = "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
-
-
-    route
+    "#{route_method}_#{route_namespace}_#{route_action}".split('(')[0].downcase.chomp('_')
   end
 end
