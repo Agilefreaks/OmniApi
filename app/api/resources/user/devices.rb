@@ -94,7 +94,7 @@ module API
           end
           route_param :id do
             before do
-              action = declared_params[registration_id].nil? ? 'deactivate' : 'activate'
+              action = declared_params[:registration_id].nil? ? 'deactivate' : 'activate'
               routes[0].route_settings[:extra] = { action: action }
             end
 
