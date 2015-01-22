@@ -26,7 +26,9 @@ class TrackingService
     post_devices_end_call: END_INCOMING_CALL_EVENT,
     post_devices_sms: SEND_SMS,
     post_clippings: NEW_CLIPPING,
+    # deprecated
     get_clippings_last: GET_CLIPPING,
+    get_clippings: GET_CLIPPING,
     post_events: NEW_EVENT,
     get_events: GET_EVENT,
     post_userscontacts_contacts: POST_CONTACTS,
