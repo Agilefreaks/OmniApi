@@ -19,32 +19,32 @@ class TrackingService
   DEVICE_TYPE = { gcm: ANDROID, omni_sync: WINDOWS }
 
   TRACKED_EVENTS = {
-    #devices
+    # devices
     post_userdevices_devices: REGISTRATION_EVENT,
     patch_userdevices_activate: ACTIVATION_EVENT,
     patch_userdevices_deactivate: DEACTIVATION_EVENT,
 
-    #phone_calls
+    # phone_calls
     post_phone_calls: CALL_EVENT,
     patch_phone_calls: END_INCOMING_CALL_EVENT,
 
-    #sms
+    # sms
     post_sms_messages: SEND_SMS,
 
-    #clippings
+    # clippings
     post_clippings: NEW_CLIPPING,
     get_clippings: GET_CLIPPING,
 
-    #events: incoming_call, incoming_sms
+    # events: incoming_call, incoming_sms
     post_events: NEW_EVENT,
     get_events: GET_EVENT,
 
-    #contacts sync
+    # contacts sync
     post_userscontacts_contacts: POST_CONTACTS,
     get_userscontacts_contacts: GET_CONTACTS,
     post_sync: SYNC_REQUEST,
 
-    #deprecated events
+    # deprecated events
     post_devices: REGISTRATION_EVENT,
     get_clippings_last: GET_CLIPPING,
     post_devices_end_call: END_INCOMING_CALL_EVENT,
