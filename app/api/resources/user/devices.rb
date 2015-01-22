@@ -96,6 +96,8 @@ module API
             patch do
               device = @current_user.devices.find(declared_params[:id])
               device.update_attributes(declared_params(false))
+              routes[0].route_settings[:extra] = { action: declared_params[:registration_id].nil? ? 'deactivate' : 'activate' }
+
 
               present device, with: API::Entities::Device
             end

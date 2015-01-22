@@ -19,8 +19,12 @@ class TrackingService
   DEVICE_TYPE = { gcm: ANDROID, omni_sync: WINDOWS }
 
   TRACKED_EVENTS = {
+    #deprecated: use patch instead
     put_devices_activate: ACTIVATION_EVENT,
+    patch_userdevices_activate: ACTIVATION_EVENT,
+    #deprecated: use patch instead
     put_devices_deactivate: DEACTIVATION_EVENT,
+    patch_userdevices_deactivate: DEACTIVATION_EVENT,
     post_devices: REGISTRATION_EVENT,
     post_devices_call: CALL_EVENT,
     post_devices_end_call: END_INCOMING_CALL_EVENT,

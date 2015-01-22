@@ -13,10 +13,16 @@ module TrackHelper
   end
 
   def method_name(routes = [])
-    route_method = routes[0].route_method
-    route_namespace = routes[0].route_namespace.tr('/', '')
-    route_path = routes[0].route_path.split('/')[4]
+    extra_route_settings = routes[0].route_settings[:extra]
 
-    "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
+    route_method = routes[0].route_method
+    route_namespace = routes[0].route_namespace.split(':')[0].tr('/', '')
+    route_path = extra_route_settings.nil? ? routes[0].route_path.split('/')[4] : extra_route_settings[:action]
+
+
+    route = "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
+
+
+    route
   end
 end
