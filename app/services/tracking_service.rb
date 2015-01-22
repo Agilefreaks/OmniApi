@@ -35,6 +35,7 @@ class TrackingService
   }
 
   def self.track(email, event, params = {})
-    MixpanelSidekiq::MixpanelEventsTracker.perform_async(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
+    MixpanelEventsTracker.perform_async(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
+    MixpanelPeopleTracker.perform_async(email, {last_seen: DateTime.now})
   end
 end

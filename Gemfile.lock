@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/levelboy/mixpanel-sidekiq.git
-  revision: 6d9148d8495277655b0aecc9a154b2ab0813a7b9
+  revision: c9b4ca9393ebf86e27327c5095dd179af4a21e70
   specs:
-    mixpanel-sidekiq (0.0.3)
+    mixpanel-sidekiq (0.0.4)
       mixpanel-ruby
       sidekiq
 
