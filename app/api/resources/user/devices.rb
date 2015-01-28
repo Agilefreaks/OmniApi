@@ -87,7 +87,7 @@ module API
             end
           end
 
-          desc 'Patch a existing device.', ParamsHelper.omni_headers
+          desc 'Patch an existing device.', ParamsHelper.omni_headers
           params do
             requires :id, type: String, desc: 'Device id.'
             use :shared
@@ -95,7 +95,7 @@ module API
           route_param :id do
             before do
               action = declared_params[:registration_id].nil? ? 'deactivate' : 'activate'
-              routes[0].route_settings[:extra] = { action: action }
+              routes[0].route_settings[:custom] = { action: action }
             end
 
             patch do

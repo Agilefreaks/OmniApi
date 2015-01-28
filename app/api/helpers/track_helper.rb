@@ -13,11 +13,11 @@ module TrackHelper
   end
 
   def get_route_name(current_route)
-    extra_route_settings = current_route.route_settings[:extra]
+    custom_route_settings = current_route.route_settings[:custom]
 
     route_method = current_route.route_method
     route_namespace = current_route.route_namespace.split(':')[0].tr('/', '')
-    route_action = extra_route_settings[:action] unless extra_route_settings.nil?
+    route_action = custom_route_settings[:action] unless custom_route_settings.nil?
 
     "#{route_method}_#{route_namespace}_#{route_action}".split('(')[0].downcase.chomp('_')
   end
