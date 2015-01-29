@@ -13,7 +13,7 @@ describe AccessToken do
     subject { access_token.to_bearer_token }
 
     its(:access_token) { should == '42' }
-    its(:expires_in) { should >= 1.month - 1.day }
+    its(:expires_in) { should >= (1.month - 1.day).to_i }
   end
 
   describe :verify do
