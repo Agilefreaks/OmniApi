@@ -33,7 +33,10 @@ class TrackingService
   }
 
   def self.track(email, event, params = {})
-    OmniKiq::Trackers::MixpanelEvents.perform_async(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
-    OmniKiq::Trackers::MixpanelPeople.perform_async(email, last_seen: DateTime.now)
+    OmniKiq::Trackers::MixpanelEvents.perform_async(email,
+                                                    TRACKED_EVENTS[event],
+                                                    params) unless TRACKED_EVENTS[event].nil?
+    OmniKiq::Trackers::MixpanelPeople.perform_async(email,
+                                                    last_seen: DateTime.now)
   end
 end

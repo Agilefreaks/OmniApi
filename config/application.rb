@@ -30,7 +30,7 @@ Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__))
 require File.expand_path('../../app/omniapi_app.rb', __FILE__)
 
 OmniKiq.configure do |config|
-  settings = YAML::load_file(File.expand_path('../omnikiq.yml', __FILE__))[ENV['RACK_ENV']]
+  settings = YAML.load_file(File.expand_path('../omnikiq.yml', __FILE__))[ENV['RACK_ENV']]
   config.redis_namespace = settings['redis_namespace']
   config.redis_url = settings['redis_url']
 end
