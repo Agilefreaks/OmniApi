@@ -1,5 +1,3 @@
-require 'mixpanel-sidekiq'
-
 class TrackingService
   ACTIVATION_EVENT = 'Device activation'
   DEACTIVATION_EVENT = 'Device deactivated'
@@ -35,7 +33,7 @@ class TrackingService
   }
 
   def self.track(email, event, params = {})
-    MixpanelEventsTracker.perform_async(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
-    MixpanelPeopleTracker.perform_async(email, {last_seen: DateTime.now})
+    OmniKiq::Trackers::MixpanelEvents.perform_async(email, TRACKED_EVENTS[event], params) unless TRACKED_EVENTS[event].nil?
+    OmniKiq::Trackers::MixpanelPeople.perform_async(email, last_seen: DateTime.now)
   end
 end

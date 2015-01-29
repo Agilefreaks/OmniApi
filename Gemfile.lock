@@ -1,10 +1,10 @@
 GIT
-  remote: git://github.com/levelboy/mixpanel-sidekiq.git
-  revision: c9b4ca9393ebf86e27327c5095dd179af4a21e70
+  remote: git@github.com:Agilefreaks/OmniKiq.git
+  revision: c238445001cdf9744d6fc3c11bf4d518578ed9ec
   specs:
-    mixpanel-sidekiq (0.0.4)
-      mixpanel-ruby
-      sidekiq
+    omnikiq (0.1.0)
+      mixpanel-ruby (~> 1)
+      sidekiq (~> 3)
 
 GEM
   remote: http://rubygems.org/
@@ -202,11 +202,11 @@ GEM
       powerpack (~> 0.0.6)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
-    shellany (0.0.1)
     ruby-progressbar (1.7.0)
-    sidekiq (3.3.0)
+    shellany (0.0.1)
+    sidekiq (3.3.1)
       celluloid (>= 0.16.0)
-      connection_pool (>= 2.0.0)
+      connection_pool (>= 2.1.1)
       json
       redis (>= 3.0.6)
       redis-namespace (>= 1.3.1)
@@ -257,11 +257,11 @@ DEPENDENCIES
   guard-rubocop
   json
   json_spec
-  mixpanel-sidekiq!
   mongoid (= 4.0.0)
   mongoid-rspec (~> 2.0.0.rc1)
   newrelic-grape
   newrelic_rpm
+  omnikiq!
   pry
   puma
   rack-cors
