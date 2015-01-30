@@ -11,6 +11,3 @@ Dir[File.expand_path(File.join('../support/**/*.rb'), __FILE__)].each { |f| requ
 
 require 'simplecov'
 SimpleCov.start 'teamcity'
-
-require 'sidekiq/testing'
-Sidekiq::Testing.fake!
