@@ -9,14 +9,16 @@ module TrackHelper
         identifier: params[:identifier]
       }
 
-    TrackingService.track(@current_user.email, method_name(routes).to_sym, default_params.merge(extra_params))
+    TrackingService.track(@current_user.email, get_route_name(routes[0]).to_sym, default_params.merge(extra_params))
   end
 
-  def method_name(routes = [])
-    route_method = routes[0].route_method
-    route_namespace = routes[0].route_namespace.tr('/', '')
-    route_path = routes[0].route_path.split('/')[4]
+  def get_route_name(current_route)
+    custom_route_settings = current_route.route_settings[:custom]
 
-    "#{route_method}_#{route_namespace}_#{route_path}".split('(')[0].downcase.chomp('_')
+    route_method = current_route.route_method
+    route_namespace = current_route.route_namespace.split(':')[0].tr('/', '')
+    route_action = custom_route_settings[:action] unless custom_route_settings.nil?
+
+    "#{route_method}_#{route_namespace}_#{route_action}".split('(')[0].downcase.chomp('_')
   end
 end

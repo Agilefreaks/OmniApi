@@ -17,19 +17,39 @@ class TrackingService
   DEVICE_TYPE = { gcm: ANDROID, omni_sync: WINDOWS }
 
   TRACKED_EVENTS = {
-    put_devices_activate: ACTIVATION_EVENT,
-    put_devices_deactivate: DEACTIVATION_EVENT,
-    post_devices: REGISTRATION_EVENT,
-    post_devices_call: CALL_EVENT,
-    post_devices_end_call: END_INCOMING_CALL_EVENT,
-    post_devices_sms: SEND_SMS,
+    # devices
+    post_userdevices_devices: REGISTRATION_EVENT,
+    patch_userdevices_activate: ACTIVATION_EVENT,
+    patch_userdevices_deactivate: DEACTIVATION_EVENT,
+
+    # phone_calls
+    post_phone_calls: CALL_EVENT,
+    patch_phone_calls: END_INCOMING_CALL_EVENT,
+
+    # sms
+    post_sms_messages: SEND_SMS,
+
+    # clippings
     post_clippings: NEW_CLIPPING,
-    get_clippings_last: GET_CLIPPING,
+    get_clippings: GET_CLIPPING,
+
+    # events: incoming_call, incoming_sms
     post_events: NEW_EVENT,
     get_events: GET_EVENT,
+
+    # contacts sync
     post_userscontacts_contacts: POST_CONTACTS,
     get_userscontacts_contacts: GET_CONTACTS,
-    post_sync: SYNC_REQUEST
+    post_sync: SYNC_REQUEST,
+
+    # deprecated events
+    post_devices: REGISTRATION_EVENT,
+    get_clippings_last: GET_CLIPPING,
+    post_devices_end_call: END_INCOMING_CALL_EVENT,
+    post_devices_call: CALL_EVENT,
+    put_devices_activate: ACTIVATION_EVENT,
+    put_devices_deactivate: DEACTIVATION_EVENT,
+    post_devices_sms: SEND_SMS
   }
 
   def self.track(email, event, params = {})
