@@ -1,5 +1,5 @@
 development:
-  redis_namespace: default
+  redis_namespace: development
   redis_url: redis://localhost:6379
 
 staging:

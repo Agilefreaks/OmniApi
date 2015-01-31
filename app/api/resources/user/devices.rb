@@ -8,7 +8,7 @@ module API
           end
 
           after do
-            track
+            track_devices(declared_params)
           end
 
           helpers do
@@ -93,11 +93,6 @@ module API
             use :shared
           end
           route_param :id do
-            before do
-              action = declared_params[:registration_id].nil? ? 'deactivate' : 'activate'
-              routes[0].route_settings[:custom] = { action: action }
-            end
-
             patch do
               device = @current_user.devices.find(declared_params[:id])
               device.update_attributes(declared_params(false))

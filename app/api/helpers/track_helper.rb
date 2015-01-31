@@ -1,15 +1,32 @@
 module TrackHelper
   extend Grape::API::Helpers
 
-  def track(extra_params = {})
+  def track(extra_params = {}, event = nil)
     default_params =
       {
         email: @current_user.email,
         device_type: params[:provider],
-        identifier: params[:identifier]
+        device_id: params[:device_id]
       }
 
-    TrackingService.track(@current_user.email, get_route_name(routes[0]).to_sym, default_params.merge(extra_params))
+    event ||= get_route_name(routes[0]).to_sym
+
+    TrackingService.track(@current_user.email, event, default_params.merge(extra_params))
+  end
+
+  def track_devices(declared_params)
+    route_method = routes.first.route_method
+
+    case route_method
+    when 'POST'
+      event = TrackingService::REGISTRATION_EVENT
+    when 'PATCH'
+      event = declared_params[:registration_id].nil? ? TrackingService::DEACTIVATION_EVENT : TrackingService::ACTIVATION_EVENT
+    else
+      event = TrackingService::UNKNOWN
+    end
+
+    track({}, event)
   end
 
   def get_route_name(current_route)

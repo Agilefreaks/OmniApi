@@ -16,6 +16,8 @@ class TrackingService
   ANDROID = 'Android'
   DEVICE_TYPE = { gcm: ANDROID, omni_sync: WINDOWS }
 
+  UNKNOWN = 'unknown'
+
   TRACKED_EVENTS = {
     # devices
     post_userdevices_devices: REGISTRATION_EVENT,
@@ -53,10 +55,7 @@ class TrackingService
   }
 
   def self.track(email, event, params = {})
-    OmniKiq::Trackers::MixpanelEvents.perform_async(email,
-                                                    TRACKED_EVENTS[event],
-                                                    params) unless TRACKED_EVENTS[event].nil?
-    OmniKiq::Trackers::MixpanelPeople.perform_async(email,
-                                                    last_seen: DateTime.now)
+    OmniKiq::Trackers::MixpanelEvents.perform_async(email, event, params)
+    OmniKiq::Trackers::MixpanelPeople.perform_async(email, last_seen: DateTime.now)
   end
 end

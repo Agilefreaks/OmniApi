@@ -23,16 +23,5 @@ end
 # require omni_sync
 require_relative '../lib/omni_sync'
 
-# mongo configuration
-Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__))
-
 # boot up the app
 require File.expand_path('../../app/omniapi_app.rb', __FILE__)
-
-OmniKiq.configure do |config|
-  settings = YAML.load_file(File.expand_path('../omnikiq.yml', __FILE__))[ENV['RACK_ENV']]
-  if settings.present?
-    config.redis_namespace = settings['redis_namespace']
-    config.redis_url = settings['redis_url']
-  end
-end
