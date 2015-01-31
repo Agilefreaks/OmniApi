@@ -7,7 +7,7 @@ module API
         end
 
         after do
-          track
+          track_sms_messages(declared_params)
         end
 
         desc 'Create an sms message', ParamsHelper.omni_headers

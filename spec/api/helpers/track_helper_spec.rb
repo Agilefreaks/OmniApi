@@ -103,4 +103,43 @@ describe TrackHelper do
       end
     end
   end
+
+  describe :track_sms_messages do
+    subject { track_helper.track_sms_messages(declared_params) }
+
+    context 'when route is post' do
+      let(:route) { Grape::Route.new(method: 'POST') }
+
+      context 'when incoming received' do
+        let(:declared_params) { { type: 'incoming', state: 'received', device_id: '42' } }
+
+        it 'will call TrackingService with received sms' do
+          expected_params = ['hang@on.com', TrackingService::RECEIVED_SMS, hash_including(device_id: '42')]
+          expect(TrackingService).to receive(:track).with(*expected_params)
+          subject
+        end
+      end
+
+      context 'when outgoing sending' do
+        let(:declared_params) { { type: 'outgoing', state: 'sending' } }
+
+        it 'will call TrackingService with outgoing sms' do
+          expected_params = ['hang@on.com', TrackingService::OUTGOING_SMS, hash_including(email: 'hang@on.com')]
+          expect(TrackingService).to receive(:track).with(*expected_params)
+          subject
+        end
+      end
+    end
+
+    context 'when route is get' do
+      let(:route) { Grape::Route.new(method: 'GET') }
+      let(:declared_params) { {} }
+
+      it 'will call TrackingService with get sms' do
+        expected_params = ['hang@on.com', TrackingService::GET_SMS, hash_including(email: 'hang@on.com')]
+        expect(TrackingService).to receive(:track).with(*expected_params)
+        subject
+      end
+    end
+  end
 end

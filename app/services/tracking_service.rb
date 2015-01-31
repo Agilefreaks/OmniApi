@@ -10,7 +10,13 @@ class TrackingService
   END_INCOMING_CALL = 'End incoming call'
   GET_CALL = 'Get call'
 
+  # sms
+  RECEIVED_SMS = 'Received sms'
+  OUTGOING_SMS = 'Outgoing sms'
   SEND_SMS = 'Send SMS'
+  GET_SMS = 'Get SMS'
+
+  # clippings
   NEW_CLIPPING = 'New clipping'
   GET_CLIPPING = 'Get clipping'
   NEW_EVENT = 'New event'

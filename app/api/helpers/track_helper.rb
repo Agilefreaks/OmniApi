@@ -8,14 +8,14 @@ module TrackHelper
   end
 
   def track_devices(declared_params)
-    case route_method
-    when 'POST'
-      event = TrackingService::REGISTRATION
-    when 'PATCH'
-      event = declared_params[:registration_id].nil? ? TrackingService::DEACTIVATION : TrackingService::ACTIVATION
-    else
-      event = TrackingService::UNKNOWN
-    end
+    event = case route_method
+            when 'POST'
+              TrackingService::REGISTRATION
+            when 'PATCH'
+              declared_params[:registration_id].nil? ? TrackingService::DEACTIVATION : TrackingService::ACTIVATION
+            else
+              TrackingService::UNKNOWN
+            end
 
     track(default_params(device_id: declared_params[:id]), event)
   end
@@ -24,20 +24,40 @@ module TrackHelper
     type = declared_params[:type]
     state = declared_params[:state]
 
-    case route_method
-    when 'POST'
-      event = if type == 'incoming' && state == 'starting'
+    event = case route_method
+            when 'POST'
+              if type == 'incoming' && state == 'starting'
                 TrackingService::INCOMING_CALL
               else
                 TrackingService::OUTGOING_CALL
               end
-    when 'GET'
-      event = TrackingService::GET_CALL
-    when 'PATCH'
-      event = TrackingService::END_INCOMING_CALL
-    else
-      event = TrackingService::UNKNOWN
-    end
+            when 'GET'
+              TrackingService::GET_CALL
+            when 'PATCH'
+              TrackingService::END_INCOMING_CALL
+            else
+              TrackingService::UNKNOWN
+            end
+
+    track(default_params(declared_params), event)
+  end
+
+  def track_sms_messages(declared_params)
+    type = declared_params[:type]
+    state = declared_params[:state]
+
+    event = case route_method
+            when 'POST'
+              if type == 'incoming' && state == 'received'
+                TrackingService::RECEIVED_SMS
+              else
+                TrackingService::OUTGOING_SMS
+              end
+            when 'GET'
+              TrackingService::GET_SMS
+            else
+              TrackingService::UNKNOWN
+            end
 
     track(default_params(declared_params), event)
   end
