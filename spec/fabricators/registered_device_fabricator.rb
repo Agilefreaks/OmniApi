@@ -1,1 +1,0 @@
-Fabricator(:registered_device)

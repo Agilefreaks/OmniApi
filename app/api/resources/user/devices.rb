@@ -44,22 +44,6 @@ module API
 
           desc 'Get all devices.', ParamsHelper.omni_headers
           get do
-            # migration from registered_devices
-            if @current_user.devices.empty?
-              # copy over registered_devices
-              @current_user.registered_devices.each do |rd|
-                @current_user.devices.create do |device|
-                  device.name = rd.identifier
-                  device.provider = rd.provider
-                  device.registration_id = rd.registration_id
-                  device.client_version = rd.client_version
-                  device.public_key = rd.public_key
-                end
-
-                rd.update_attribute(:registration_id, '')
-              end
-            end
-
             present @current_user.devices, with: API::Entities::Device
           end
 

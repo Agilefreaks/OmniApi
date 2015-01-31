@@ -16,7 +16,6 @@ describe :EndCall do
 
     it 'will send a end_call notification with the correct params' do
       expect(notification_service).to receive(:end_phone_call_requested).with(phone_call, '42')
-      expect(notification_service).to receive(:end_call).with(phone_call, '42')
       subject
     end
   end

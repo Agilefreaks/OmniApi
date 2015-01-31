@@ -19,9 +19,6 @@ class User
   embeds_many :devices
   accepts_nested_attributes_for :devices
 
-  embeds_many :registered_devices
-  accepts_nested_attributes_for :registered_devices
-
   embeds_many :providers
   accepts_nested_attributes_for :providers
 
@@ -29,13 +26,8 @@ class User
   accepts_nested_attributes_for :contact_lists
 
   has_many :clippings
-  has_many :events
   has_many :sms_messages
   has_many :phone_calls
-
-  def active_registered_devices
-    registered_devices.active
-  end
 
   def active_devices
     devices.active

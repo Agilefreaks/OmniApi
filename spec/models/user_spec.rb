@@ -5,13 +5,11 @@ describe User do
 
   it { is_expected.to embed_many(:access_tokens) }
   it { is_expected.to embed_many(:authorization_codes) }
-  it { is_expected.to embed_many(:registered_devices) }
   it { is_expected.to embed_many(:devices) }
   it { is_expected.to embed_many(:providers) }
   it { is_expected.to embed_many(:contact_lists) }
 
   it { is_expected.to have_many(:clippings) }
-  it { is_expected.to have_many(:events) }
   it { is_expected.to have_many(:sms_messages) }
   it { is_expected.to have_many(:phone_calls) }
 
@@ -143,14 +141,14 @@ describe User do
     it { is_expected.to eq @authorization_code }
   end
 
-  describe :active_registered_devices do
+  describe :active_devices do
     let(:user) { Fabricate(:user) }
-    let!(:active_registered_device) { user.registered_devices.create(registration_id: '42') }
-    let!(:inactive_registered_device) { user.registered_devices.create }
+    let!(:active_device) { Fabricate(:device, user: user, registration_id: '42') }
+    let!(:inactive_device) { Fabricate(:device, user: user) }
 
-    subject { user.active_registered_devices }
+    subject { user.active_devices }
 
-    it { should == [active_registered_device] }
+    it { is_expected.to eq [active_device] }
   end
 
   describe :find_by_provider do

@@ -9,7 +9,7 @@ class CreateClipping
   def initialize(args)
     @access_token = args[:access_token]
     @content = args[:content]
-    @device_id = args[:identifier] || args[:device_id]
+    @device_id = args[:device_id]
   end
 
   def create
@@ -18,9 +18,6 @@ class CreateClipping
 
     clipping = @clipping_builder.build(@access_token, @content)
     @notification_service.clipping_created(clipping, @device_id)
-
-    # TODO: deprecated
-    @notification_service.notify(clipping, @device_id)
 
     clipping
   end

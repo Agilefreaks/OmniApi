@@ -39,13 +39,13 @@ describe 'users' do
       end
     end
 
-    context 'events' do
+    context 'phone_calls' do
       before :each do
-        user.events << event
+        user.phone_calls << phone_call
       end
 
-      context 'when the user has a event in the time interval' do
-        let(:event) { Fabricate(:incoming_call_event, created_at: interval + 1.minute, phone_number: '123') }
+      context 'when the user has an phone call in the time interval' do
+        let(:phone_call) { Fabricate(:phone_call, created_at: interval + 1.minute, number: '123') }
 
         it 'will return the users email' do
           expect(UsersOutput).to receive(:puts).with(%w(train@user.com))
@@ -55,7 +55,32 @@ describe 'users' do
 
       context 'when user has no events in the time interval' do
         let(:created_at) { interval - 1.minute }
-        let(:event) { Fabricate(:incoming_sms_event, created_at: created_at, phone_number: '123', content: 'content') }
+        let(:phone_call) { Fabricate(:phone_call, created_at: created_at, number: '123') }
+
+        it 'will return the users email' do
+          expect(UsersOutput).not_to receive(:puts)
+          subject
+        end
+      end
+    end
+
+    context 'sms_messages' do
+      before :each do
+        user.sms_messages << sms_message
+      end
+
+      context 'when the user has an phone call in the time interval' do
+        let(:sms_message) { Fabricate(:sms_message, created_at: interval + 1.minute, phone_number: '123') }
+
+        it 'will return the users email' do
+          expect(UsersOutput).to receive(:puts).with(%w(train@user.com))
+          subject
+        end
+      end
+
+      context 'when user has no events in the time interval' do
+        let(:created_at) { interval - 1.minute }
+        let(:sms_message) { Fabricate(:sms_message, created_at: created_at, phone_number: '123') }
 
         it 'will return the users email' do
           expect(UsersOutput).not_to receive(:puts)

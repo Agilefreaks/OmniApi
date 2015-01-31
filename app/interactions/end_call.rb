@@ -21,9 +21,6 @@ class EndCall
     phone_call.update_attribute(:state, :end_call)
     @notification_service.end_phone_call_requested(phone_call, @device_id)
 
-    # TODO: remove old method once the clients are updated
-    @notification_service.end_call(phone_call, @device_id)
-
     phone_call
   end
 end

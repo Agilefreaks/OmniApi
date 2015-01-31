@@ -61,15 +61,5 @@ class Sms
 
   def incoming_received(sms_message, device_id)
     @notification_service.sms_message_received(sms_message, device_id)
-    backwards_compatibility
-  end
-
-  def backwards_compatibility
-    type = :incoming_sms
-    payload = { phone_number: @params.phone_number, contact_name: @params.contact_name, content: @params.content }
-    CreateEvent.with(
-      access_token: @params.access_token,
-      type: type, incoming_sms: payload,
-      identifier: @params.device_id)
   end
 end

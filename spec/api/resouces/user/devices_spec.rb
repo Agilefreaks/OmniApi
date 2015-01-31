@@ -40,17 +40,6 @@ describe API::Resources::User::Devices do
 
       its(:size) { is_expected.to eq 2 }
     end
-
-    context 'when the user has old registered_devices' do
-      before do
-        Fabricate(:registered_device, user: user, identifier: 'Existing device 1')
-        Fabricate(:registered_device, user: user, identifier: 'Existing device 2')
-        Fabricate(:registered_device, user: user, identifier: 'Existing device 3')
-        get '/api/v1/user/devices', '', options
-      end
-
-      its(:size) { is_expected.to eq 3 }
-    end
   end
 
   describe "DELETE 'api/v1/user/devices/:id'" do

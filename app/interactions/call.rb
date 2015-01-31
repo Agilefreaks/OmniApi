@@ -42,19 +42,9 @@ class Call
 
   def incoming_starting(phone_call, device_id)
     @notification_service.phone_call_received(phone_call, device_id)
-    backwards_compatibility
   end
 
   def outgoing_starting(phone_call, device_id)
     @notification_service.start_phone_call_requested(phone_call, device_id)
-  end
-
-  def backwards_compatibility
-    type = :incoming_call
-    payload = { phone_number: @call_params.number, contact_name: @call_params.contact_name  }
-    CreateEvent.with(
-      access_token: @call_params.access_token,
-      type: type, incoming_call: payload,
-      identifier: @call_params.device_id)
   end
 end

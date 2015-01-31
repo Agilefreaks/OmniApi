@@ -11,10 +11,11 @@ namespace :users do
     users = []
 
     User.all.each do |u|
-      events = u.events.where(:created_at.gt => interval)
+      sms_messages = u.sms_messages.where(:created_at.gt => interval)
+      phone_calls = u.phone_calls.where(:created_at.gt => interval)
       clippings = u.clippings.where(:created_at.gt => interval)
 
-      users << u if events.any? || clippings.any?
+      users << u if sms_messages.any? || phone_calls.any? || clippings.any?
     end
 
     UsersOutput.puts(users.map(&:email)) unless users.empty?

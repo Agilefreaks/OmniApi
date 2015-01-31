@@ -17,9 +17,6 @@ class CreateContactList
     @contact_list_builder ||= ContactListBuilder.new
     @notification_service ||= NotificationService.new
 
-    contact_list = @contact_list_builder.build(@access_token, @destination_identifier, @contacts)
-    @notification_service.notify(contact_list, @identifier)
-
-    contact_list
+    @contact_list_builder.build(@access_token, @destination_identifier, @contacts)
   end
 end

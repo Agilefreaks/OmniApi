@@ -25,10 +25,5 @@ describe CreateContactList do
       expect(contact_list_builder).to receive(:build).with(access_token.token, '42', 'e')
       subject
     end
-
-    it 'will call notify with the correct params' do
-      expect(notification_service).to receive(:notify).with(contact_list, '43')
-      subject
-    end
   end
 end

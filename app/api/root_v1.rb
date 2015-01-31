@@ -19,10 +19,8 @@ module API
   require 'resources/user/devices'
   require 'resources/user/api'
   require 'resources/users/api'
-  require 'resources/devices'
   require 'resources/clippings'
   require 'resources/authorization_codes'
-  require 'resources/events'
   require 'resources/sync'
   require 'resources/sms_messages'
   require 'resources/phone_calls'
@@ -30,12 +28,10 @@ module API
   class RootV1 < Grape::API
     mount Resources::OAuth2
     mount Resources::Version
-    mount Resources::Devices
     mount Resources::User::Api
     mount Resources::Users::Api
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
-    mount Resources::Events
     mount Resources::Sync
     mount Resources::SmsMessages
     mount Resources::PhoneCalls
