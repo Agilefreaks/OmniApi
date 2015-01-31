@@ -6,10 +6,6 @@ module API
           authenticate!
         end
 
-        after do
-          track(what: merged_params[:what])
-        end
-
         desc 'Create a sync request', ParamsHelper.omni_headers
         params do
           optional :what, type: Symbol, values: [:contacts, :other], desc: 'What to sync?'

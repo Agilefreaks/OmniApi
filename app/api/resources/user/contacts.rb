@@ -7,10 +7,6 @@ module API
             authenticate!
           end
 
-          after do
-            track
-          end
-
           desc 'Get all contacts.', ParamsHelper.omni_headers
           params do
             requires :identifier, type: String, desc: 'The device identifier that requires the contacts.'

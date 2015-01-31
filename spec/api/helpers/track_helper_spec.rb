@@ -142,4 +142,30 @@ describe TrackHelper do
       end
     end
   end
+
+  describe :track_clipping do
+    subject { track_helper.track_clipping(declared_params) }
+
+    context 'when route is post' do
+      let(:route) { Grape::Route.new(method: 'POST') }
+      let(:declared_params) { { device_id: '42' } }
+
+      it 'will call TrackingService with clipping' do
+        expected_params = ['hang@on.com', TrackingService::CLIPPING, hash_including(device_id: '42')]
+        expect(TrackingService).to receive(:track).with(*expected_params)
+        subject
+      end
+    end
+
+    context 'when route is get' do
+      let(:route) { Grape::Route.new(method: 'GET') }
+      let(:declared_params) { { device_id: '42' } }
+
+      it 'will call TrackingService with clipping' do
+        expected_params = ['hang@on.com', TrackingService::GET_CLIPPING, hash_including(device_id: '42')]
+        expect(TrackingService).to receive(:track).with(*expected_params)
+        subject
+      end
+    end
+  end
 end

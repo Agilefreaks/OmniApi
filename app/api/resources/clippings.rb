@@ -7,7 +7,7 @@ module API
         end
 
         after do
-          track
+          track_clipping(declared_params)
         end
 
         desc 'Create a clipping.', ParamsHelper.omni_headers

@@ -1,6 +1,7 @@
 module API
   module Resources
     class Events < Grape::API
+      desc 'Deprecated, please see sms_messages phone_calls'
       resources :events do
         presenters = {
           IncomingSmsEvent => API::Entities::IncomingSmsEvent,
@@ -9,10 +10,6 @@ module API
 
         before do
           authenticate!
-        end
-
-        after do
-          track(type: merged_params[:type])
         end
 
         desc 'Create a event.', ParamsHelper.omni_headers

@@ -7,10 +7,6 @@ module API
           authenticate!
         end
 
-        after do
-          track
-        end
-
         desc 'Create a device', ParamsHelper.omni_headers
         params do
           requires :identifier, type: String, desc: 'Unique device identifier.'

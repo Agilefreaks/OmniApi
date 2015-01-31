@@ -1,9 +1,8 @@
+# rubocop:disable MethodLength
 module TrackHelper
   extend Grape::API::Helpers
 
   def track(params, event = nil)
-    event ||= get_route_name(routes[0]).to_sym
-
     TrackingService.track(@current_user.email, event, params)
   end
 
@@ -62,14 +61,16 @@ module TrackHelper
     track(default_params(declared_params), event)
   end
 
-  def get_route_name(current_route)
-    custom_route_settings = current_route.route_settings[:custom]
-
-    route_method = current_route.route_method
-    route_namespace = current_route.route_namespace.split(':')[0].tr('/', '')
-    route_action = custom_route_settings[:action] unless custom_route_settings.nil?
-
-    "#{route_method}_#{route_namespace}_#{route_action}".split('(')[0].downcase.chomp('_')
+  def track_clipping(declared_params)
+    event = case route_method
+            when 'POST'
+              TrackingService::CLIPPING
+            when 'GET'
+              TrackingService::GET_CLIPPING
+            else
+              TrackingService::UNKNOWN
+            end
+    track(default_params(declared_params), event)
   end
 
   private
