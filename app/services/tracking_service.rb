@@ -1,9 +1,15 @@
 class TrackingService
-  ACTIVATION_EVENT = 'Device activation'
-  DEACTIVATION_EVENT = 'Device deactivated'
-  REGISTRATION_EVENT = 'Device registration'
-  CALL_EVENT = 'Call'
-  END_INCOMING_CALL_EVENT = 'End incoming call'
+  # devices
+  ACTIVATION = 'Device activation'
+  DEACTIVATION = 'Device deactivated'
+  REGISTRATION = 'Device registration'
+
+  # phone_calls
+  INCOMING_CALL = 'Incoming Call'
+  OUTGOING_CALL = 'Outgoing Call'
+  END_INCOMING_CALL = 'End incoming call'
+  GET_CALL = 'Get call'
+
   SEND_SMS = 'Send SMS'
   NEW_CLIPPING = 'New clipping'
   GET_CLIPPING = 'Get clipping'
@@ -20,13 +26,13 @@ class TrackingService
 
   TRACKED_EVENTS = {
     # devices
-    post_userdevices_devices: REGISTRATION_EVENT,
-    patch_userdevices_activate: ACTIVATION_EVENT,
-    patch_userdevices_deactivate: DEACTIVATION_EVENT,
+    post_userdevices_devices: REGISTRATION,
+    patch_userdevices_activate: ACTIVATION,
+    patch_userdevices_deactivate: DEACTIVATION,
 
     # phone_calls
-    post_phone_calls: CALL_EVENT,
-    patch_phone_calls: END_INCOMING_CALL_EVENT,
+    post_phone_calls: INCOMING_CALL,
+    patch_phone_calls: END_INCOMING_CALL,
 
     # sms
     post_sms_messages: SEND_SMS,
@@ -45,12 +51,12 @@ class TrackingService
     post_sync: SYNC_REQUEST,
 
     # deprecated events
-    post_devices: REGISTRATION_EVENT,
+    post_devices: REGISTRATION,
     get_clippings_last: GET_CLIPPING,
-    post_devices_end_call: END_INCOMING_CALL_EVENT,
-    post_devices_call: CALL_EVENT,
-    put_devices_activate: ACTIVATION_EVENT,
-    put_devices_deactivate: DEACTIVATION_EVENT,
+    post_devices_end_call: END_INCOMING_CALL,
+    post_devices_call: INCOMING_CALL,
+    put_devices_activate: ACTIVATION,
+    put_devices_deactivate: DEACTIVATION,
     post_devices_sms: SEND_SMS
   }
 

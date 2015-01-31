@@ -1,32 +1,45 @@
 module TrackHelper
   extend Grape::API::Helpers
 
-  def track(extra_params = {}, event = nil)
-    default_params =
-      {
-        email: @current_user.email,
-        device_type: params[:provider],
-        device_id: params[:id]
-      }
-
+  def track(params, event = nil)
     event ||= get_route_name(routes[0]).to_sym
 
-    TrackingService.track(@current_user.email, event, default_params.merge(extra_params))
+    TrackingService.track(@current_user.email, event, params)
   end
 
   def track_devices(declared_params)
-    route_method = routes.first.route_method
-
     case route_method
     when 'POST'
-      event = TrackingService::REGISTRATION_EVENT
+      event = TrackingService::REGISTRATION
     when 'PATCH'
-      event = declared_params[:registration_id].nil? ? TrackingService::DEACTIVATION_EVENT : TrackingService::ACTIVATION_EVENT
+      event = declared_params[:registration_id].nil? ? TrackingService::DEACTIVATION : TrackingService::ACTIVATION
     else
       event = TrackingService::UNKNOWN
     end
 
-    track({}, event)
+    track(default_params(device_id: declared_params[:id]), event)
+  end
+
+  def track_phone_calls(declared_params)
+    type = declared_params[:type]
+    state = declared_params[:state]
+
+    case route_method
+    when 'POST'
+      event = if type == :incoming && state == :starting
+                TrackingService::INCOMING_CALL
+              else
+                TrackingService::OUTGOING_CALL
+              end
+    when 'GET'
+      event = TrackingService::GET_CALL
+    when 'PATCH'
+      event = TrackingService::END_INCOMING_CALL
+    else
+      event = TrackingService::UNKNOWN
+    end
+
+    track(default_params(declared_params), event)
   end
 
   def get_route_name(current_route)
@@ -37,5 +50,21 @@ module TrackHelper
     route_action = custom_route_settings[:action] unless custom_route_settings.nil?
 
     "#{route_method}_#{route_namespace}_#{route_action}".split('(')[0].downcase.chomp('_')
+  end
+
+  private
+
+  def route_method
+    routes.first.route_method
+  end
+
+  def default_params(declared_params = {}, device_id = nil)
+    declared_params ||= params # where does params comes from? is a kind of magic ...
+
+    {
+      email: @current_user.email,
+      device_type: declared_params[:provider],
+      device_id: device_id || declared_params[:device_id]
+    }
   end
 end
