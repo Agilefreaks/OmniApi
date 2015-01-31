@@ -61,7 +61,7 @@ describe TrackHelper do
       let(:route) { Grape::Route.new(method: 'POST') }
 
       context 'when incoming starting' do
-        let(:declared_params) { { type: :incoming, state: :starting } }
+        let(:declared_params) { { type: 'incoming', state: 'starting' } }
 
         it 'will call TrackingService with incoming call' do
           expected_params = ['hang@on.com', TrackingService::INCOMING_CALL, hash_including(email: 'hang@on.com')]
@@ -71,7 +71,7 @@ describe TrackHelper do
       end
 
       context 'when outgoing starting' do
-        let(:declared_params) { { type: :outgoing, state: :starting } }
+        let(:declared_params) { { type: 'outgoing', state: 'starting' } }
 
         it 'will call TrackingService with outgoing call' do
           expected_params = ['hang@on.com', TrackingService::OUTGOING_CALL, hash_including(email: 'hang@on.com')]

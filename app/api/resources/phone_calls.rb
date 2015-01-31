@@ -7,7 +7,7 @@ module API
         end
 
         after do
-          track
+          track_phone_calls(declared_params)
         end
 
         helpers do
@@ -19,12 +19,12 @@ module API
             optional :number, type: String, desc: 'The phone number.'
             optional :contact_name, type: String, desc: 'Contact name.'
             optional :type,
-                     values: [:incoming, :outgoing],
-                     type: Symbol,
+                     values: %w(incoming outgoing),
+                     type: String,
                      desc: 'Type of the call,'
             optional :state,
-                     values: [:starting, :started, :ended, :ending],
-                     type: Symbol,
+                     values: %w(starting started ended ending),
+                     type: String,
                      desc: 'State of the call.'
           end
         end

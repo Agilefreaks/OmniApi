@@ -26,7 +26,7 @@ module TrackHelper
 
     case route_method
     when 'POST'
-      event = if type == :incoming && state == :starting
+      event = if type == 'incoming' && state == 'starting'
                 TrackingService::INCOMING_CALL
               else
                 TrackingService::OUTGOING_CALL

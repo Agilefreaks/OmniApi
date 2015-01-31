@@ -24,8 +24,8 @@ describe Sms do
     subject { sms.execute }
 
     context 'with type outgoing, state sent' do
-      let(:type) { :outgoing }
-      let(:state) { :sending }
+      let(:type) { 'outgoing' }
+      let(:state) { 'sending' }
 
       it 'will call send_sms_message_requested on notification service' do
         expect(notification_service).to receive(:send_sms_message_requested).with(an_instance_of(SmsMessage), '42')
@@ -34,8 +34,8 @@ describe Sms do
     end
 
     context 'with type incoming, state received' do
-      let(:type) { :incoming }
-      let(:state) { :received }
+      let(:type) { 'incoming' }
+      let(:state) { 'received' }
 
       it 'will call send_sms_message_requested on notification service' do
         expect(notification_service).to receive(:sms_message_received).with(an_instance_of(SmsMessage), '42')

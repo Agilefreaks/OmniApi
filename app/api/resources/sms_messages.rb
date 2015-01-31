@@ -30,12 +30,12 @@ module API
           mutually_exclusive :contact_name, :contact_name_list
 
           optional :type,
-                   values: [:incoming, :outgoing],
-                   type: Symbol,
+                   values: %w(incoming outgoing),
+                   type: String,
                    desc: 'Type of the sms_message.'
           optional :state,
-                   values: [:sending, :sent, :received],
-                   type: Symbol,
+                   values: %w(sending sent received),
+                   type: String,
                    desc: 'State of the call.'
         end
         post do

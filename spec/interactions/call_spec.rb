@@ -21,8 +21,8 @@ describe Call do
     end
 
     context 'when incoming and starting' do
-      let(:type) { :incoming }
-      let(:state) { :starting }
+      let(:type) { 'incoming' }
+      let(:state) { 'starting' }
 
       it 'will send a incoming call notification with the correct params' do
         expect(notification_service).to receive(:phone_call_received).with(an_instance_of(PhoneCall), '42')
@@ -31,8 +31,8 @@ describe Call do
     end
 
     context 'when outgoing and started' do
-      let(:type) { :outgoing }
-      let(:state) { :starting }
+      let(:type) { 'outgoing' }
+      let(:state) { 'starting' }
 
       it 'will send a call notification with the correct params' do
         expect(notification_service).to receive(:start_phone_call_requested).with(an_instance_of(PhoneCall), '42')
