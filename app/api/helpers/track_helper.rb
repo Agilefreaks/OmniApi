@@ -6,7 +6,7 @@ module TrackHelper
       {
         email: @current_user.email,
         device_type: params[:provider],
-        device_id: params[:device_id]
+        device_id: params[:id]
       }
 
     event ||= get_route_name(routes[0]).to_sym
