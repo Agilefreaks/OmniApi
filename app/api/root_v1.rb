@@ -2,12 +2,9 @@ module API
   # entities
   require 'entities/provider'
   require 'entities/user'
-  require 'entities/registered_device'
   require 'entities/device'
   require 'entities/clipping'
   require 'entities/authorization_code'
-  require 'entities/incoming_call_event'
-  require 'entities/incoming_sms_event'
   require 'entities/contact_list'
   require 'entities/sms_message'
   require 'entities/phone_call'
