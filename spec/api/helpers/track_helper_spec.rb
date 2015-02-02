@@ -19,7 +19,7 @@ describe TrackHelper do
 
     context 'when the route method is patch' do
       let(:route) { Grape::Route.new(method: 'PATCH') }
-      let(:declared_params) { { id: '42', registration_id: registration_id } }
+      let(:declared_params) { { id: '42', registration_id: registration_id, provider: 'gcm' } }
 
       context 'when the registration id is set' do
         let(:registration_id) { '42' }
@@ -35,7 +35,8 @@ describe TrackHelper do
         let(:registration_id) { nil }
 
         it 'will call TrackingService with deactivation event' do
-          expected_params = ['hang@on.com', TrackingService::DEACTIVATION, hash_including(device_id: '42')]
+          event = TrackingService::DEACTIVATION
+          expected_params = ['hang@on.com', event, hash_including(device_id: '42', provider: 'gcm')]
           expect(TrackingService).to receive(:track).with(*expected_params)
           subject
         end

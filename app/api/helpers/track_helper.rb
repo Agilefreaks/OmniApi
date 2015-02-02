@@ -16,7 +16,7 @@ module TrackHelper
               TrackingService::UNKNOWN
             end
 
-    track(default_params(device_id: declared_params[:id]), event)
+    track(default_params(device_id: declared_params[:id]).merge(provider: declared_params[:provider]), event)
   end
 
   def track_phone_calls(declared_params)
@@ -84,7 +84,6 @@ module TrackHelper
 
     {
       email: @current_user.email,
-      device_type: declared_params[:provider],
       device_id: device_id || declared_params[:device_id]
     }
   end

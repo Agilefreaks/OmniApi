@@ -16,8 +16,8 @@ module API
               optional :name, type: String, desc: 'The name of the device.'
               optional :registration_id, type: String, desc: 'The registration id.'
               optional :provider,
-                       type: Symbol,
-                       values: [:gcm, :omni_sync],
+                       type: String,
+                       values: %w(gcm omni_sync),
                        desc: 'The push notification provider, it defaults to :gcm if none provided.'
               optional :public_key, type: String, desc: 'The public key.'
             end
