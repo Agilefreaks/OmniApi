@@ -30,7 +30,7 @@ class TrackingService
     return if event == TrackingService::UNKNOWN
 
     OmniKiq::Trackers::MixpanelEvents.perform_async(email, event, params)
-    people(email, last_seen: DateTime.now)
+    people(email, '$last_seen' => DateTime.now)
   end
 
   def self.people(email, params = {})
