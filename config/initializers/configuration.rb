@@ -6,7 +6,7 @@ class Configuration
     attr_accessor :omni_sync_api_key
   end
 
-  @app_version = '1.7.1'
+  @app_version = '1.7.2'
 
   @google_api_key = 'AIzaSyDiX6YE0kjKmnjSygNRC_sYq6MBUfzsg2I'
 
