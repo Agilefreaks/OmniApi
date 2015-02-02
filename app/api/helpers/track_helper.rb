@@ -3,7 +3,16 @@ module TrackHelper
   extend Grape::API::Helpers
 
   def track(params, event = nil)
-    TrackingService.track(@current_user.email, event, params)
+    TrackingService.event(@current_user.email, event, params)
+
+    return if @current_user.mixpanel_profile_updated?
+
+    TrackingService.people(@current_user.email,
+                           '$first_name' => @current_user.first_name,
+                           '$last_name' => @current_user.last_name,
+                           '$email' => @current_user.email,
+                           '$mixpanel_profile_updated' => true)
+    @current_user.update_attribute(:mixpanel_profile_updated, true)
   end
 
   def track_devices(declared_params)

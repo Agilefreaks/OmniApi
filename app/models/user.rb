@@ -13,6 +13,7 @@ class User
   field :last_name, type: String
   field :image_url, type: String
   field :email, type: String, default: ''
+  field :mixpanel_profile_updated, type: Boolean, default: false
 
   validates_uniqueness_of :email
 

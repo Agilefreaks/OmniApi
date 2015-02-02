@@ -26,8 +26,14 @@ class TrackingService
 
   UNKNOWN = 'unknown'
 
-  def self.track(email, event, params = {})
+  def self.event(email, event, params = {})
+    return if event == TrackingService::UNKNOWN
+
     OmniKiq::Trackers::MixpanelEvents.perform_async(email, event, params)
-    OmniKiq::Trackers::MixpanelPeople.perform_async(email, last_seen: DateTime.now)
+    people(email, last_seen: DateTime.now)
+  end
+
+  def self.people(email, params = {})
+    OmniKiq::Trackers::MixpanelPeople.perform_async(email, params)
   end
 end

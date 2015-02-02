@@ -6,12 +6,33 @@ describe TrackHelper do
   end
 
   let(:track_helper) { TrackHelperTest.new }
-  let(:user) { Fabricate(:user, email: 'hang@on.com') }
+  let(:user) { Fabricate(:user, email: 'hang@on.com', first_name: 'Ion', last_name: 'Hang') }
 
   before do
     track_helper.instance_variable_set(:@current_user, user)
     allow(track_helper).to receive(:params).and_return({})
     allow(track_helper).to receive(:routes).and_return([route])
+  end
+
+  describe :track do
+    let(:route) { Grape::Route.new }
+
+    context 'when current user mixpanel_profile_updated is false' do
+      before do
+        user.mixpanel_profile_updated = false
+      end
+
+      subject { track_helper.track({}, TrackingService::UNKNOWN) }
+
+      it 'will call TrackingService people with the correct params' do
+        expect(TrackingService).to receive(:people).with('hang@on.com',
+                                                         '$first_name' => 'Ion',
+                                                         '$last_name' => 'Hang',
+                                                         '$email' => 'hang@on.com',
+                                                         '$mixpanel_profile_updated' => true)
+        subject
+      end
+    end
   end
 
   describe :track_devices do
@@ -26,7 +47,7 @@ describe TrackHelper do
 
         it 'will call TrackingService with activation event' do
           expected_params = ['hang@on.com', TrackingService::ACTIVATION, hash_including(email: 'hang@on.com')]
-          expect(TrackingService).to receive(:track).with(*expected_params)
+          expect(TrackingService).to receive(:event).with(*expected_params)
           subject
         end
       end
@@ -37,7 +58,7 @@ describe TrackHelper do
         it 'will call TrackingService with deactivation event' do
           event = TrackingService::DEACTIVATION
           expected_params = ['hang@on.com', event, hash_including(device_id: '42', provider: 'gcm')]
-          expect(TrackingService).to receive(:track).with(*expected_params)
+          expect(TrackingService).to receive(:event).with(*expected_params)
           subject
         end
       end
@@ -49,7 +70,7 @@ describe TrackHelper do
 
       it 'will call TrackingService with registration event' do
         expected_params = ['hang@on.com', TrackingService::REGISTRATION, hash_including(email: 'hang@on.com')]
-        expect(TrackingService).to receive(:track).with(*expected_params)
+        expect(TrackingService).to receive(:event).with(*expected_params)
         subject
       end
     end
@@ -66,7 +87,7 @@ describe TrackHelper do
 
         it 'will call TrackingService with incoming call' do
           expected_params = ['hang@on.com', TrackingService::INCOMING_CALL, hash_including(email: 'hang@on.com')]
-          expect(TrackingService).to receive(:track).with(*expected_params)
+          expect(TrackingService).to receive(:event).with(*expected_params)
           subject
         end
       end
@@ -76,7 +97,7 @@ describe TrackHelper do
 
         it 'will call TrackingService with outgoing call' do
           expected_params = ['hang@on.com', TrackingService::OUTGOING_CALL, hash_including(email: 'hang@on.com')]
-          expect(TrackingService).to receive(:track).with(*expected_params)
+          expect(TrackingService).to receive(:event).with(*expected_params)
           subject
         end
       end
@@ -88,7 +109,7 @@ describe TrackHelper do
 
       it 'will call TrackingService with get call' do
         expected_params = ['hang@on.com', TrackingService::GET_CALL, hash_including(device_id: '42')]
-        expect(TrackingService).to receive(:track).with(*expected_params)
+        expect(TrackingService).to receive(:event).with(*expected_params)
         subject
       end
     end
@@ -99,7 +120,7 @@ describe TrackHelper do
 
       it 'will call TrackingService with end incoming call' do
         expected_params = ['hang@on.com', TrackingService::END_INCOMING_CALL, hash_including(email: 'hang@on.com')]
-        expect(TrackingService).to receive(:track).with(*expected_params)
+        expect(TrackingService).to receive(:event).with(*expected_params)
         subject
       end
     end
@@ -116,7 +137,7 @@ describe TrackHelper do
 
         it 'will call TrackingService with received sms' do
           expected_params = ['hang@on.com', TrackingService::RECEIVED_SMS, hash_including(device_id: '42')]
-          expect(TrackingService).to receive(:track).with(*expected_params)
+          expect(TrackingService).to receive(:event).with(*expected_params)
           subject
         end
       end
@@ -126,7 +147,7 @@ describe TrackHelper do
 
         it 'will call TrackingService with outgoing sms' do
           expected_params = ['hang@on.com', TrackingService::OUTGOING_SMS, hash_including(email: 'hang@on.com')]
-          expect(TrackingService).to receive(:track).with(*expected_params)
+          expect(TrackingService).to receive(:event).with(*expected_params)
           subject
         end
       end
@@ -138,7 +159,7 @@ describe TrackHelper do
 
       it 'will call TrackingService with get sms' do
         expected_params = ['hang@on.com', TrackingService::GET_SMS, hash_including(email: 'hang@on.com')]
-        expect(TrackingService).to receive(:track).with(*expected_params)
+        expect(TrackingService).to receive(:event).with(*expected_params)
         subject
       end
     end
@@ -153,7 +174,7 @@ describe TrackHelper do
 
       it 'will call TrackingService with clipping' do
         expected_params = ['hang@on.com', TrackingService::CLIPPING, hash_including(device_id: '42')]
-        expect(TrackingService).to receive(:track).with(*expected_params)
+        expect(TrackingService).to receive(:event).with(*expected_params)
         subject
       end
     end
@@ -164,7 +185,7 @@ describe TrackHelper do
 
       it 'will call TrackingService with clipping' do
         expected_params = ['hang@on.com', TrackingService::GET_CLIPPING, hash_including(device_id: '42')]
-        expect(TrackingService).to receive(:track).with(*expected_params)
+        expect(TrackingService).to receive(:event).with(*expected_params)
         subject
       end
     end
