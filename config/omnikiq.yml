@@ -8,3 +8,4 @@ staging:
 
 production:
   redis_namespace: production
+  redis_url: redis://10.133.201.189:6379
