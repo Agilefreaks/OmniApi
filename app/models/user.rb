@@ -26,6 +26,7 @@ class User
   has_many :clippings
   has_many :sms_messages
   has_many :phone_calls
+  has_many :contacts
 
   def active_devices
     devices.active
