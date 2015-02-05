@@ -17,7 +17,6 @@ module API
   require 'resources/users/api'
   require 'resources/clippings'
   require 'resources/authorization_codes'
-  require 'resources/sync'
   require 'resources/sms_messages'
   require 'resources/phone_calls'
 
@@ -28,7 +27,6 @@ module API
     mount Resources::Users::Api
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
-    mount Resources::Sync
     mount Resources::SmsMessages
     mount Resources::PhoneCalls
 
