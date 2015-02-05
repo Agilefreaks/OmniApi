@@ -5,9 +5,9 @@ module API
   require 'entities/device'
   require 'entities/clipping'
   require 'entities/authorization_code'
-  require 'entities/contact_list'
   require 'entities/sms_message'
   require 'entities/phone_call'
+  require 'entities/contact'
 
   # resources
   require 'resources/oauth2'
@@ -18,7 +18,6 @@ module API
   require 'resources/users/api'
   require 'resources/clippings'
   require 'resources/authorization_codes'
-  require 'resources/sync'
   require 'resources/sms_messages'
   require 'resources/phone_calls'
 
@@ -29,7 +28,6 @@ module API
     mount Resources::Users::Api
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
-    mount Resources::Sync
     mount Resources::SmsMessages
     mount Resources::PhoneCalls
 

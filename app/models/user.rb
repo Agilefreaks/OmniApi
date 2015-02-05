@@ -14,6 +14,7 @@ class User
   field :image_url, type: String
   field :email, type: String, default: ''
   field :mixpanel_profile_updated, type: Boolean, default: false
+  field :contacts_updated_at, type: Time
 
   validates_uniqueness_of :email
 
@@ -23,12 +24,10 @@ class User
   embeds_many :providers
   accepts_nested_attributes_for :providers
 
-  embeds_many :contact_lists
-  accepts_nested_attributes_for :contact_lists
-
   has_many :clippings
   has_many :sms_messages
   has_many :phone_calls
+  has_many :contacts
 
   def active_devices
     devices.active
