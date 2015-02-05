@@ -5,7 +5,6 @@ module API
   require 'entities/device'
   require 'entities/clipping'
   require 'entities/authorization_code'
-  require 'entities/contact_list'
   require 'entities/sms_message'
   require 'entities/phone_call'
 
