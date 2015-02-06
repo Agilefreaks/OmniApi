@@ -220,6 +220,7 @@ GEM
       net-ssh (>= 2.8.0)
     thor (0.19.1)
     thread_safe (0.3.4)
+    timecop (0.7.1)
     timers (4.0.1)
       hitimes
     tzinfo (1.2.2)
@@ -272,3 +273,4 @@ DEPENDENCIES
   simplecov
   simplecov-teamcity-summary
   sometimes
+  timecop

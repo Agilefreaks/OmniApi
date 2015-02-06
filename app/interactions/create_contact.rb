@@ -11,6 +11,8 @@ class CreateContact
   end
 
   def create
-    (@contact_builder ||= ContactBuilder.new).build(access_token, params)
+    contact = (@contact_builder ||= ContactBuilder.new).build(access_token, params)
+    User.find_by_token(access_token).update_attribute(:contacts_updated_at, Time.now.utc)
+    contact
   end
 end

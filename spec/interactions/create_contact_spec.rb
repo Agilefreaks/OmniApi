@@ -17,8 +17,12 @@ describe CreateContact do
 
   describe :create do
     let(:contact_builder) { double(ContactBuilder) }
+    let(:contact) { Contact.new }
 
-    before { service.contact_builder = contact_builder }
+    before do
+      allow(contact_builder).to receive(:build).and_return(contact)
+      service.contact_builder = contact_builder
+    end
 
     subject { service.create }
 
@@ -28,12 +32,15 @@ describe CreateContact do
       subject
     end
 
-    context 'the builder returns a contact' do
-      let(:contact) { Contact.new }
+    it 'updates the contacts_updated_at field for the current user with the current time' do
+      new_time = Time.local(2015, 1, 1, 1, 0, 0)
+      Timecop.freeze(new_time)
 
-      before { allow(contact_builder).to receive(:build).and_return(contact) }
+      expect { subject }.to change { user.reload.contacts_updated_at }.to(new_time)
 
-      it { is_expected.to be(contact) }
+      Timecop.return
     end
+
+    it { is_expected.to be(contact) }
   end
 end
