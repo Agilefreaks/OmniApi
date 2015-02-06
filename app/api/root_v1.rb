@@ -7,6 +7,7 @@ module API
   require 'entities/authorization_code'
   require 'entities/sms_message'
   require 'entities/phone_call'
+  require 'entities/contact'
 
   # resources
   require 'resources/oauth2'

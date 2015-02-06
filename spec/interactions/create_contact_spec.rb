@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CreateContact do
   include_context :with_authenticated_user
 
-  let(:contact_params) {
+  let(:contact_params) do
     {
       contact_id: 'someId12',
       first_name: 'John',
@@ -11,7 +11,7 @@ describe CreateContact do
       phone_numbers: %w(123 456),
       image: 'someData'
     }
-  }
+  end
   let(:params) { { access_token: access_token.token }.merge(contact_params) }
   let(:service) { CreateContact.new(params) }
 
@@ -33,7 +33,7 @@ describe CreateContact do
 
       before { allow(contact_builder).to receive(:build).and_return(contact) }
 
-      it { is_expected.to be(contact)}
+      it { is_expected.to be(contact) }
     end
   end
 end

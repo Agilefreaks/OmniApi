@@ -1,13 +1,13 @@
 class CreateContact
   def self.with(params)
-    CreateClipping.new(params).create
+    CreateContact.new(params).create
   end
 
-  attr_accessor :contact_builder, :params
+  attr_accessor :contact_builder, :access_token, :params
 
   def initialize(args)
-    access_token = args[:access_token]
-    params = args.slice(:access_token, :contact_id, :first_name, :last_name, :phone_numbers, :image)
+    @access_token = args[:access_token]
+    @params = args.slice(:contact_id, :first_name, :last_name, :phone_numbers, :image)
   end
 
   def create
