@@ -56,4 +56,5 @@ group :test do
   gem 'simplecov-teamcity-summary'
   gem 'mongoid-rspec', '~> 2.0.0.rc1'
   gem 'timecop'
+  gem 'faker'
 end
