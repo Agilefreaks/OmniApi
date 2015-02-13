@@ -20,6 +20,7 @@ module API
   require 'resources/authorization_codes'
   require 'resources/sms_messages'
   require 'resources/phone_calls'
+  require 'resources/batch'
 
   class RootV1 < Grape::API
     mount Resources::OAuth2
@@ -30,6 +31,7 @@ module API
     mount Resources::AuthorizationCodes
     mount Resources::SmsMessages
     mount Resources::PhoneCalls
+    mount Resources::Batch
 
     base_paths = {
       'development' => 'http://localhost:9292/api/v1',

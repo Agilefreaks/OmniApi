@@ -11,10 +11,13 @@ module API
             requires :contact_id, type: String, desc: 'A unique contact id used to identify a contact across devices.'
             optional :first_name, type: String, desc: 'The contact first name.'
             optional :last_name, type: String, desc: 'The contact last name.'
+            optional :name, type: String, desc: 'The contact name.'
+            optional :middle_name, type: String, desc: 'The contact middle name.'
             optional :phone_numbers, type: Array, desc: 'An array of phone numbers corresponding to the contact'
             optional :image, type: String, desc: 'A Base64 encoded image'
           end
           post do
+            # if batch don't notify
             present CreateContact.with(merged_params(false)), with: API::Entities::Contact
           end
 

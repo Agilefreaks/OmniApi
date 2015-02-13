@@ -6,6 +6,7 @@ gem 'puma'
 gem 'grape', '~> 0.10.1'
 gem 'grape-entity'
 gem 'grape-swagger'
+gem 'grape-batch'
 
 gem 'mongoid', '4.0.0'
 
