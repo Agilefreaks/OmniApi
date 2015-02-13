@@ -6,29 +6,54 @@ describe API::Resources::User::Contacts do
   describe "POST 'api/v1/user/contacts'" do
     let(:params) do
       {
-        contact_id: 'someId12',
+        device_id: 'device id',
+        contact_id: 42,
         first_name: 'John',
         last_name: 'Doe',
-        phone_numbers: %w(123 456),
+        phone_numbers: [
+          {
+            number: '123',
+            type: 'work'
+          },
+          {
+            number: '456',
+            type: 'home'
+          }
+        ],
         image: 'someData'
       }
     end
 
-    before do
-      post '/api/v1/user/contacts', params.to_json, options
+    subject do
+      # noinspection RubyStringKeysInHashInspection
+      post '/api/v1/user/contacts', params.to_json, options.merge({ 'HTTP_NO_NOTIFICATION' => true })
+      JSON.parse(last_response.body)
     end
 
-    subject { JSON.parse(last_response.body) }
-
-    its(['contact_id']) { is_expected.to eq 'someId12' }
+    its(['contact_id']) { is_expected.to eq 42 }
 
     its(['first_name']) { is_expected.to eq 'John' }
 
     its(['last_name']) { is_expected.to eq 'Doe' }
 
-    its(['phone_numbers']) { is_expected.to eq %w(123 456) }
-
     its(['image']) { is_expected.to eq 'someData' }
+
+    it 'will create phone number' do
+      phone_numbers = subject['phone_numbers']
+
+      expect(phone_numbers.size).to eq 2
+      expect(phone_numbers.first['number']).to eq '123'
+      expect(phone_numbers.first['type']).to eq 'work'
+      expect(phone_numbers.last['number']).to eq '456'
+      expect(phone_numbers.last['type']).to eq 'home'
+    end
+
+    context 'when contact with duplicate contact_id' do
+      it 'will return a bad request' do
+        2.times { post '/api/v1/user/contacts', params.to_json, options }
+        expect(last_response).to be_bad_request
+      end
+    end
   end
 
   describe "GET 'api/v1/user/contacts'" do
@@ -40,7 +65,6 @@ describe API::Resources::User::Contacts do
 
     it 'searches for contacts for the current user' do
       expect(FindContacts).to receive(:for).with(access_token.token, from_time).and_return([])
-
       subject
     end
 

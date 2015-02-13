@@ -5,17 +5,37 @@ module API
         resources :contacts do
           before { authenticate! }
 
-          desc 'Post a contact.', ParamsHelper.omni_headers
+          def contact_headers
+            {
+              headers: ParamsHelper.auth_headers.merge(ParamsHelper.client_version_headers).merge('No-Notification' => {
+                                                                          description: 'Set if not to send sync.',
+                                                                          required: false
+                                                                        })
+            }
+          end
+
+          desc 'Post a contact.', contact_headers
           params do
             optional :device_id, type: String, desc: 'Id for source device.'
-            requires :contact_id, type: String, desc: 'A unique contact id used to identify a contact across devices.'
+            requires :contact_id, type: Integer, desc: 'A unique contact id used to identify a contact across devices.'
             optional :first_name, type: String, desc: 'The contact first name.'
             optional :last_name, type: String, desc: 'The contact last name.'
-            optional :phone_numbers, type: Array, desc: 'An array of phone numbers corresponding to the contact'
+            optional :name, type: String, desc: 'The contact name.'
+            optional :middle_name, type: String, desc: 'The contact middle name.'
+            optional :phone_numbers, type: Array, desc: 'An array of phone numbers corresponding to the contact' do
+              requires :number, type: String, desc: 'The actual phone number.'
+              requires :type, type: String, desc: 'The type of the phone number.'
+            end
             optional :image, type: String, desc: 'A Base64 encoded image'
           end
           post do
-            present CreateContact.with(merged_params(false)), with: API::Entities::Contact
+            contact = CreateContact.with(merged_params(false).merge(:no_notification => headers['No-Notification']))
+
+            if contact.valid?
+              present contact, with: API::Entities::Contact
+            else
+              error!(contact.errors, 400)
+            end
           end
 
           desc "Get a user's contacts", ParamsHelper.omni_headers

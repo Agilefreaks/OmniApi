@@ -1,6 +1,8 @@
+require_relative 'timestamp_base_entity'
+
 module API
   module Entities
-    class Clipping < BaseEntity
+    class Clipping < TimestampBaseEntity
       expose :content, :type
     end
   end

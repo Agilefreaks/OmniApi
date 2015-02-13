@@ -7,8 +7,7 @@ module ParamsHelper
 
   def merged_params(include_missing = true)
     result = merge_access_token(declared_params(include_missing))
-    result = merge_client_version(result)
-    result
+    merge_client_version(result)
   end
 
   def merge_access_token(params)

@@ -5,7 +5,8 @@ describe CreateContact do
 
   let(:contact_params) do
     {
-      contact_id: 'someId12',
+      device_id: 'device id',
+      contact_id: 42,
       first_name: 'John',
       last_name: 'Doe',
       phone_numbers: %w(123 456),
@@ -17,7 +18,7 @@ describe CreateContact do
 
   describe :create do
     let(:contact_builder) { double(ContactBuilder) }
-    let(:contact) { Contact.new }
+    let(:contact) { Fabricate(:contact, user: user) }
 
     before do
       allow(contact_builder).to receive(:build).and_return(contact)
@@ -27,7 +28,7 @@ describe CreateContact do
     subject { service.create }
 
     it 'calls build with the access token and the contact params' do
-      expect(contact_builder).to receive(:build).with(access_token.token, contact_params)
+      expect(contact_builder).to receive(:build).with(access_token.token, contact_params.except(:device_id))
 
       subject
     end
@@ -42,5 +43,10 @@ describe CreateContact do
     end
 
     it { is_expected.to be(contact) }
+
+    it 'will call NotificationService#contact_created' do
+      expect_any_instance_of(NotificationService).to receive(:contact_created).with(kind_of(Contact), 'device id')
+      subject
+    end
   end
 end
