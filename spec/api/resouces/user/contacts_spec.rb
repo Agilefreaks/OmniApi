@@ -6,10 +6,19 @@ describe API::Resources::User::Contacts do
   describe "POST 'api/v1/user/contacts'" do
     let(:params) do
       {
-        contact_id: 'someId12',
+        contact_id: 42,
         first_name: 'John',
         last_name: 'Doe',
-        phone_numbers: %w(123 456),
+        phone_numbers: [
+          {
+            number: '123',
+            type: 'work'
+          },
+          {
+            number: '456',
+            type: 'home'
+          }
+        ],
         image: 'someData'
       }
     end
@@ -20,15 +29,23 @@ describe API::Resources::User::Contacts do
 
     subject { JSON.parse(last_response.body) }
 
-    its(['contact_id']) { is_expected.to eq 'someId12' }
+    its(['contact_id']) { is_expected.to eq 42 }
 
     its(['first_name']) { is_expected.to eq 'John' }
 
     its(['last_name']) { is_expected.to eq 'Doe' }
 
-    its(['phone_numbers']) { is_expected.to eq %w(123 456) }
-
     its(['image']) { is_expected.to eq 'someData' }
+
+    it 'will create phone number' do
+      phone_numbers = subject['phone_numbers']
+
+      expect(phone_numbers.size).to eq 2
+      expect(phone_numbers.first['number']).to eq '123'
+      expect(phone_numbers.first['type']).to eq 'work'
+      expect(phone_numbers.last['number']).to eq '456'
+      expect(phone_numbers.last['type']).to eq 'home'
+    end
   end
 
   describe "GET 'api/v1/user/contacts'" do

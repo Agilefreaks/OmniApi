@@ -8,12 +8,15 @@ module API
           desc 'Post a contact.', ParamsHelper.omni_headers
           params do
             optional :device_id, type: String, desc: 'Id for source device.'
-            requires :contact_id, type: String, desc: 'A unique contact id used to identify a contact across devices.'
+            requires :contact_id, type: Integer, desc: 'A unique contact id used to identify a contact across devices.'
             optional :first_name, type: String, desc: 'The contact first name.'
             optional :last_name, type: String, desc: 'The contact last name.'
             optional :name, type: String, desc: 'The contact name.'
             optional :middle_name, type: String, desc: 'The contact middle name.'
-            optional :phone_numbers, type: Array, desc: 'An array of phone numbers corresponding to the contact'
+            optional :phone_numbers, type: Array, desc: 'An array of phone numbers corresponding to the contact' do
+              requires :number, type: String, desc: 'The actual phone number.'
+              requires :type, type: String, desc: 'The type of the phone number.'
+            end
             optional :image, type: String, desc: 'A Base64 encoded image'
           end
           post do

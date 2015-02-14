@@ -1,6 +1,7 @@
+require_relative 'timestamp_base_entity'
 module API
   module Entities
-    class AuthorizationCode < BaseEntity
+    class AuthorizationCode < TimestampBaseEntity
       expose :code
     end
   end
