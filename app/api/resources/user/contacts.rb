@@ -7,10 +7,11 @@ module API
 
           def contact_headers
             {
-              headers: ParamsHelper.auth_headers.merge(ParamsHelper.client_version_headers).merge('No-Notification' => {
-                                                                                                    description: 'Set not to send sync.',
-                                                                                                    required: false
-                                                                                                  })
+              headers: ParamsHelper.auth_headers.merge(
+                ParamsHelper.client_version_headers).merge('No-Notification' => {
+                                                             description: 'Set not to send sync.',
+                                                             required: false
+                                                           })
             }
           end
 
