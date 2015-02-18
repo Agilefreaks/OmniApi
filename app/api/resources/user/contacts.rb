@@ -8,9 +8,9 @@ module API
           def contact_headers
             {
               headers: ParamsHelper.auth_headers.merge(ParamsHelper.client_version_headers).merge('No-Notification' => {
-                                                                          description: 'Set if not to send sync.',
-                                                                          required: false
-                                                                        })
+                                                                                                    description: 'Set not to send sync.',
+                                                                                                    required: false
+                                                                                                  })
             }
           end
 
@@ -29,7 +29,7 @@ module API
             optional :image, type: String, desc: 'A Base64 encoded image'
           end
           post do
-            contact = CreateContact.with(merged_params(false).merge(:no_notification => headers['No-Notification']))
+            contact = CreateContact.with(merged_params(false).merge(no_notification: headers['No-Notification']))
 
             if contact.valid?
               present contact, with: API::Entities::Contact

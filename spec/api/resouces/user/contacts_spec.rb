@@ -26,7 +26,7 @@ describe API::Resources::User::Contacts do
 
     subject do
       # noinspection RubyStringKeysInHashInspection
-      post '/api/v1/user/contacts', params.to_json, options.merge({ 'HTTP_NO_NOTIFICATION' => true })
+      post '/api/v1/user/contacts', params.to_json, options.merge('HTTP_NO_NOTIFICATION' => true)
       JSON.parse(last_response.body)
     end
 
