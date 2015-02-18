@@ -54,28 +54,59 @@ describe NotificationService do
   end
 
   %w(end_phone_call_requested phone_call_received start_phone_call_requested phone_call_ended).each do |event|
-    let(:model) { Fabricate(:phone_call, id: BSON::ObjectId.from_string('5424468a63616c6cfb000000'), user: user) }
+    context event do
+      let(:model) { Fabricate(:phone_call, id: BSON::ObjectId.from_string('5424468a63616c6cfb000000'), user: user) }
 
-    it_behaves_like :interaction_notification_provider,
-                    event,
-                    data: {
-                      type: event,
-                      payload: {
-                        id: '5424468a63616c6cfb000000'
+      it_behaves_like :interaction_notification_provider,
+                      event,
+                      data: {
+                        type: event,
+                        payload: {
+                          id: '5424468a63616c6cfb000000'
+                        }
                       }
-                    }
+    end
   end
 
   %w(sms_message_received send_sms_message_requested).each do |event|
-    let(:model) { Fabricate(:sms_message, id: BSON::ObjectId.from_string('5424468a63616c6cfb000000'), user: user) }
+    context event do
+      let(:model) { Fabricate(:sms_message, id: BSON::ObjectId.from_string('5424468a63616c6cfb000000'), user: user) }
 
-    it_behaves_like :interaction_notification_provider,
-                    event,
-                    data: {
-                      type: event,
-                      payload: {
-                        id: '5424468a63616c6cfb000000'
+      it_behaves_like :interaction_notification_provider,
+                      event,
+                      data: {
+                        type: event,
+                        payload: {
+                          id: '5424468a63616c6cfb000000'
+                        }
                       }
-                    }
+    end
+  end
+
+  %w(contact_created).each do |event|
+    context event do
+      let(:model) { Fabricate(:contact, id: BSON::ObjectId.from_string('5424468a63616c6cfb000001'), user: user) }
+
+      it_behaves_like :interaction_notification_provider,
+                      event,
+                      data: {
+                        type: event,
+                        payload: {
+                          id: '5424468a63616c6cfb000001'
+                        }
+                      }
+    end
+  end
+
+  %w(contacts_updated).each do |event|
+    let(:model) { OpenStruct.new(user: user) }
+
+    context event do
+      it_behaves_like :interaction_notification_provider,
+                      event,
+                      data: {
+                        type: event
+                      }
+    end
   end
 end

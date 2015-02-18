@@ -10,17 +10,18 @@ class NotificationService
 
   %w(clipping_created
      end_phone_call_requested phone_call_received start_phone_call_requested phone_call_ended
-     sms_message_received send_sms_message_requested).each do |method_name|
+     sms_message_received send_sms_message_requested
+     contacts_updated contact_created).each do |method_name|
     define_method(method_name) do |model, device_id|
       options = {
         data:
           {
-            type: method_name,
-            payload: {
-              id: model.id.to_s
-            }
+            type: method_name
           }
       }
+
+      options[:data][:payload] = { id: model.id.to_s } if model.respond_to?(:id)
+
       send_notification(model.user, device_id, options)
     end
   end

@@ -26,5 +26,10 @@ describe :batch do
     it 'will create contacts' do
       expect { subject }.to change { user.contacts.count }.by(2)
     end
+
+    it 'will call NotificationService#contacts_updated' do
+      expect_any_instance_of(NotificationService).to receive(:contacts_updated).with(duck_type(:user), nil)
+      subject
+    end
   end
 end

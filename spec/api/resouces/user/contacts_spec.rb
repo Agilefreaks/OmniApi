@@ -6,6 +6,7 @@ describe API::Resources::User::Contacts do
   describe "POST 'api/v1/user/contacts'" do
     let(:params) do
       {
+        device_id: 'device id',
         contact_id: 42,
         first_name: 'John',
         last_name: 'Doe',
@@ -23,11 +24,11 @@ describe API::Resources::User::Contacts do
       }
     end
 
-    before do
-      post '/api/v1/user/contacts', params.to_json, options
+    subject do
+      # noinspection RubyStringKeysInHashInspection
+      post '/api/v1/user/contacts', params.to_json, options.merge({ 'HTTP_NO_NOTIFICATION' => true })
+      JSON.parse(last_response.body)
     end
-
-    subject { JSON.parse(last_response.body) }
 
     its(['contact_id']) { is_expected.to eq 42 }
 
@@ -49,7 +50,7 @@ describe API::Resources::User::Contacts do
 
     context 'when contact with duplicate contact_id' do
       it 'will return a bad request' do
-        post '/api/v1/user/contacts', params.to_json, options
+        2.times { post '/api/v1/user/contacts', params.to_json, options }
         expect(last_response).to be_bad_request
       end
     end
@@ -64,7 +65,6 @@ describe API::Resources::User::Contacts do
 
     it 'searches for contacts for the current user' do
       expect(FindContacts).to receive(:for).with(access_token.token, from_time).and_return([])
-
       subject
     end
 

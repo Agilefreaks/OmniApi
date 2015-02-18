@@ -5,7 +5,16 @@ module API
         resources :contacts do
           before { authenticate! }
 
-          desc 'Post a contact.', ParamsHelper.omni_headers
+          def contact_headers
+            {
+              headers: ParamsHelper.auth_headers.merge(ParamsHelper.client_version_headers).merge('No-Notification' => {
+                                                                          description: 'Set if not to send sync.',
+                                                                          required: false
+                                                                        })
+            }
+          end
+
+          desc 'Post a contact.', contact_headers
           params do
             optional :device_id, type: String, desc: 'Id for source device.'
             requires :contact_id, type: Integer, desc: 'A unique contact id used to identify a contact across devices.'
@@ -20,8 +29,7 @@ module API
             optional :image, type: String, desc: 'A Base64 encoded image'
           end
           post do
-            # if batch don't notify
-            contact = CreateContact.with(merged_params(false))
+            contact = CreateContact.with(merged_params(false).merge(:no_notification => headers['No-Notification']))
 
             if contact.valid?
               present contact, with: API::Entities::Contact
