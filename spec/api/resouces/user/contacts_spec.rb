@@ -46,6 +46,13 @@ describe API::Resources::User::Contacts do
       expect(phone_numbers.last['number']).to eq '456'
       expect(phone_numbers.last['type']).to eq 'home'
     end
+
+    context 'when contact with duplicate contact_id' do
+      it 'will return a bad request' do
+        post '/api/v1/user/contacts', params.to_json, options
+        expect(last_response).to be_bad_request
+      end
+    end
   end
 
   describe "GET 'api/v1/user/contacts'" do

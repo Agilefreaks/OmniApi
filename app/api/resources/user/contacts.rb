@@ -21,7 +21,13 @@ module API
           end
           post do
             # if batch don't notify
-            present CreateContact.with(merged_params(false)), with: API::Entities::Contact
+            contact = CreateContact.with(merged_params(false))
+
+            if contact.valid?
+              present contact, with: API::Entities::Contact
+            else
+              error!(contact.errors, 400)
+            end
           end
 
           desc "Get a user's contacts", ParamsHelper.omni_headers
