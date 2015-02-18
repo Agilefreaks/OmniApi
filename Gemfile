@@ -9,8 +9,6 @@ gem 'grape-swagger'
 gem 'grape-batch'
 
 gem 'mongoid', '~> 4.0'
-# until https://github.com/mongoid/moped/issues/345 get's released
-gem 'moped', github: 'mongoid/moped'
 
 gem 'bundler'
 gem 'rake'
