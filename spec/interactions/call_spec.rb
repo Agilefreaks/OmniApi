@@ -10,6 +10,7 @@ describe Call do
       { access_token: access_token.token,
         number: '898989',
         contact_name: 'Ion',
+        contact_id: 43,
         device_id: '42',
         state: state,
         type: type }

@@ -26,6 +26,7 @@ module API
           mutually_exclusive :content, :content_list
 
           optional :contact_name, type: String, desc: 'The contact name.'
+          optional :contact_id, type: Integer, desc: 'The contact id.'
           optional :contact_name_list, type: Array[String], desc: 'The contact names.'
           mutually_exclusive :contact_name, :contact_name_list
 

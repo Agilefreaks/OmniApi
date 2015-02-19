@@ -4,6 +4,7 @@ class SmsMessage
 
   field :phone_number, type: String
   field :contact_name, type: String
+  field :contact_id, type: Integer
   field :content, type: String
   field :phone_number_list, type: Array, default: []
   field :contact_name_list, type: Array, default: []

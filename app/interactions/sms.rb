@@ -2,7 +2,7 @@ class Sms
   class SmsMessageParams
     attr_accessor :phone_number, :phone_number_list,
                   :content, :content_list,
-                  :contact_name, :contact_name_list,
+                  :contact_name, :contact_id, :contact_name_list,
                   :access_token,
                   :device_id,
                   :state,
@@ -14,6 +14,7 @@ class Sms
       @content = params[:content]
       @content_list = params[:content_list]
       @contact_name = params[:contact_name]
+      @contact_id = params[:contact_id]
       @contact_name_list = params[:contact_name_list]
       @access_token = params[:access_token]
       @type = params[:type]
@@ -45,6 +46,7 @@ class Sms
       content: @params.content,
       content_list: @params.content_list || [],
       contact_name: @params.contact_name,
+      contact_id: @params.contact_id,
       contact_name_list: @params.contact_name_list || []
     )
 
