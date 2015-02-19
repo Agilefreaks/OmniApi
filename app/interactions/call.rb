@@ -1,11 +1,12 @@
 class Call
   class CallParams
-    attr_accessor :access_token, :number, :contact_name, :device_id, :state, :type
+    attr_accessor :access_token, :number, :contact_name, :contact_id, :device_id, :state, :type
 
     def initialize(params)
       @access_token = params[:access_token]
       @number = params[:number]
       @contact_name = params[:contact_name]
+      @contact_id = params[:contact_id]
       @device_id = params[:device_id]
       @state = params[:state]
       @type = params[:type]
@@ -30,7 +31,8 @@ class Call
 
     phone_call = user.phone_calls.create(
       number: @call_params.number,
-      contact_name: @call_params.contact_name
+      contact_name: @call_params.contact_name,
+      contact_id: @call_params.contact_id
     )
 
     send("#{@call_params.type}_#{@call_params.state}", phone_call, @call_params.device_id)

@@ -18,6 +18,7 @@ module API
                             the target device id, depending on the value of @state'
             optional :number, type: String, desc: 'The phone number.'
             optional :contact_name, type: String, desc: 'Contact name.'
+            optional :contact_id, type: Integer, desc: 'Contact id.'
             optional :type,
                      values: %w(incoming outgoing),
                      type: String,
