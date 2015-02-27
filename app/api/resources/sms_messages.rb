@@ -30,11 +30,11 @@ module API
           optional :contact_name_list, type: Array[String], desc: 'The contact names.'
           mutually_exclusive :contact_name, :contact_name_list
 
-          optional :type,
+          requires :type,
                    values: %w(incoming outgoing),
                    type: String,
                    desc: 'Type of the sms_message.'
-          optional :state,
+          requires :state,
                    values: %w(sending sent received),
                    type: String,
                    desc: 'State of the call.'
