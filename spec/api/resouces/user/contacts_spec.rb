@@ -57,34 +57,56 @@ describe API::Resources::User::Contacts do
   end
 
   describe "GET 'api/v1/user/contacts'" do
-    let(:from_time) { Time.new(2015, 1, 1, 1, 0, 0) }
-
-    let(:action) { get "/api/v1/user/contacts?from=#{from_time.iso8601}", '', options }
-
     subject { action }
 
-    it 'searches for contacts for the current user' do
-      expect(FindContacts).to receive(:for).with(access_token.token, from_time).and_return([])
-      subject
+    context 'from_time' do
+      let(:from_time) { Time.new(2015, 1, 1, 1, 0, 0) }
+
+      let(:action) { get "/api/v1/user/contacts?from=#{from_time.iso8601}", '', options }
+
+      it 'call FindContacts with from' do
+        expect(FindContacts).to receive(:for).with(access_token.token, from: from_time)
+        subject
+      end
+
+      context 'the search returns results' do
+        let!(:contacts) { [Fabricate(:contact, user: user), Fabricate(:contact, user: user)] }
+
+        before { allow(FindContacts).to receive(:for).and_return(contacts) }
+
+        describe 'the response' do
+          before { action }
+
+          let(:json_response) { JSON.parse(last_response.body, symbolize_names: true) }
+
+          subject { json_response }
+
+          its(:length) { is_expected.to eq(2) }
+
+          it { is_expected.to include(API::Entities::Contact.represent(contacts[0]).as_json) }
+
+          it { is_expected.to include(API::Entities::Contact.represent(contacts[1]).as_json) }
+        end
+      end
     end
 
-    context 'the search returns results' do
-      let!(:contacts) { [Fabricate(:contact, user: user), Fabricate(:contact, user: user)] }
+    context 'contact_id' do
+      let(:contact_id) { 42 }
 
-      before { allow(FindContacts).to receive(:for).and_return(contacts) }
+      let(:action) { get "/api/v1/user/contacts?contact_id=#{contact_id}", '', options }
 
-      describe 'the response' do
-        before { action }
+      it 'calls FindContacts with contact id' do
+        expect(FindContacts).to receive(:for).with(access_token.token, contact_id: contact_id)
+        subject
+      end
+    end
 
-        let(:json_response) { JSON.parse(last_response.body, symbolize_names: true) }
+    context 'no params' do
+      let(:action) { get '/api/v1/user/contacts', '', options }
 
-        subject { json_response }
-
-        its(:length) { is_expected.to eq(2) }
-
-        it { is_expected.to include(API::Entities::Contact.represent(contacts[0]).as_json) }
-
-        it { is_expected.to include(API::Entities::Contact.represent(contacts[1]).as_json) }
+      it 'call FindContacts with nil' do
+        expect(FindContacts).to receive(:for).with(access_token.token, {})
+        subject
       end
     end
   end

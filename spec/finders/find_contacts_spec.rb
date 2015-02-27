@@ -4,34 +4,51 @@ describe FindContacts do
   include_context :with_authenticated_user
 
   describe :for do
-    let(:params) { [access_token.token] }
-    subject { FindContacts.for(*params) }
+    let(:params) { {} }
+    subject { FindContacts.for(access_token.token, params) }
 
     context 'the current user has at least one contact' do
       let(:contact1) { Fabricate(:contact, user: user) }
 
       it { is_expected.to include(contact1) }
 
-      context 'a second parameter is given representing a specific time' do
-        let(:from_time) { Time.new(2015, 1, 1, 1, 0, 0) }
-        before { params.push(from_time) }
+      context 'a from time is given' do
+        let(:from) { Time.new(2015, 1, 1, 1, 0, 0) }
+        before { params[:from] = from }
 
         context 'a contact was updated after the given time' do
-          before { contact1.update_attribute(:updated_at, from_time + 1.minute) }
+          before { contact1.update_attribute(:updated_at, from + 1.minute) }
 
           it  { is_expected.to include(contact1) }
         end
 
         context 'a contact was updated before the given time' do
-          before { contact1.update_attribute(:updated_at, from_time - 1.minute) }
+          before { contact1.update_attribute(:updated_at, from - 1.minute) }
 
           it  { is_expected.to_not include(contact1) }
         end
 
         describe 'contacts updated before the given time' do
-          let(:old_contacts) { subject.select { |contact| contact.updated_at < from_time } }
+          let(:old_contacts) { subject.select { |contact| contact.updated_at < from } }
 
           its(:length) { is_expected.to eq(0) }
+        end
+      end
+
+      context 'a contact_id is given' do
+        let(:contact_id) { 42 }
+        before { params[:contact_id] = contact_id }
+
+        context 'when there is a user with contact id' do
+          before { contact1.update_attribute(:contact_id, contact_id) }
+
+          it { is_expected.to eq contact1 }
+        end
+
+        context 'when there is no user with the contact id' do
+          it 'will throw DocumentNotFound' do
+            expect { subject }.to raise_error Mongoid::Errors::DocumentNotFound
+          end
         end
       end
     end

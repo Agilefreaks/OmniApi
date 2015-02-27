@@ -43,9 +43,11 @@ module API
           params do
             optional :from, type: Time, desc: 'A timestamp in the iso8601 format (eg: 2015-02-06T15:03:30+02:00),
                                                to filter contacts with, based on their updated_at field'
+            optional :contact_id, type: Integer, desc: 'A contact id.'
+            mutually_exclusive :from, :contact_id
           end
           get do
-            present FindContacts.for(@current_token.token, declared_params[:from]), with: API::Entities::Contact
+            present FindContacts.for(@current_token.token, declared_params(false)), with: API::Entities::Contact
           end
         end
       end
