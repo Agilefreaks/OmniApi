@@ -3,27 +3,27 @@ require 'spec_helper'
 describe API::Resources::User::Contacts do
   include_context :with_authenticated_user
 
-  describe "POST 'api/v1/user/contacts'" do
-    let(:params) do
-      {
-        device_id: 'device id',
-        contact_id: 42,
-        first_name: 'John',
-        last_name: 'Doe',
-        phone_numbers: [
-          {
-            number: '123',
-            type: 'work'
-          },
-          {
-            number: '456',
-            type: 'home'
-          }
-        ],
-        image: 'someData'
-      }
-    end
+  let(:params) do
+    {
+      device_id: 'device id',
+      contact_id: 42,
+      first_name: 'John',
+      last_name: 'Doe',
+      phone_numbers: [
+        {
+          number: '123',
+          type: 'work'
+        },
+        {
+          number: '456',
+          type: 'home'
+        }
+      ],
+      image: 'someData'
+    }
+  end
 
+  describe "POST 'api/v1/user/contacts'" do
     subject do
       # noinspection RubyStringKeysInHashInspection
       post '/api/v1/user/contacts', params.to_json, options.merge('HTTP_NO_NOTIFICATION' => true)
@@ -123,21 +123,11 @@ describe API::Resources::User::Contacts do
   end
 
   describe "PUT 'api/v1/users/contacts/:id'" do
-    let(:params) do
-      {
-        device_id: 'device id',
-        contact_id: 42,
-        first_name: 'John',
-        last_name: 'Doe',
-      }
-    end
-
     subject { put 'api/v1/user/contacts/42', params.to_json, options }
 
-    it 'will call update_attributes on the contact' do
-      contact = Fabricate(:contact, user: user)
-      expect(FindContacts).to receive(:for).with(access_token.token, id: '42').and_return(contact)
-      expect(contact).to receive(:update_attributes)
+    it 'will call update_contact with params' do
+      expected_params = params.merge(id: '42', name: nil, middle_name: nil, access_token: access_token.token)
+      expect(UpdateContact).to receive(:with).with(expected_params)
       subject
     end
   end

@@ -83,7 +83,7 @@ describe NotificationService do
     end
   end
 
-  %w(contact_created).each do |event|
+  %w(contact_created contact_updated).each do |event|
     context event do
       let(:model) { Fabricate(:contact, id: BSON::ObjectId.from_string('5424468a63616c6cfb000001'), user: user) }
 

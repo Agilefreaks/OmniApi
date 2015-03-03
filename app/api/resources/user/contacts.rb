@@ -71,10 +71,7 @@ module API
               use :shared
             end
             put do
-              contact = FindContacts.for(@current_token.token, id: declared_params[:id])
-              contact.update_attributes(declared_params)
-
-              present contact, with: API::Entities::Contact
+              present UpdateContact.with(merged_params), with: API::Entities::Contact
             end
           end
         end

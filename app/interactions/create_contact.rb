@@ -3,7 +3,8 @@ class CreateContact
     CreateContact.new(params).create
   end
 
-  attr_accessor :contact_builder, :access_token, :params, :device_id, :no_notification
+  attr_reader :access_token, :params, :device_id, :no_notification
+  attr_accessor :contact_builder
 
   def initialize(args)
     @access_token = args[:access_token]
