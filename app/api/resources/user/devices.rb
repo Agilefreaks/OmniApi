@@ -32,51 +32,45 @@ module API
             present device, with: API::Entities::Device
           end
 
-          desc 'Get a device.', ParamsHelper.omni_headers
-          params do
-            requires :id, type: String, desc: 'Device id.'
-          end
-          route_param :id do
-            get do
-              present @current_user.devices.find(declared_params[:id]), with: API::Entities::Device
-            end
-          end
-
           desc 'Get all devices.', ParamsHelper.omni_headers
           get do
             present @current_user.devices, with: API::Entities::Device
           end
 
-          desc 'Delete a device.', ParamsHelper.omni_headers
-          params do
-            requires :id, type: String, desc: 'Device id.'
-          end
           route_param :id do
-            delete do
-              @current_user.devices.find(declared_params[:id]).delete
+            desc 'Get a device.', ParamsHelper.omni_headers
+            params do
+              requires :id, type: String, desc: 'Device id.'
             end
-          end
+            get do
+              present @current_user.devices.find(declared_params[:id]), with: API::Entities::Device
+            end
 
-          desc 'Update existing device.', ParamsHelper.omni_headers
-          params do
-            requires :id, type: String, desc: 'Device id.'
-            use :shared
-          end
-          route_param :id do
+            desc 'Update existing device.', ParamsHelper.omni_headers
+            params do
+              requires :id, type: String, desc: 'Device id.'
+              use :shared
+            end
             put do
               device = @current_user.devices.find(declared_params[:id])
               device.update_attributes(declared_params)
 
               present device, with: API::Entities::Device
             end
-          end
 
-          desc 'Patch an existing device.', ParamsHelper.omni_headers
-          params do
-            requires :id, type: String, desc: 'Device id.'
-            use :shared
-          end
-          route_param :id do
+            desc 'Delete a device.', ParamsHelper.omni_headers
+            params do
+              requires :id, type: String, desc: 'Device id.'
+            end
+            delete do
+              @current_user.devices.find(declared_params[:id]).delete
+            end
+
+            desc 'Patch an existing device.', ParamsHelper.omni_headers
+            params do
+              requires :id, type: String, desc: 'Device id.'
+              use :shared
+            end
             patch do
               device = @current_user.devices.find(declared_params[:id])
               device.update_attributes(declared_params(false))
