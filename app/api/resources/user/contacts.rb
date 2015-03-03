@@ -49,6 +49,16 @@ module API
           get do
             present FindContacts.for(@current_token.token, declared_params(false)), with: API::Entities::Contact
           end
+
+          route_param :id do
+            desc "Get a user's contacts", ParamsHelper.omni_headers
+            params do
+              requires :id, type: String, desc: 'The contact id'
+            end
+            get do
+              present FindContacts.for(@current_token.token, declared_params(false)), with: API::Entities::Contact
+            end
+          end
         end
       end
     end

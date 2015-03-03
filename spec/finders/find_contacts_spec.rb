@@ -51,6 +51,17 @@ describe FindContacts do
           end
         end
       end
+
+      context 'a id is given' do
+        let(:id) { '5424468a63616c6cfb000001' }
+        before { params[:id] = id }
+
+        context 'where there is a user with this id' do
+          let!(:contact) { Fabricate(:contact, id: BSON::ObjectId.from_string(id), user: user) }
+
+          it { is_expected.to eq contact }
+        end
+      end
     end
 
     context 'at least another user exists in the db' do

@@ -110,4 +110,15 @@ describe API::Resources::User::Contacts do
       end
     end
   end
+
+  describe "GET 'api/v1/user/contacts/:id'" do
+    let(:id) { '5424468a63616c6cfb000001' }
+
+    subject { get "/api/v1/user/contacts/#{id}", '', options }
+
+    it 'calls FindContacts with id' do
+      expect(FindContacts).to receive(:for).with(access_token.token, id: id)
+      subject
+    end
+  end
 end
