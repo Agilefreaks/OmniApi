@@ -121,4 +121,24 @@ describe API::Resources::User::Contacts do
       subject
     end
   end
+
+  describe "PUT 'api/v1/users/contacts/:id'" do
+    let(:params) do
+      {
+        device_id: 'device id',
+        contact_id: 42,
+        first_name: 'John',
+        last_name: 'Doe',
+      }
+    end
+
+    subject { put 'api/v1/user/contacts/42', params.to_json, options }
+
+    it 'will call update_attributes on the contact' do
+      contact = Fabricate(:contact, user: user)
+      expect(FindContacts).to receive(:for).with(access_token.token, id: '42').and_return(contact)
+      expect(contact).to receive(:update_attributes)
+      subject
+    end
+  end
 end

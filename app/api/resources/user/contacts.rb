@@ -15,19 +15,25 @@ module API
             }
           end
 
+          helpers do
+            params :shared do
+              optional :device_id, type: String, desc: 'Id for source device.'
+              requires :contact_id, type: Integer, desc: 'A unique contact id used to identify a contact across devices.'
+              optional :first_name, type: String, desc: 'The contact first name.'
+              optional :last_name, type: String, desc: 'The contact last name.'
+              optional :name, type: String, desc: 'The contact name.'
+              optional :middle_name, type: String, desc: 'The contact middle name.'
+              optional :phone_numbers, type: Array, desc: 'An array of phone numbers corresponding to the contact' do
+                requires :number, type: String, desc: 'The actual phone number.'
+                requires :type, type: String, desc: 'The type of the phone number.'
+              end
+              optional :image, type: String, desc: 'A Base64 encoded image'
+            end
+          end
+
           desc 'Post a contact.', contact_headers
           params do
-            optional :device_id, type: String, desc: 'Id for source device.'
-            requires :contact_id, type: Integer, desc: 'A unique contact id used to identify a contact across devices.'
-            optional :first_name, type: String, desc: 'The contact first name.'
-            optional :last_name, type: String, desc: 'The contact last name.'
-            optional :name, type: String, desc: 'The contact name.'
-            optional :middle_name, type: String, desc: 'The contact middle name.'
-            optional :phone_numbers, type: Array, desc: 'An array of phone numbers corresponding to the contact' do
-              requires :number, type: String, desc: 'The actual phone number.'
-              requires :type, type: String, desc: 'The type of the phone number.'
-            end
-            optional :image, type: String, desc: 'A Base64 encoded image'
+            use :shared
           end
           post do
             contact = CreateContact.with(merged_params(false).merge(no_notification: headers['No-Notification']))
@@ -53,10 +59,22 @@ module API
           route_param :id do
             desc "Get a user's contacts", ParamsHelper.omni_headers
             params do
-              requires :id, type: String, desc: 'The contact id'
+              requires :id, type: String, desc: 'The contact id from the api.'
             end
             get do
               present FindContacts.for(@current_token.token, declared_params(false)), with: API::Entities::Contact
+            end
+
+            desc "Update a user's contact", ParamsHelper.omni_headers
+            params do
+              requires :id, type: String, desc: 'The contact id from the api.'
+              use :shared
+            end
+            put do
+              contact = FindContacts.for(@current_token.token, id: declared_params[:id])
+              contact.update_attributes(declared_params)
+
+              present contact, with: API::Entities::Contact
             end
           end
         end
