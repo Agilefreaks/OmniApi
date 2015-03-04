@@ -23,7 +23,7 @@ describe UpdateSms do
       its(:state) { is_expected.to eq 'sent' }
 
       it 'will send a notification' do
-        expect_any_instance_of(NotificationService).to receive(:sms_message_delivered).with(sms_message, 'device_id')
+        expect_any_instance_of(NotificationService).to receive(:sms_message_sent).with(sms_message, 'device_id')
         subject
       end
     end

@@ -38,24 +38,24 @@ module API
           present Call.with(merged_params), with: API::Entities::PhoneCall
         end
 
-        desc 'Patch a call.', ParamsHelper.omni_headers
-        params do
-          requires :id, type: String, desc: 'The phone call id.'
-          use :shared
-        end
         route_param :id do
+          desc 'Patch a call.', ParamsHelper.omni_headers
+          params do
+            requires :id, type: String, desc: 'The phone call id.'
+            use :shared
+          end
           patch do
             present EndCall.with(merged_params(false)), with: API::Entities::PhoneCall
           end
-        end
 
-        desc 'Get a phone call.', ParamsHelper.omni_headers
-        params do
-          requires :id, type: String, desc: 'The phone call id.'
-        end
-        route_param :id do
-          get do
-            present @current_user.phone_calls.find(declared_params[:id]), with: API::Entities::PhoneCall
+          desc 'Get a phone call.', ParamsHelper.omni_headers
+          params do
+            requires :id, type: String, desc: 'The phone call id.'
+          end
+          route_param :id do
+            get do
+              present @current_user.phone_calls.find(declared_params[:id]), with: API::Entities::PhoneCall
+            end
           end
         end
       end

@@ -16,7 +16,7 @@ class UpdateSms
     user = User.find_by_token(@token)
     sms_message = user.sms_messages.find(@id)
     sms_message.update_attributes(@update_attributes)
-    NotificationService.new.sms_message_delivered(sms_message, @device_id)
+    NotificationService.new.sms_message_sent(sms_message, @device_id)
 
     sms_message
   end
