@@ -46,7 +46,7 @@ module API
           use :shared
         end
         post do
-          present Sms.with(merged_params(false)), with: API::Entities::SmsMessage
+          present Sms::Create.with(merged_params(false)), with: API::Entities::SmsMessage
         end
 
         route_param :id do
@@ -64,7 +64,7 @@ module API
             requires :id, type: String, desc: 'Sms Message id.'
           end
           patch do
-            present UpdateSms.with(merged_params(false)), with: API::Entities::SmsMessage
+            present Sms::Update.with(merged_params(false)), with: API::Entities::SmsMessage
           end
         end
       end

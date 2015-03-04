@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Sms do
+describe Sms::Create do
   describe :with do
     include_context :with_authenticated_user
 
-    let(:sms) { Sms.new(params) }
+    let(:sms) { Sms::Create.new(params) }
     let(:notification_service) { double(NotificationService) }
     let(:params) do
       {

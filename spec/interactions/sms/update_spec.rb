@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UpdateSms do
+describe Sms::Update do
   include_context :with_authenticated_user
 
   describe :with do
@@ -14,7 +14,7 @@ describe UpdateSms do
       }
     end
 
-    subject { UpdateSms.with(params) }
+    subject { Sms::Update.with(params) }
 
     context 'for an existing sms' do
       let(:sms_message) { Fabricate(:sms_message, user: user, state: 'sending') }

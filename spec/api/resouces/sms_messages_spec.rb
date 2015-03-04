@@ -19,7 +19,7 @@ describe API::Resources::SmsMessages do
 
       it 'will call SendSms with correct params' do
         params[:access_token] = access_token.token
-        expect(Sms).to receive(:with).with(params)
+        expect(Sms::Create).to receive(:with).with(params)
         subject
       end
     end
@@ -36,7 +36,7 @@ describe API::Resources::SmsMessages do
 
       it 'will call SendSms with correct params' do
         params[:access_token] = access_token.token
-        expect(Sms).to receive(:with).with(params)
+        expect(Sms::Create).to receive(:with).with(params)
         subject
       end
     end
@@ -63,7 +63,7 @@ describe API::Resources::SmsMessages do
 
     it 'will call update sms with the correct params' do
       expected_params = { access_token: access_token.token, id: sms_message.id.to_s, state: 'sent', type: 'outgoing' }
-      expect(UpdateSms).to receive(:with).with(expected_params)
+      expect(Sms::Update).to receive(:with).with(expected_params)
       subject
     end
   end
