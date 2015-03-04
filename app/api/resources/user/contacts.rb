@@ -18,7 +18,7 @@ module API
           helpers do
             params :shared do
               optional :device_id, type: String, desc: 'Id for source device.'
-              requires :contact_id, type: Integer, desc: 'A unique contact id used to identify a contact across devices.'
+              requires :contact_id, type: Integer, desc: 'A unique contact id to identify a contact across devices.'
               optional :first_name, type: String, desc: 'The contact first name.'
               optional :last_name, type: String, desc: 'The contact last name.'
               optional :name, type: String, desc: 'The contact name.'
