@@ -32,5 +32,18 @@ describe Call::Update do
         end
       end
     end
+
+    context 'when type outgoing' do
+      let(:type) { 'outgoing' }
+
+      context 'when type started' do
+        let(:state) { 'started' }
+
+        it 'will call phone_call_started' do
+          expect_any_instance_of(NotificationService).to receive(:outgoing_started).with(phone_call, '42')
+          subject
+        end
+      end
+    end
   end
 end

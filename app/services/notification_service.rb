@@ -9,7 +9,7 @@ class NotificationService
   end
 
   %w(clipping_created
-     end_phone_call_requested phone_call_received start_phone_call_requested phone_call_ended
+     end_phone_call_requested phone_call_received start_phone_call_requested phone_call_ended outgoing_started
      sms_message_received send_sms_message_requested sms_message_sent
      contacts_updated contact_updated contact_created).each do |method_name|
     define_method(method_name) do |model, device_id|

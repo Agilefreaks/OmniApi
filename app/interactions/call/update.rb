@@ -32,5 +32,9 @@ module Call
     def incoming_ended(phone_call, device_id)
       NotificationService.new.phone_call_ended(phone_call, device_id)
     end
+
+    def outgoing_started(phone_call, device_id)
+      NotificationService.new.outgoing_started(phone_call, device_id)
+    end
   end
 end
