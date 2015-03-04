@@ -9,6 +9,9 @@ class SmsMessage
   field :phone_number_list, type: Array, default: []
   field :contact_name_list, type: Array, default: []
   field :content_list, type: Array, default: []
+  field :state, type: String
 
   belongs_to :user
+
+  validates_inclusion_of :state, in: %w(sending sent received)
 end

@@ -27,10 +27,18 @@ describe Sms do
       let(:type) { 'outgoing' }
       let(:state) { 'sending' }
 
+      before do
+        allow(notification_service).to receive(:send_sms_message_requested)
+      end
+
       it 'will call send_sms_message_requested on notification service' do
         expect(notification_service).to receive(:send_sms_message_requested).with(an_instance_of(SmsMessage), '42')
         subject
       end
+
+      its(:content) { is_expected.to eq '1' }
+
+      its(:state) { is_expected.to eq 'sending' }
     end
 
     context 'with type incoming, state received' do

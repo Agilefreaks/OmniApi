@@ -14,7 +14,8 @@ class Sms
     @sms_message_params = params.slice(
       :phone_number, :phone_number_list,
       :content, :content_list,
-      :contact_name, :contact_id, :contact_name_list)
+      :contact_name, :contact_id, :contact_name_list,
+      :state)
   end
 
   # rubocop:disable MethodLength, AbcSize
@@ -30,7 +31,8 @@ class Sms
       content_list: @sms_message_params[:content_list] || [],
       contact_name: @sms_message_params[:contact_name],
       contact_id: @sms_message_params[:contact_id],
-      contact_name_list: @sms_message_params[:contact_name_list] || []
+      contact_name_list: @sms_message_params[:contact_name_list] || [],
+      state: @sms_message_params[:state]
     )
 
     send("#{@type}_#{@state}", sms_message, @device_id)

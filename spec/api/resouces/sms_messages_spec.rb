@@ -13,7 +13,8 @@ describe API::Resources::SmsMessages do
           content: 'I am hot!',
           contact_id: 42,
           type: 'outgoing',
-          state: 'sending' }
+          state: 'sending'
+        }
       end
 
       it 'will call SendSms with correct params' do
@@ -51,6 +52,19 @@ describe API::Resources::SmsMessages do
     it 'will return the sms message' do
       subject
       expect(last_response).to be_ok
+    end
+  end
+
+  describe "PATCH 'api/v1/sms_messages/:id'" do
+    let!(:sms_message) { Fabricate(:sms_message, user: user) }
+    let(:params) { { state: 'sent' } }
+
+    subject { patch "/api/v1/sms_messages/#{sms_message.id.to_s}", { state: 'sent', type: 'outgoing' }.to_json, options }
+
+    it 'will call update sms with the correct params' do
+      expected_params = { access_token: access_token.token, id: sms_message.id.to_s, state: 'sent', type: 'outgoing' }
+      expect(UpdateSms).to receive(:with).with(expected_params)
+      subject
     end
   end
 end
