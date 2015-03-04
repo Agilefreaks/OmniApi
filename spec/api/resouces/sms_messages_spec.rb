@@ -59,7 +59,7 @@ describe API::Resources::SmsMessages do
     let!(:sms_message) { Fabricate(:sms_message, user: user) }
     let(:params) { { state: 'sent' } }
 
-    subject { patch "/api/v1/sms_messages/#{sms_message.id.to_s}", { state: 'sent', type: 'outgoing' }.to_json, options }
+    subject { patch "/api/v1/sms_messages/#{sms_message.id}", { state: 'sent', type: 'outgoing' }.to_json, options }
 
     it 'will call update sms with the correct params' do
       expected_params = { access_token: access_token.token, id: sms_message.id.to_s, state: 'sent', type: 'outgoing' }

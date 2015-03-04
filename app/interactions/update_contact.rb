@@ -8,14 +8,14 @@ class UpdateContact
   def initialize(params)
     @access_token = params.delete(:access_token)
     @id = params.delete(:id)
-    @update_params = params
+    @update_attributes = params
   end
 
   def update
     contact = FindContacts.for(@access_token, id: @id)
-    contact.update_attributes(@update_params)
+    contact.update_attributes(@update_attributes)
 
-    NotificationService.new.contact_updated(contact, @update_params[:device_id])
+    NotificationService.new.contact_updated(contact, @update_attributes[:device_id])
 
     contact
   end

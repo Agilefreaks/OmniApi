@@ -68,7 +68,7 @@ describe NotificationService do
     end
   end
 
-  %w(sms_message_received send_sms_message_requested).each do |event|
+  %w(sms_message_received send_sms_message_requested sms_message_delivered).each do |event|
     context event do
       let(:model) { Fabricate(:sms_message, id: BSON::ObjectId.from_string('5424468a63616c6cfb000000'), user: user) }
 
