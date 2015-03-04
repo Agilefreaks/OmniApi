@@ -19,11 +19,11 @@ module API
             optional :number, type: String, desc: 'The phone number.'
             optional :contact_name, type: String, desc: 'Contact name.'
             optional :contact_id, type: Integer, desc: 'Contact id.'
-            optional :type,
+            requires :type,
                      values: %w(incoming outgoing),
                      type: String,
                      desc: 'Type of the call,'
-            optional :state,
+            requires :state,
                      values: %w(starting started ended ending),
                      type: String,
                      desc: 'State of the call.'
