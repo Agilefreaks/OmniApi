@@ -17,7 +17,7 @@ describe API::Resources::PhoneCalls do
 
     subject { post '/api/v1/phone_calls', params.to_json, options }
 
-    it 'will call Call with the correct params' do
+    it 'will call create with the correct params' do
       expected_params = {
         access_token: access_token.token,
         contact_name: 'contact',
@@ -27,7 +27,7 @@ describe API::Resources::PhoneCalls do
         type: 'incoming',
         state: 'starting'
       }
-      expect(Call).to receive(:with).with(expected_params)
+      expect(Call::Create).to receive(:with).with(expected_params)
       subject
     end
   end
@@ -38,9 +38,9 @@ describe API::Resources::PhoneCalls do
 
     subject { patch "/api/v1/phone_calls/#{phone_call.id}", params.to_json, options }
 
-    it 'will call EndCall with the right params' do
+    it 'will call update with the right params' do
       expected_params = { access_token: access_token.token, id: phone_call.id.to_s, type: 'incoming', state: 'ended' }
-      expect(EndCall).to receive(:with).with(expected_params)
+      expect(Call::Update).to receive(:with).with(expected_params)
       subject
     end
   end

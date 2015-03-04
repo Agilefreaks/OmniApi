@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Call do
-  let(:call) { Call.new(Call::CallParams.new(params)) }
+describe Call::Create do
+  let(:call) { Call::Create.new(Call::Create::CallParams.new(params)) }
 
   describe :with do
     include_context :with_authenticated_user

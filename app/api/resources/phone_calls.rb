@@ -35,7 +35,7 @@ module API
           use :shared
         end
         post do
-          present Call.with(merged_params), with: API::Entities::PhoneCall
+          present Call::Create.with(merged_params), with: API::Entities::PhoneCall
         end
 
         route_param :id do
@@ -45,17 +45,15 @@ module API
             use :shared
           end
           patch do
-            present EndCall.with(merged_params(false)), with: API::Entities::PhoneCall
+            present Call::Update.with(merged_params(false)), with: API::Entities::PhoneCall
           end
 
           desc 'Get a phone call.', ParamsHelper.omni_headers
           params do
             requires :id, type: String, desc: 'The phone call id.'
           end
-          route_param :id do
-            get do
-              present @current_user.phone_calls.find(declared_params[:id]), with: API::Entities::PhoneCall
-            end
+          get do
+            present @current_user.phone_calls.find(declared_params[:id]), with: API::Entities::PhoneCall
           end
         end
       end

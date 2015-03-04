@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe :EndCall do
+describe Call::End do
   describe :with do
     include_context :with_authenticated_user
 
     let(:phone_call) { Fabricate(:phone_call, user: user) }
     let(:notification_service) { double(:notification_service) }
-    let(:end_call) { EndCall.new(access_token.token, phone_call.id, '42') }
+    let(:end_call) { Call::End.new(access_token.token, phone_call.id, '42') }
 
     before do
       end_call.notification_service = notification_service
