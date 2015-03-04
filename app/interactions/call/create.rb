@@ -19,7 +19,6 @@ module Call
     end
 
     attr_accessor :call_params
-    attr_accessor :notification_service
 
     def initialize(call_params)
       @call_params = call_params
@@ -28,12 +27,11 @@ module Call
     def execute
       user = User.find_by_token(@call_params.access_token)
 
-      @notification_service ||= NotificationService.new
-
       phone_call = user.phone_calls.create(
         number: @call_params.number,
         contact_name: @call_params.contact_name,
-        contact_id: @call_params.contact_id
+        contact_id: @call_params.contact_id,
+        state: @call_params.state
       )
 
       send("#{@call_params.type}_#{@call_params.state}", phone_call, @call_params.device_id)
@@ -44,11 +42,11 @@ module Call
     private
 
     def incoming_starting(phone_call, device_id)
-      @notification_service.phone_call_received(phone_call, device_id)
+      NotificationService.new.phone_call_received(phone_call, device_id)
     end
 
     def outgoing_starting(phone_call, device_id)
-      @notification_service.start_phone_call_requested(phone_call, device_id)
+      NotificationService.new.start_phone_call_requested(phone_call, device_id)
     end
   end
 end

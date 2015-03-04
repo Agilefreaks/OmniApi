@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Call::Create do
-  let(:call) { Call::Create.new(Call::Create::CallParams.new(params)) }
-
   describe :with do
     include_context :with_authenticated_user
 
@@ -13,22 +11,24 @@ describe Call::Create do
         contact_id: 43,
         device_id: '42',
         state: state,
-        type: type }
+        type: type
+      }
     end
-    let(:notification_service) { double(:notification_service) }
 
-    before do
-      call.notification_service = notification_service
-    end
+    subject { Call::Create.with(params) }
 
     context 'when incoming and starting' do
       let(:type) { 'incoming' }
       let(:state) { 'starting' }
 
       it 'will send a incoming call notification with the correct params' do
-        expect(notification_service).to receive(:phone_call_received).with(an_instance_of(PhoneCall), '42')
-        call.execute
+        expect_any_instance_of(NotificationService)
+          .to receive(:phone_call_received)
+          .with(an_instance_of(PhoneCall), '42')
+        subject
       end
+
+      its(:state) { is_expected.to eq 'starting' }
     end
 
     context 'when outgoing and started' do
@@ -36,8 +36,10 @@ describe Call::Create do
       let(:state) { 'starting' }
 
       it 'will send a call notification with the correct params' do
-        expect(notification_service).to receive(:start_phone_call_requested).with(an_instance_of(PhoneCall), '42')
-        call.execute
+        expect_any_instance_of(NotificationService)
+          .to receive(:start_phone_call_requested)
+          .with(an_instance_of(PhoneCall), '42')
+        subject
       end
     end
   end

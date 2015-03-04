@@ -53,6 +53,7 @@ describe NotificationService do
                     }
   end
 
+  # rubocop:disable Metrics/LineLength
   %w(end_phone_call_requested phone_call_received start_phone_call_requested phone_call_ended outgoing_started).each do |event|
     context event do
       let(:model) { Fabricate(:phone_call, id: BSON::ObjectId.from_string('5424468a63616c6cfb000000'), user: user) }
