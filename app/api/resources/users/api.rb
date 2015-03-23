@@ -25,6 +25,13 @@ module API
               authenticate!
               @current_user
             end
+
+            params :shared do
+              requires :email, type: String, desc: 'The Email of the user.'
+              optional :first_name, type: String
+              optional :last_name, type: String
+              optional :image_url, type: String, desc: 'The users image url'
+            end
           end
 
           desc 'Fetch a user.', ParamsHelper.omni_headers
@@ -38,10 +45,7 @@ module API
 
           desc 'Create a new user.', ParamsHelper.omni_headers
           params do
-            requires :email, type: String, desc: 'The Email of the user.'
-            optional :first_name, type: String
-            optional :last_name, type: String
-            optional :image_url, type: String, desc: 'The users image url'
+            use :shared
           end
           post do
             authenticate_client!
@@ -50,10 +54,7 @@ module API
 
           desc 'Update a existing user.', ParamsHelper.omni_headers
           params do
-            requires :email, type: String, desc: 'The Email of the user.'
-            optional :first_name, type: String
-            optional :last_name, type: String
-            optional :image_url, type: String, desc: 'The users image url'
+            use :shared
           end
           put do
             authenticate_client!
