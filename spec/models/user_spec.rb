@@ -16,6 +16,8 @@ describe User do
 
   its(:via_omnipaste) { is_expected.to eq true }
 
+  its(:contacts_updated_at) { is_expected.not_to be_nil }
+
   describe :find_by_code do
     before do
       user.authorization_codes.create(code: 42)
