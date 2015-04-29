@@ -15,6 +15,7 @@ class User
   field :email, type: String, default: ''
   field :mixpanel_profile_updated, type: Boolean, default: false
   field :contacts_updated_at, type: Time
+  field :plan, type: Symbol, default: :basic
 
   validates_uniqueness_of :email
 

@@ -26,6 +26,16 @@ module API
               @current_user
             end
 
+            def change_pricing_plan(email, new_plan)
+              authenticate_client!
+
+              user = ::User.find_by(email: email)
+              user.plan = new_plan
+              user.save!
+
+              user
+            end
+
             params :shared do
               requires :email, type: String, desc: 'The Email of the user.'
               optional :first_name, type: String
@@ -62,6 +72,26 @@ module API
             user = ::User.find_by(email: declared_params[:email])
             user.update(declared_params)
             check_access_token(user)
+
+            present user, with: API::Entities::User
+          end
+
+          desc 'Change the plan of an existing user to premium', ParamsHelper.omni_headers
+          params do
+            requires :email, type: String, desc: 'The Email of the user.'
+          end
+          put '/premium' do
+            user = change_pricing_plan(declared_params[:email], :premium)
+
+            present user, with: API::Entities::User
+          end
+
+          desc 'Change the plan of an existing user to basic', ParamsHelper.omni_headers
+          params do
+            requires :email, type: String, desc: 'The Email of the user.'
+          end
+          put '/basic' do
+            user = change_pricing_plan(declared_params[:email], :basic)
 
             present user, with: API::Entities::User
           end

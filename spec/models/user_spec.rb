@@ -14,6 +14,10 @@ describe User do
 
   it { is_expected.to have_field(:via_omnipaste) }
 
+  it { is_expected.to have_field(:plan) }
+
+  its(:plan) { is_expected.to eq :basic }
+
   its(:via_omnipaste) { is_expected.to eq true }
 
   describe :find_by_code do
