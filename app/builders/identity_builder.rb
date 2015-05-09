@@ -20,6 +20,7 @@ class IdentityBuilder
 
   def create_identity(params)
     identity = Identity.new
+
     identity.provider = params[:provider]
     identity.scope = params[:scope]
     identity.expires = params[:expires]

@@ -30,7 +30,5 @@ describe API::Resources::Users::Identities do
 
       expect(user.identity).to be_a Identity
     end
-
-    its(:body)
   end
 end
