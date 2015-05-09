@@ -8,6 +8,7 @@ module API
   require 'entities/sms_message'
   require 'entities/phone_call'
   require 'entities/contact'
+  require 'entities/identity'
 
   # resources
   require 'resources/oauth2'
@@ -16,6 +17,7 @@ module API
   require 'resources/user/devices'
   require 'resources/user/api'
   require 'resources/users/api'
+  require 'resources/users/identities'
   require 'resources/clippings'
   require 'resources/authorization_codes'
   require 'resources/sms_messages'
@@ -27,6 +29,7 @@ module API
     mount Resources::Version
     mount Resources::User::Api
     mount Resources::Users::Api
+    mount Resources::Users::Identities
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
     mount Resources::SmsMessages
