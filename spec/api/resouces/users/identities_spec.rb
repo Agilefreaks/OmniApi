@@ -9,7 +9,7 @@ describe API::Resources::Users::Identities do
     end
 
     let(:user) { User.find('42') }
-    let(:params) {
+    let(:params) do
       {
         user_id: '42',
         provider: 'Google',
@@ -19,7 +19,7 @@ describe API::Resources::Users::Identities do
         token: 'token',
         refresh_token: 'refresh_token'
       }
-    }
+    end
 
     subject { post '/api/v1/users/42/identities', params.to_json, options }
 
