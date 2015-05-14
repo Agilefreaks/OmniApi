@@ -13,5 +13,5 @@ class SmsMessage
 
   belongs_to :user
 
-  validates_inclusion_of :state, in: %w(sending sent received)
+  validates_inclusion_of :state, in: %w(sending sent received scheduled)
 end
