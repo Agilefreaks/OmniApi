@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:levelboy/OmniKiq.git
+  revision: 744e7fe0949e812ba41a8583c1d0720e961315d7
+  specs:
+    omnikiq (0.0.1)
+      mixpanel-ruby (~> 1)
+      sidekiq (~> 3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -143,9 +151,6 @@ GEM
     notiffany (0.0.6)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    omnikiq (0.1.1)
-      mixpanel-ruby (~> 1)
-      sidekiq (~> 3)
     optionable (0.2.0)
     origin (2.1.1)
     parser (2.2.0.3)
@@ -177,7 +182,7 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     redis (3.2.1)
-    redis-namespace (1.5.1)
+    redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
     rerun (0.10.0)
       listen (~> 2.7, >= 2.7.3)
@@ -185,6 +190,8 @@ GEM
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
       rspec-mocks (~> 3.2.0)
+    rspec-collection_matchers (1.1.2)
+      rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.2.1)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.0)
@@ -205,7 +212,7 @@ GEM
       ruby-progressbar (~> 1.4)
     ruby-progressbar (1.7.1)
     shellany (0.0.1)
-    sidekiq (3.3.2)
+    sidekiq (3.3.4)
       celluloid (>= 0.16.0)
       connection_pool (>= 2.1.1)
       json
@@ -265,7 +272,7 @@ DEPENDENCIES
   mongoid-rspec (~> 2.0.0.rc1)
   newrelic-grape
   newrelic_rpm
-  omnikiq
+  omnikiq!
   pry
   puma
   rack-cors
@@ -275,6 +282,7 @@ DEPENDENCIES
   rb-fsevent
   rerun
   rspec
+  rspec-collection_matchers
   rspec-its
   rspec-mocks
   rubocop

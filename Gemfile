@@ -23,7 +23,7 @@ gem 'gcm'
 gem 'newrelic_rpm'
 gem 'newrelic-grape'
 
-gem 'omnikiq'
+gem 'omnikiq', git: 'git@github.com:levelboy/OmniKiq.git'
 
 gem 'sometimes'
 
@@ -49,6 +49,7 @@ group :test do
   gem 'rspec'
   gem 'rspec-mocks'
   gem 'rspec-its'
+  gem 'rspec-collection_matchers'
   gem 'json_spec'
   gem 'rack-test'
   gem 'fabrication'

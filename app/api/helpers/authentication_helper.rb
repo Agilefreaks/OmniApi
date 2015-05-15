@@ -31,4 +31,12 @@ module AuthenticationHelper
     NewRelic::Agent.add_custom_parameters(client_name: @current_client.name)
     @current_token = @current_client.access_tokens.find_by(token: @current_token.token)
   end
+
+  def authenticate_user_or_client!
+    begin
+      authenticate!
+    rescue Rack::OAuth2::Server::Resource::Bearer::Unauthorized
+      authenticate_client!
+    end
+  end
 end

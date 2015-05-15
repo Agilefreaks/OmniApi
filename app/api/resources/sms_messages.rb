@@ -2,10 +2,6 @@ module API
   module Resources
     class SmsMessages < Grape::API
       resources :sms_messages do
-        before do
-          authenticate!
-        end
-
         after do
           track_sms_messages(declared_params)
         end
@@ -30,14 +26,16 @@ module API
             optional :contact_name_list, type: Array[String], desc: 'The contact names.'
             mutually_exclusive :contact_name, :contact_name_list
 
+            optional :scheduled_at, type: DateTime, desc: 'The time when the message will be sent. It is only used when the state of the sms message is set to scheduled'
+
             requires :type,
                      values: %w(incoming outgoing),
                      type: String,
                      desc: 'Type of the sms_message.'
             requires :state,
-                     values: %w(sending sent received),
+                     values: %w(sending sent received scheduled),
                      type: String,
-                     desc: 'State of the call.'
+                     desc: 'State of the message.'
           end
         end
 
@@ -46,6 +44,8 @@ module API
           use :shared
         end
         post do
+          authenticate!
+
           present Sms::Create.with(merged_params(false)), with: API::Entities::SmsMessage
         end
 
@@ -55,6 +55,8 @@ module API
             requires :id, type: String, desc: 'Sms Message id.'
           end
           get do
+            authenticate!
+
             present @current_user.sms_messages.find(declared_params[:id]), with: API::Entities::SmsMessage
           end
 
@@ -64,6 +66,9 @@ module API
             requires :id, type: String, desc: 'Sms Message id.'
           end
           patch do
+            authenticate_user_or_client!
+            AuthorizationService.verify(:sms_messages, :update, @current_token) if @current_client
+
             present Sms::Update.with(merged_params(false)), with: API::Entities::SmsMessage
           end
         end

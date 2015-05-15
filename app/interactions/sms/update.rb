@@ -14,10 +14,14 @@ module Sms
     end
 
     def update
-      user = User.find_by_token(@token)
-      sms_message = user.sms_messages.find(@id)
+      sms_message = SmsMessage.find(@id)
       sms_message.update_attributes(@update_attributes)
-      NotificationService.new.sms_message_sent(sms_message, @device_id)
+
+      if (@update_attributes[:state] == 'sent')
+        NotificationService.new.sms_message_sent(sms_message, @device_id)
+      elsif (@update_attributes[:state] == 'sending')
+        NotificationService.new.send_sms_message_requested(sms_message, @device_id)
+      end
 
       sms_message
     end

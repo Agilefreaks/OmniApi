@@ -51,6 +51,7 @@ module TrackHelper
   end
 
   def track_sms_messages(declared_params)
+    return unless @current_user
     type = declared_params[:type]
     state = declared_params[:state]
 
