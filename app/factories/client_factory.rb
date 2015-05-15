@@ -12,6 +12,10 @@ class ClientFactory
       create_client(id: id, name: 'WinClient', group: :win_client)
     end
 
+    def create_omnikiq_client(id = nil)
+      create_client(id: id, name: 'OmnikiqClient', group: :omnikiq_client)
+    end
+
     # rubocop:disable AbcSize
     def create_client(id: nil, name:, group: nil)
       client = ::Client.new do |c|
