@@ -16,7 +16,7 @@ module Sms
         :phone_number, :phone_number_list,
         :content, :content_list,
         :contact_name, :contact_id, :contact_name_list,
-        :state, :scheduled_at)
+        :state, :send_at)
       @notification_service ||= NotificationService.new
     end
 
@@ -33,7 +33,7 @@ module Sms
         contact_id: @sms_message_params[:contact_id],
         contact_name_list: @sms_message_params[:contact_name_list] || [],
         state: @sms_message_params[:state],
-        scheduled_at: @sms_message_params[:scheduled_at]
+        send_at: @sms_message_params[:send_at]
       )
 
       send("#{@type}_#{@state}", sms_message, @device_id)
@@ -44,7 +44,7 @@ module Sms
     private
 
     def outgoing_scheduled(sms_message, device_id)
-      OmniKiq::Workers::SendScheduledSmsWorker.perform_at(sms_message.scheduled_at, sms_message.id, device_id)
+      OmniKiq::Workers::SendScheduledSmsWorker.perform_at(sms_message.send_at, sms_message.id, device_id)
     end
 
     def outgoing_sending(sms_message, device_id)

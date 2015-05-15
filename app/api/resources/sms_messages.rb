@@ -26,7 +26,7 @@ module API
             optional :contact_name_list, type: Array[String], desc: 'The contact names.'
             mutually_exclusive :contact_name, :contact_name_list
 
-            optional :scheduled_at, type: DateTime, desc: 'The time when the message will be sent. It is only used when the state of the sms message is set to scheduled'
+            optional :send_at, type: DateTime, desc: 'The time when the message will be sent. It is only used when the state of the sms message is set to scheduled'
 
             requires :type,
                      values: %w(incoming outgoing),

@@ -49,7 +49,7 @@ describe API::Resources::SmsMessages do
             content_list: ['First template', 'Second template'],
             device_id: 'device_id',
             state: 'scheduled',
-            scheduled_at: DateTime.now.utc + 5.minutes,
+            send_at: DateTime.now.utc + 5.minutes,
             type: 'outgoing'
           }
         end
@@ -64,14 +64,14 @@ describe API::Resources::SmsMessages do
           expect(user.sms_messages.last.state).to eq 'scheduled'
         end
 
-        it 'creates the message with scheduled_at set correctly' do
+        it 'creates the message with send_at set correctly' do
           subject
 
-          expect(user.sms_messages.last.scheduled_at).to be_the_same_time_as(params[:scheduled_at])
+          expect(user.sms_messages.last.send_at).to be_the_same_time_as(params[:send_at])
         end
 
         it 'creates a delayed job to send the SMS at the specified time' do
-          expect(OmniKiq::Workers::SendScheduledSmsWorker).to receive(:perform_at).with(params[:scheduled_at], any_args, params[:device_id])
+          expect(OmniKiq::Workers::SendScheduledSmsWorker).to receive(:perform_at).with(params[:send_at], any_args, params[:device_id])
 
           subject
         end
