@@ -10,6 +10,9 @@ class SmsMessage
   field :contact_name_list, type: Array, default: []
   field :content_list, type: Array, default: []
   field :state, type: String
+  field :scheduled_at, type: DateTime
+
+  scope :scheduled, -> { where(state: 'scheduled') }
 
   belongs_to :user
 

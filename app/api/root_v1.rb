@@ -33,6 +33,7 @@ module API
     mount Resources::Clippings
     mount Resources::AuthorizationCodes
     mount Resources::SmsMessages
+    mount Resources::ScheduledSmsMessages
     mount Resources::PhoneCalls
     mount Resources::Batch
 
