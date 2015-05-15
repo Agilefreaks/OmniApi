@@ -25,7 +25,6 @@ class User
   embeds_many :providers
   accepts_nested_attributes_for :providers
 
-  embeds_one :identity
 
   has_many :clippings
   has_many :sms_messages
