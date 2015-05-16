@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe :ClientFactory do
   shared_examples_for 'a client' do |expected_name, expected_scope|
-    its(:name) { is_expected.to eq expected_name}
+    its(:name) { is_expected.to eq expected_name }
     its('access_tokens.count') { is_expected.to eq 1 }
-    its(:'access_tokens.first.scopes') { is_expected.to eq expected_scope}
+    its(:'access_tokens.first.scopes') { is_expected.to eq expected_scope }
   end
 
   describe :create_web_client do

@@ -33,10 +33,8 @@ module AuthenticationHelper
   end
 
   def authenticate_user_or_client!
-    begin
-      authenticate!
+    authenticate!
     rescue Rack::OAuth2::Server::Resource::Bearer::Unauthorized
       authenticate_client!
-    end
   end
 end

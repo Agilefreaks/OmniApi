@@ -71,7 +71,7 @@ describe API::Resources::SmsMessages do
         end
 
         it 'creates a delayed job to send the SMS at the specified time' do
-          expect(OmniKiq::Workers::SendScheduledSmsWorker).to receive(:perform_at).with(params[:send_at], any_args, params[:device_id])
+          expect(SendScheduledSmsWorker).to receive(:perform_at).with(params[:send_at], any_args, params[:device_id])
 
           subject
         end
@@ -95,11 +95,16 @@ describe API::Resources::SmsMessages do
       context 'for a sent message' do
         let!(:sms_message) { Fabricate(:sms_message, user: user) }
         let(:params) { { state: 'sent' } }
+        let(:path) { "/api/v1/sms_messages/#{sms_message.id}" }
 
-        subject { patch "/api/v1/sms_messages/#{sms_message.id}", { state: 'sent', type: 'outgoing' }.to_json, options }
+        subject { patch path, { state: 'sent', type: 'outgoing' }.to_json, options }
 
         it 'will call update sms with the correct params' do
-          expected_params = { access_token: access_token.token, id: sms_message.id.to_s, state: 'sent', type: 'outgoing' }
+          expected_params = {
+            access_token: access_token.token,
+            id: sms_message.id.to_s,
+            state: 'sent',
+            type: 'outgoing' }
           expect(Sms::Update).to receive(:with).with(expected_params)
 
           subject
@@ -116,13 +121,14 @@ describe API::Resources::SmsMessages do
         let(:sms_message) { Fabricate(:sms_message, state: 'scheduled') }
         let(:params) { { state: 'sending' } }
         let(:notification_service) { double(NotificationService) }
+        let(:path) { "/api/v1/sms_messages/#{sms_message.id}" }
 
         before do
           allow(NotificationService).to receive(:new).and_return(notification_service)
           allow(notification_service).to receive(:send_sms_message_requested)
         end
 
-        subject { patch "/api/v1/sms_messages/#{sms_message.id}", { state: 'sending', type: 'outgoing'}.to_json, options }
+        subject { patch path, { state: 'sending', type: 'outgoing' }.to_json, options }
 
         it 'will call send sms with correct params' do
           expect { subject }.to change { SmsMessage.find(sms_message.id).state }.from('scheduled').to('sending')
