@@ -71,7 +71,9 @@ describe API::Resources::SmsMessages do
         end
 
         it 'creates a delayed job to send the SMS at the specified time' do
-          expect(SendScheduledSmsWorker).to receive(:perform_at).with(params[:send_at], any_args, params[:device_id])
+          expect(OmniKiq::Workers::SendScheduledSmsWorker)
+            .to receive(:perform_at)
+            .with(params[:send_at], any_args, params[:device_id])
 
           subject
         end
