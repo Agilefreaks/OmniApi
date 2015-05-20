@@ -136,6 +136,23 @@ describe API::Resources::SmsMessages do
           expect { subject }.to change { SmsMessage.find(sms_message.id).state }.from('scheduled').to('sending')
         end
       end
+
+      context 'for a message that is already in sending state' do
+        let(:sms_message) { Fabricate(:sms_message, state: 'sending') }
+        let(:params) { { state: 'sending' } }
+        let(:notification_service) { double(NotificationService) }
+        let(:path) { "/api/v1/sms_messages/#{sms_message.id}" }
+
+        before do
+          allow(NotificationService).to receive(:new).and_return(notification_service)
+        end
+
+        subject { patch path, { state: 'sending', type: 'outgoing' }.to_json, options }
+
+        it 'will not send a notification to send the sms message again' do
+          expect(notification_service).to_not receive(:send_sms_message_requested)
+        end
+      end
     end
   end
 end
