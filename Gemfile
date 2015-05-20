@@ -23,7 +23,7 @@ gem 'gcm'
 gem 'newrelic_rpm'
 gem 'newrelic-grape'
 
-gem 'omnikiq', git: 'git@github.com:levelboy/OmniKiq.git'
+gem 'omnikiq'
 
 gem 'sometimes'
 
