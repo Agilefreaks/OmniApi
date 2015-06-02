@@ -11,5 +11,5 @@ module RakeTestHelper
 end
 
 RSpec.configure do |config|
-  config.include RakeTestHelper, file_path: /spec\/api/
+  config.include RakeTestHelper, file_path: %r{spec\/api}
 end

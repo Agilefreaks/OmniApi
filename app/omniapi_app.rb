@@ -9,7 +9,7 @@ module OmniApi
         -> { [404, {}, []] },
         root: File.expand_path('../../public', __FILE__),
         urls: %w(/)
-        )
+      )
     end
 
     # rubocop:disable MethodLength, AbcSize

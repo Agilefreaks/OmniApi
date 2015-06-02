@@ -7,7 +7,7 @@ class ClippingBuilder
 
   def get_type(content)
     case content
-    when /^[0-9+\(\)#\.\s\/ext-]+$/
+    when %r{^[0-9+\(\)#\.\s\/ext-]+$}
       Clipping::TYPES[:phone_number]
     when %r{^https?://[\S]+$}
       Clipping::TYPES[:url]
