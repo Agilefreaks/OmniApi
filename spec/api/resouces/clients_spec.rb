@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe API::Resources::Clients do
-  include_context :with_authenticated_user
+  include_context :with_authenticated_client
 
   describe "GET 'api/v1/clients/:id'" do
     let(:scope) { Scope.create({key: :phone_calls_create, description: 'Some description'}) }
     let(:client) { Client.create!(name: 'test', scopes: [scope]) }
-    let(:action) { get "/api/v1/clients/#{client.id}" }
+    let(:action) { get "/api/v1/clients/#{client.id}", '', options }
 
     subject { action }
 
@@ -17,7 +17,7 @@ describe API::Resources::Clients do
 
       its(['name']) { is_expected.to eq('test') }
 
-      its(['scopes']) { is_expected.to eq([{'key' => 'phone_calls_create', 'description' => 'Some description'}]) }
+      its(['scopes']) { is_expected.to eq([{'id' => scope.id.to_s, 'key' => 'phone_calls_create', 'description' => 'Some description'}]) }
     end
   end
 end

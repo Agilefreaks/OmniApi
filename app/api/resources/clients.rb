@@ -2,7 +2,7 @@ module API
   module Resources
     class Clients < Grape::API
       resource :clients do
-        before { authenticate! }
+        before { authenticate_client! }
 
         desc 'Get client information.', ParamsHelper.omni_headers
         params do
