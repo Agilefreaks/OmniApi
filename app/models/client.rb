@@ -10,6 +10,8 @@ class Client
 
   embeds_many :access_tokens
 
+  embeds_many :scopes
+
   index 'access_tokens.token' => 1
 
   before_save do
