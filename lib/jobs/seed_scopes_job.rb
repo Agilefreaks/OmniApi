@@ -1,6 +1,6 @@
 class SeedScopesJob
   AVAILABLE_SCOPES = [
-      {key: :phone_calls_create, description: 'This app will be able to initiate calls on your phone.'}
+      {key: :phone_calls_create, description: 'Start phone calls'}
   ]
 
   def perform
