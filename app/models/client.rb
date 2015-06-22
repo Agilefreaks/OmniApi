@@ -5,8 +5,9 @@ class Client
   include Mongoid::Timestamps
   include Concerns::OAuth2Finders
 
-  field :secret, type: String, default: -> { SecureRandom.base64(64) }
   field :name, type: String
+  field :url, type: String
+  field :secret, type: String, default: -> { SecureRandom.base64(64) }
 
   embeds_many :access_tokens
 
