@@ -8,6 +8,8 @@ module API
   require 'entities/sms_message'
   require 'entities/phone_call'
   require 'entities/contact'
+  require 'entities/client'
+  require 'entities/scope'
 
   # resources
   require 'resources/oauth2'
@@ -21,6 +23,7 @@ module API
   require 'resources/sms_messages'
   require 'resources/phone_calls'
   require 'resources/batch'
+  require 'resources/clients'
 
   class RootV1 < Grape::API
     mount Resources::OAuth2
@@ -32,6 +35,7 @@ module API
     mount Resources::SmsMessages
     mount Resources::PhoneCalls
     mount Resources::Batch
+    mount Resources::Clients
 
     base_paths = {
       'development' => 'http://localhost:9292/api/v1',
