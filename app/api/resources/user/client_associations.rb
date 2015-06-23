@@ -14,6 +14,16 @@ module API
 
             present CreateUserClientAssociation.between(@current_user, client), with: API::Entities::UserClientAssociation
           end
+
+          desc 'Get Client Association for a client', ParamsHelper.omni_headers
+          params do
+            requires :client_id, type: String, desc: 'Id of the client.'
+          end
+          route_param :client_id do
+            get do
+              present UserClientAssociation.find_by_client_id(merged_params[:client_id]), with: API::Entities::UserClientAssociation
+            end
+          end
         end
       end
     end

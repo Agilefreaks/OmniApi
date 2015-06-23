@@ -40,4 +40,33 @@ describe API::Resources::User::ClientAssociations do
       its(:status) { is_expected.to eq(404) }
     end
   end
+
+  describe "GET '/api/v1/user/client_associations/:client_id'" do
+    let!(:scope) { Fabricate(:scope) }
+    let!(:client) { Fabricate(:client, {name: 'Test', url: 'https://some-url.com/', scopes: [scope]}) }
+    let!(:client_id) { client.id.to_s }
+    let(:action) { get "/api/v1/user/client_associations/#{client_id}", '', options }
+
+    subject { action }
+
+    context 'user_client_association exists' do
+      before do
+        CreateUserClientAssociation.between(user, client)
+      end
+
+      describe 'response body' do
+        subject { JSON.parse(action.body) }
+
+        its(['token']) { is_expected.to eq(user.access_tokens.last.token) }
+
+        its(['client_id']) { is_expected.to eq(client_id) }
+
+        its(['client_name']) { is_expected.to eq('Test') }
+
+        its(['client_url']) { is_expected.to eq('https://some-url.com/') }
+
+        its(['scopes']) { is_expected.to eq([{'id' => scope.id.to_s, 'key' => scope.key.to_s, 'description' => scope.description.to_s}]) }
+      end
+    end
+  end
 end
