@@ -23,6 +23,8 @@ describe API::Resources::User::ClientAssociations do
     describe 'response body' do
       subject { JSON.parse(action.body) }
 
+      its(['client_id']) { is_expected.to eq(client_id) }
+
       its(['client_name']) { is_expected.to eq('Test') }
 
       its(['client_url']) { is_expected.to eq('https://some-url.com/') }
