@@ -16,6 +16,10 @@ module API
       end
 
       expose :scopes, using: API::Entities::Scope
+
+      expose :token do |user_client_association, _options|
+        user_client_association.user.access_tokens.last.try(:token)
+      end
     end
   end
 end
