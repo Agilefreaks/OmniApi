@@ -11,6 +11,10 @@ module API
         user_client_association.client.url
       end
 
+      expose :client_id do |user_client_association, _options|
+        user_client_association.client.id.to_s
+      end
+
       expose :scopes, using: API::Entities::Scope
     end
   end
