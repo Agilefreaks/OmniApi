@@ -4,7 +4,7 @@ describe API::Resources::User::ClientAssociations do
   include_context :with_authenticated_user
 
   describe "POST '/api/v1/user/client_associations'" do
-    let(:scope) { Fabricate(:scope) }
+    let(:scope) { Fabricate(:scope, key: :phone_calls_create) }
     let(:client) { Fabricate(:client, name: 'Test', url: 'https://some-url.com/', scopes: [scope]) }
     let(:client_id) { client.id.to_s }
     let(:params) { {client_id: client_id} }
@@ -23,7 +23,7 @@ describe API::Resources::User::ClientAssociations do
     describe 'response body' do
       subject { JSON.parse(action.body) }
 
-      its(['token']) { is_expected.to eq(user.access_tokens.last.token) }
+      its(['token']) { is_expected.to eq(user.reload.access_tokens.last.token) }
 
       its(['client_id']) { is_expected.to eq(client_id) }
 

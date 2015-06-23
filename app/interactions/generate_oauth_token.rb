@@ -17,6 +17,14 @@ class GenerateOauthToken
     symbol.to_s.split('_').map(&:capitalize).join
   end
 
+  def self.build_access_token(client)
+    access_token = AccessToken.build(client.id)
+    access_token.refresh_token = ::RefreshToken.build(client.id)
+    access_token.scopes = client.scopes.pluck(:key)
+
+    access_token
+  end
+
   def self.build_access_token_for(access_tokens_holder, client_id = nil)
     access_token = AccessToken.build(client_id)
     access_token.refresh_token = ::RefreshToken.build(client_id)
