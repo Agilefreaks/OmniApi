@@ -12,6 +12,8 @@ module API
           mount API::Resources::User::Contacts
 
           mount API::Resources::User::Devices
+
+          mount API::Resources::User::ClientAssociations
         end
       end
     end

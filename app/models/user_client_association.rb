@@ -6,4 +6,8 @@ class UserClientAssociation
   belongs_to :client, index: true
 
   embeds_many :scopes
+
+  def self.find_by_client_id(client_id)
+    find_by(client_id: client_id)
+  end
 end

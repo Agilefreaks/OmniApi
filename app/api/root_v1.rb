@@ -10,12 +10,14 @@ module API
   require 'entities/contact'
   require 'entities/client'
   require 'entities/scope'
+  require 'entities/user_client_association'
 
   # resources
   require 'resources/oauth2'
   require 'resources/version'
   require 'resources/user/contacts'
   require 'resources/user/devices'
+  require 'resources/user/client_associations'
   require 'resources/user/api'
   require 'resources/users/api'
   require 'resources/clippings'
