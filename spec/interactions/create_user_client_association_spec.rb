@@ -3,7 +3,8 @@ require 'spec_helper'
 describe CreateUserClientAssociation do
   describe :between do
     let(:user) { Fabricate(:user) }
-    let(:client) { Fabricate(:client) }
+    let(:client_scope) { Fabricate(:scope) }
+    let(:client) { Fabricate(:client, scopes: [client_scope]) }
 
     subject { CreateUserClientAssociation.between(user, client).reload }
 
@@ -14,5 +15,7 @@ describe CreateUserClientAssociation do
     its(:user) { is_expected.to eq(user) }
 
     its(:client) { is_expected.to eq(client) }
+
+    its(:scopes) { is_expected.to eq([client_scope]) }
   end
 end
