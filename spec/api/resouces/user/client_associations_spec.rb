@@ -4,7 +4,8 @@ describe API::Resources::User::ClientAssociations do
   include_context :with_authenticated_user
 
   describe "POST '/api/v1/user/client_associations'" do
-    let(:client) { Fabricate(:client, name: 'Test', url: 'https://some-url.com/') }
+    let(:scope) { Fabricate(:scope) }
+    let(:client) { Fabricate(:client, name: 'Test', url: 'https://some-url.com/', scopes: [scope]) }
     let(:client_id) { client.id.to_s }
     let(:params) { {client_id: client_id} }
     let(:action) { post '/api/v1/user/client_associations', params.to_json, options }
@@ -26,7 +27,7 @@ describe API::Resources::User::ClientAssociations do
 
       its(['client_url']) { is_expected.to eq('https://some-url.com/') }
 
-      its(['scopes']) { is_expected.to eq([]) }
+      its(['scopes']) { is_expected.to eq([{'id' => scope.id.to_s, 'key' => scope.key.to_s, 'description' => scope.description.to_s}]) }
     end
 
     context 'client does not exist' do

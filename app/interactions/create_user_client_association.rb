@@ -11,6 +11,10 @@ class CreateUserClientAssociation
   end
 
   def create
-    UserClientAssociation.create({user: user, client: client})
+    user_client_association = UserClientAssociation.new(user: user, client: client)
+    user_client_association.scopes = client.scopes
+    user_client_association.save!
+
+    user_client_association
   end
 end
