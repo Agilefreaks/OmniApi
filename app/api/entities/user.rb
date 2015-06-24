@@ -11,13 +11,13 @@ module API
       expose :access_token do |user, _options|
         user.access_tokens.last.token
       end
-      expose :contacts_updated_at
 
-      format_with(:iso_timestamp) { |dt| dt.iso8601 }
+      format_with(:iso_timestamp) { |dt| dt.iso8601 unless dt.nil? }
 
       with_options(format_with: :iso_timestamp) do
         expose :created_at
         expose :updated_at
+        expose :contacts_updated_at, safe: true
       end
     end
   end
