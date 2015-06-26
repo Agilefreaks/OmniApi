@@ -9,7 +9,7 @@ class UserClientAssociation
 
   embeds_many :scopes
 
-  index({'access_token.token' => 1}, unique: true, sparse: true)
+  index({ 'access_token.token' => 1 }, unique: true, sparse: true)
 
   def self.find_by_client_id(client_id)
     find_by(client_id: client_id)

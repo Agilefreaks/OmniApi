@@ -11,8 +11,9 @@ module API
           end
           post do
             client = Client.find(merged_params[:client_id])
+            association = CreateUserClientAssociation.between(@current_user, client)
 
-            present CreateUserClientAssociation.between(@current_user, client), with: API::Entities::UserClientAssociation
+            present association, with: API::Entities::UserClientAssociation
           end
 
           desc 'Get Client Association for a client', ParamsHelper.omni_headers
@@ -21,7 +22,8 @@ module API
           end
           route_param :client_id do
             get do
-              present UserClientAssociation.find_by_client_id(merged_params[:client_id]), with: API::Entities::UserClientAssociation
+              association = UserClientAssociation.find_by_client_id(merged_params[:client_id])
+              present association, with: API::Entities::UserClientAssociation
             end
           end
         end

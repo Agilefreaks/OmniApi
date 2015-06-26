@@ -15,9 +15,9 @@ describe UserClientAssociation do
       end
 
       it 'raises not found exception' do
-        expect {
+        expect do
           subject
-        }.to raise_error(Mongoid::Errors::DocumentNotFound)
+        end.to raise_error(Mongoid::Errors::DocumentNotFound)
       end
     end
 
