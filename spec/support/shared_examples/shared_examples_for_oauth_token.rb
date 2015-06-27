@@ -17,13 +17,13 @@ shared_examples :oauth_token do
     context 'when expired_at before today' do
       let(:expires_at) { Time.now.utc - 1.day }
 
-      its(:expired?) { is_expected.to be_falsey }
+      its(:expired?) { is_expected.to be_truthy }
     end
 
     context 'when expired_at after today' do
       let(:expires_at) { Time.now.utc + 1.day }
 
-      its(:expired?) { is_expected.to be_truthy }
+      its(:expired?) { is_expected.to be_falsey }
     end
   end
 

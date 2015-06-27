@@ -9,10 +9,13 @@ module Concerns
       field :expires_at, type: Time
       field :client_id, type: BSON::ObjectId
 
+      scope :for_client, -> client_id { where(client_id: client_id) }
+      scope :active, -> { where(:expires_at.gt => Time.now.utc) }
+
       validates_presence_of :token
 
       def expired?
-        expires_at > Time.now.utc
+        expires_at < Time.now.utc
       end
     end
 
