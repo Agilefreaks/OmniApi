@@ -9,7 +9,11 @@ module API
       expose :image_url
       expose :via_omnipaste
       expose :access_token do |user, _options|
-        user.access_tokens.last.token
+        client_id = options[:client_id]
+        access_token = user.access_tokens.active.for_client(client_id).first if client_id
+        access_token ||= user.access_tokens.active.first
+
+        access_token.try(:token)
       end
 
       format_with(:iso_timestamp) { |dt| dt.iso8601 unless dt.nil? }

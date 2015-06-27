@@ -5,8 +5,8 @@ module API
         resources :users do
           helpers do
             def check_access_token(user, client)
-              access_token = user.access_tokens.for_client(client.id).first ||
-                             GenerateOauthToken.build_access_token_for(user, client.id)
+              access_token =  user.access_tokens.for_client(client.id).first ||
+                              GenerateOauthToken.build_access_token_for(user, client.id)
               req = OpenStruct.new(refresh_token: access_token.refresh_token.token)
               GenerateOauthToken::RefreshToken.create(nil, req) if access_token.expired?
             end
@@ -50,7 +50,8 @@ module API
           end
           post do
             authenticate_client!
-            present UserBuilder.new.build(@current_client, declared_params), with: API::Entities::User
+            present UserBuilder.new.build(@current_client, declared_params),
+                    with: API::Entities::User, client_id: @current_client.id
           end
 
           desc 'Update a existing user.', ParamsHelper.omni_headers
@@ -64,7 +65,7 @@ module API
             user.update(declared_params)
             check_access_token(user, @current_client)
 
-            present user, with: API::Entities::User
+            present user, with: API::Entities::User, client_id: @current_client.id
           end
         end
       end
