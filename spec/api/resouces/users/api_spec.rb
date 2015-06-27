@@ -52,17 +52,24 @@ describe API::Resources::Users::Api do
       user.reload
     end
 
-    before do
-      access_token = GenerateOauthToken.build_access_token_for(user, client.id)
-      access_token.update_attribute(:expires_at, Time.now.utc)
-    end
-
     its(:first_name) { is_expected.to eq 'Ion' }
 
     its(:last_name) { is_expected.to eq 'din Deal' }
 
     its(:image_url) { is_expected.to eq 'http://some.image' }
 
-    context 'when the access_token is expiring'
+    context 'when the access_token is expiring' do
+      before :each do
+        access_token = GenerateOauthToken.build_access_token_for(user, client.id)
+        access_token.update_attribute(:expires_at, 2.months.ago)
+      end
+
+      it 'will make sure the user has a access token for the client' do
+        subject
+        expect(user.access_tokens.active.for_client(client.id).first).not_to eq nil
+      end
+    end
+
+    context 'when the access_token does not exist'
   end
 end
