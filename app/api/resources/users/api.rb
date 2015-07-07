@@ -41,7 +41,7 @@ module API
           end
           get do
             result = declared_params[:email].to_s.empty? ? fetch_user : fetch_user_with_email(declared_params[:email])
-            present result, with: API::Entities::User
+            present result, with: API::Entities::User, client_id: @current_client.try(:id)
           end
 
           desc 'Create a new user.', ParamsHelper.omni_headers
