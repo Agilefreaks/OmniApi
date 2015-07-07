@@ -4,8 +4,7 @@ describe API::Resources::User::ClientAssociations do
   include_context :with_authenticated_user
 
   describe "POST '/api/v1/user/client_associations'" do
-    let(:scope) { Fabricate(:scope, key: :phone_calls_create) }
-    let(:client) { Fabricate(:client, name: 'Test', url: 'https://some-url.com/', scopes: [scope]) }
+    let(:client) { Fabricate(:classified_add_client, name: 'Test', url: 'https://some-url.com/') }
     let(:client_id) { client.id.to_s }
     let(:params) { { client_id: client_id } }
     let(:action) { post '/api/v1/user/client_associations', params.to_json, options }
@@ -30,9 +29,6 @@ describe API::Resources::User::ClientAssociations do
       its(['client_name']) { is_expected.to eq('Test') }
 
       its(['client_url']) { is_expected.to eq('https://some-url.com/') }
-
-      # rubocop:disable Metrics/LineLength
-      its(['scopes']) { is_expected.to eq([{ 'id' => scope.id.to_s, 'key' => scope.key.to_s, 'description' => scope.description.to_s }]) }
     end
 
     context 'client does not exist' do
@@ -43,9 +39,8 @@ describe API::Resources::User::ClientAssociations do
   end
 
   describe "GET '/api/v1/user/client_associations/:client_id'" do
-    let!(:scope) { Fabricate(:scope) }
-    let!(:client) { Fabricate(:client, name: 'Test', url: 'https://some-url.com/', scopes: [scope]) }
-    let!(:client_id) { client.id.to_s }
+    let(:client) { Fabricate(:classified_add_client, name: 'Test', url: 'https://some-url.com/') }
+    let(:client_id) { client.id.to_s }
     let(:action) { get "/api/v1/user/client_associations/#{client_id}", '', options }
 
     subject { action }
@@ -65,8 +60,6 @@ describe API::Resources::User::ClientAssociations do
         its(['client_name']) { is_expected.to eq('Test') }
 
         its(['client_url']) { is_expected.to eq('https://some-url.com/') }
-
-        its(['scopes']) { is_expected.to eq([{ 'id' => scope.id.to_s, 'key' => scope.key.to_s, 'description' => scope.description.to_s }]) }
       end
     end
   end

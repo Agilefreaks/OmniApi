@@ -3,9 +3,9 @@ require 'spec_helper'
 describe UserClientAssociation do
   it { is_expected.to belong_to(:user) }
   it { is_expected.to belong_to(:client) }
-  it { is_expected.to embed_many(:scopes) }
+  it { is_expected.to have_field(:scopes).of_type(Array) }
 
-  describe 'find_by_client_id' do
+  describe :find_by_client_id do
     let(:client_id) { '42' }
     subject { UserClientAssociation.find_by_client_id(client_id) }
 

@@ -11,8 +11,6 @@ class Client
 
   embeds_many :access_tokens
 
-  embeds_many :scopes
-
   index 'access_tokens.token' => 1
 
   before_save do
@@ -21,6 +19,10 @@ class Client
     access_token = AccessToken.build
     access_token.expires_at = Time.now.utc + 1.year
     access_tokens.push(AccessToken.build)
+  end
+
+  def scopes
+    access_tokens.last.scopes.map { |scope| Scope.new(key: scope, description: ScopesRepository.description(scope)) }
   end
 
   def self.verify(client_id)

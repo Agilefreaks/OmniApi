@@ -20,7 +20,7 @@ class GenerateOauthToken
   def self.build_access_token(client)
     access_token = AccessToken.build(client.id)
     access_token.refresh_token = ::RefreshToken.build(client.id)
-    access_token.scopes = client.scopes.pluck(:key)
+    access_token.scopes = client.scopes.map(&:key)
 
     access_token
   end

@@ -3,8 +3,7 @@ require 'spec_helper'
 describe CreateUserClientAssociation do
   describe :between do
     let(:user) { Fabricate(:user) }
-    let(:client_scope) { Fabricate(:scope, key: :phone_calls_create) }
-    let(:client) { Fabricate(:client, scopes: [client_scope]) }
+    let(:client) { Fabricate(:classified_add_client) }
 
     subject { CreateUserClientAssociation.between(user, client).reload }
 
@@ -16,7 +15,7 @@ describe CreateUserClientAssociation do
 
     its(:client) { is_expected.to eq(client) }
 
-    its(:scopes) { is_expected.to eq([client_scope]) }
+    its(:scopes) { is_expected.to eq(client.scopes.map(&:key)) }
 
     its(:access_token) { is_expected.not_to be_nil }
 
@@ -29,7 +28,7 @@ describe CreateUserClientAssociation do
     it 'sets scopes on token' do
       result = subject
 
-      expect(result.access_token.scopes).to eq([:phone_calls_create])
+      expect(result.access_token.scopes).to eq(client.scopes.map(&:key))
     end
   end
 end

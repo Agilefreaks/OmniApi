@@ -22,7 +22,7 @@ class CreateUserClientAssociation
 
   def create_association(access_token)
     UserClientAssociation.create(user: user, client: client) do |assoc|
-      assoc.scopes = client.scopes
+      assoc.scopes = client.scopes.map(&:key)
       assoc.access_token = access_token.clone
     end
   end

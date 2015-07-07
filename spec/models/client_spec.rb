@@ -5,7 +5,6 @@ describe Client do
   it { should have_field(:url).of_type(String) }
   it { should have_field(:secret).of_type(String) }
   it { should embed_many(:access_tokens) }
-  it { should embed_many(:scopes) }
 
   its(:secret) { should_not be_nil }
 
@@ -48,5 +47,17 @@ describe Client do
     subject { Client.find_by_token(client.access_tokens.first.token) }
 
     it { should == client }
+  end
+
+  describe :scopes do
+    let(:client) { Fabricate(:classified_add_client) }
+
+    subject { client.scopes }
+
+    its(:count) { is_expected.to eq 1 }
+
+    its('first.key') { is_expected.to eq :phone_calls_create }
+
+    its('first.description') { is_expected.to eq 'Initiate phone calls.' }
   end
 end

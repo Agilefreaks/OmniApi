@@ -2,7 +2,7 @@ require_relative 'base_entity'
 
 module API
   module Entities
-    class Scope < BaseEntity
+    class Scope < Grape::Entity
       expose :key, :description
     end
   end

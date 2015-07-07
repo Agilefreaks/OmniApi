@@ -18,8 +18,6 @@ module API
       expose :token do |user_client_association, _options|
         user_client_association.access_token.token
       end
-
-      expose :scopes, using: API::Entities::Scope
     end
   end
 end
