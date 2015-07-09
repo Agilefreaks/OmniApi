@@ -62,5 +62,13 @@ describe API::Resources::User::ClientAssociations do
         its(['client_url']) { is_expected.to eq('https://some-url.com/') }
       end
     end
+
+    context 'user_client_association does not exists' do
+      before do
+        CreateUserClientAssociation.between(Fabricate(:user), client)
+      end
+
+      it { is_expected.to be_not_found }
+    end
   end
 end

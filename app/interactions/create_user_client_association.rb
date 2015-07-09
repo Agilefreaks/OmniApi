@@ -11,13 +11,14 @@ class CreateUserClientAssociation
   end
 
   def create
-    access_token = GenerateOauthToken.build_access_token(client)
-    add_access_token_to_user(access_token.clone)
+    access_token = GenerateOauthToken.build_access_token_for(user, client.id)
+    add_access_token_to_user(access_token, client)
     create_association(access_token)
   end
 
-  def add_access_token_to_user(access_token)
-    user.access_tokens.push(access_token.clone)
+  def add_access_token_to_user(access_token, client)
+    access_token.scopes = client.scopes.map(&:key)
+    access_token.save
   end
 
   def create_association(access_token)
