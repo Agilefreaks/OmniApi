@@ -22,7 +22,9 @@ module API
           end
           route_param :client_id do
             get do
-              association = UserClientAssociation.find_by(client_id: merged_params[:client_id], user_id: @current_user.id)
+              client_id = merged_params[:client_id]
+              user_id = @current_user.id
+              association = UserClientAssociation.find_by(client_id: client_id, user_id: user_id)
               present association, with: API::Entities::UserClientAssociation
             end
           end
