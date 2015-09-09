@@ -60,7 +60,7 @@ describe API::Resources::Users::Api do
 
     context 'when the access_token is expiring' do
       before :each do
-        access_token = GenerateOauthToken.build_access_token_for(user, client.id)
+        access_token = Oauth::BaseTokenGenerator.build_access_token_for(user, client.id)
         access_token.update_attribute(:expires_at, 2.months.ago)
       end
 

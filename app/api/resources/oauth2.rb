@@ -13,18 +13,25 @@ module API
                    type: Symbol,
                    values: [:authorization_code, :refresh_token, :client_credentials],
                    desc: 'The grant type.'
-          optional :code,
-                   type: String,
-                   desc: 'The authorization code.'
           requires :client_id,
                    type: String,
                    desc: 'The client id.'
-          optional :client_secret,
+          optional :code,
                    type: String,
-                   desc: 'The client secret.'
+                   desc: 'The authorization code.'
           optional :refresh_token,
                    type: String,
                    desc: 'The refresh_token.'
+          optional :client_secret,
+                   type: String,
+                   desc: 'The client secret.'
+          optional :resource_type,
+                   type: Symbol,
+                   values: [:user, :client], default: :client,
+                   desc: 'The type of the resource for which to create the access token'
+          optional :resource_id,
+                   type: String,
+                   desc: 'The identifier of resource for which to create the access token. eg: the user email for a user'
         end
         post :token do
           response = authorization_response(env)

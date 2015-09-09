@@ -6,9 +6,9 @@ module API
           helpers do
             def check_access_token(user, client)
               access_token =  user.access_tokens.for_client(client.id).first ||
-                              GenerateOauthToken.build_access_token_for(user, client.id)
+                              Oauth::BaseTokenGenerator.build_access_token_for(user, client.id)
               req = OpenStruct.new(refresh_token: access_token.refresh_token.token)
-              GenerateOauthToken::RefreshToken.create(nil, req) if access_token.expired?
+              Oauth::RefreshTokenTokenGenerator.generate(nil, req) if access_token.expired?
             end
 
             def fetch_user_with_email(email)

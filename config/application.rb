@@ -6,28 +6,19 @@ require 'boot'
 
 Bundler.require :default, ENV['RACK_ENV']
 
+base_path = Pathname.new(File.expand_path(File.dirname(__FILE__))).join('../')
+
 # require initializers
-Dir[Pathname.new(__FILE__).dirname.join('initializers', '*.rb')].each do |file|
-  require file
-end
+Dir.glob(base_path.join('config', 'initializers', '*.rb')).each { |f| require f }
 
 # require all the rest
-include_dirs = %w(models
-                  interactions interactions/call interactions/sms
-                  finders
-                  factories
-                  builders
-                  services
-                  repositories)
-
+include_dirs = %w(models interactions finders factories builders services repositories)
 include_dirs.each do |dir|
-  Dir[Pathname.new(__FILE__).dirname.join('..', 'app', dir, '*.rb')].each do |f|
-    require f
-  end
+  Dir.glob(base_path.join('app', dir, '**', '*.rb')).each { |f| require f }
 end
 
 # require omni_sync
-require_relative '../lib/omni_sync'
+require base_path.join('lib', 'omni_sync').to_s
 
 # boot up the app
-require File.expand_path('../../app/omniapi_app.rb', __FILE__)
+require base_path.join('app', 'omniapi_app').to_s

@@ -79,6 +79,7 @@ describe API::Resources::OAuth2 do
   context 'when grant type is client_credentials' do
     let(:grant_type) { :client_credentials }
     let(:valid_params) { params.merge(client_secret: client.secret) }
+    before { params['resource_type'] = :client }
 
     it_behaves_like 'oauth2 grant type' do
       let(:invalid_params) { params.merge(client_secret: 'not secret') }

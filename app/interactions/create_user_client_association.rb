@@ -11,7 +11,7 @@ class CreateUserClientAssociation
   end
 
   def create
-    access_token = GenerateOauthToken.build_access_token_for(user, client.id)
+    access_token = Oauth::BaseTokenGenerator.build_access_token_for(user, client.id)
     add_access_token_to_user(access_token, client)
     create_association(access_token)
   end
