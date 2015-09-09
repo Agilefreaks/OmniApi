@@ -2,9 +2,7 @@ module API
   module Resources
     class AuthorizationCodes < Grape::API
       resource :authorization_codes do
-        before do
-          authenticate_client!
-        end
+        before { authenticate_client! }
 
         desc 'Create an authorization code.', ParamsHelper.omni_headers
         params do

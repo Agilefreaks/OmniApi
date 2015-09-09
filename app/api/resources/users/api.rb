@@ -50,7 +50,7 @@ module API
           end
           post do
             authenticate_client!
-            present UserBuilder.new.build(@current_client, declared_params),
+            present UserBuilder.new.build(declared_params),
                     with: API::Entities::User, client_id: @current_client.id
           end
 

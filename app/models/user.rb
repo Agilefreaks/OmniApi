@@ -32,7 +32,6 @@ class User
   def active_devices
     devices.active
   end
-
   def self.find_by_provider_or_email(email, provider)
     User.where('providers.email' => email, 'providers.name' => provider)
   end
