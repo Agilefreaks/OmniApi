@@ -25,6 +25,9 @@ module API
           optional :refresh_token,
                    type: String,
                    desc: 'The refresh_token.'
+          optional :user_email,
+                   type: String,
+                   desc: 'The email address of the user for whom to create an access token'
         end
         post :token do
           response = authorization_response(env)

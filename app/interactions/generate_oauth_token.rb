@@ -21,8 +21,7 @@ class GenerateOauthToken
     access_token = AccessToken.build(client_id)
     access_token.refresh_token = ::RefreshToken.build(client_id)
     access_tokens_holder.access_tokens.push(access_token)
-    access_tokens_holder.save
-
+    access_tokens_holder.save!
     access_token
   end
 
@@ -54,8 +53,13 @@ class GenerateOauthToken
   class ClientCredentials
     def self.create(client, req)
       req.invalid_grant! unless client.secret == req.client_secret
-
-      GenerateOauthToken.build_access_token_for(client)
+      if req.params['user_email']
+        user = User.find_by(email: req.params['user_email']) rescue nil
+        req.invalid_grant! unless user
+        GenerateOauthToken.build_access_token_for(user, client.id)
+      else
+        GenerateOauthToken.build_access_token_for(client)
+      end
     end
   end
 end

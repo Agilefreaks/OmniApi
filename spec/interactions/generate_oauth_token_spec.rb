@@ -4,18 +4,35 @@ describe :GenerateOauthToken do
   let(:client) { Fabricate(:client, secret: 'secret') }
 
   describe GenerateOauthToken::ClientCredentials do
-    let(:req) { double('request', client_secret: secret) }
+    let(:params) { {} }
+    let(:req) { double('request', client_secret: secret, params: params) }
 
     subject { GenerateOauthToken::ClientCredentials.create(client, req) }
 
     context 'when secret is valid' do
       let(:secret) { 'secret' }
 
-      it 'will create a access token on the client' do
-        expect { subject }.to change(client.access_tokens, :count).by(1)
+      context 'and an email is not provided' do
+        it 'will create a access token on the client' do
+          expect { subject }.to change(client.access_tokens, :count).by(1)
+        end
+
+        its(:token) { should == client.access_tokens.last.token }
       end
 
-      its(:token) { should == client.access_tokens.last.token }
+      context 'and an email is provided' do
+        before { params['user_email'] = 'test@email.com' }
+
+        context 'and the given email corresponds to an existing user' do
+          let!(:user) { Fabricate(:user, email: params['user_email']) }
+
+          it 'will create an access token for the given client on the user' do
+            expect { subject }.to change {user.reload.access_tokens.count }.by(1)
+          end
+
+          its(:token) { should == user.reload.access_tokens.last.token }
+        end
+      end
 
       its(:refresh_token) { should_not be_nil }
     end
