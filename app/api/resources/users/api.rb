@@ -36,28 +36,21 @@ module API
           end
 
           desc 'Fetch a user.', ParamsHelper.omni_headers
-          params do
-            optional :email, type: String, desc: 'The Email of the user.'
-          end
+          params { optional :email, type: String, desc: 'The Email of the user.' }
           get do
             result = declared_params[:email].to_s.empty? ? fetch_user : fetch_user_with_email(declared_params[:email])
-            present result, with: API::Entities::User, client_id: @current_client.try(:id)
+            present result
           end
 
           desc 'Create a new user.', ParamsHelper.omni_headers
-          params do
-            use :shared
-          end
+          params { use :shared }
           post do
             authenticate_client!
-            present UserBuilder.new.build(declared_params),
-                    with: API::Entities::User, client_id: @current_client.id
+            present UserBuilder.new.build(declared_params)
           end
 
           desc 'Update a existing user.', ParamsHelper.omni_headers
-          params do
-            use :shared
-          end
+          params { use :shared }
           put do
             authenticate_client!
 
@@ -65,7 +58,7 @@ module API
             user.update(declared_params)
             check_access_token(user, @current_client)
 
-            present user, with: API::Entities::User, client_id: @current_client.id
+            present user
           end
         end
       end
