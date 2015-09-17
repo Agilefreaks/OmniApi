@@ -197,4 +197,17 @@ describe User do
       end.to change(User, :count).by(1)
     end
   end
+
+  describe :destroy do
+    subject { user.destroy }
+
+    context 'user has at least one user client association' do
+      let(:client) { Fabricate(:client) }
+      before { user.user_client_associations.push(UserClientAssociation.new({client: client})) }
+
+      it 'deletes all corresponding user_client_associations' do
+        expect { subject }.to change { UserClientAssociation.count }.by(-1)
+      end
+    end
+  end
 end

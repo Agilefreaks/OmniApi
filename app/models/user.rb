@@ -28,6 +28,7 @@ class User
   has_many :sms_messages
   has_many :phone_calls
   has_many :contacts
+  has_many :user_client_associations, dependent: :destroy
 
   def active_devices
     devices.active
