@@ -60,4 +60,19 @@ describe Client do
 
     its('first.description') { is_expected.to eq 'Initiate phone calls.' }
   end
+
+  describe :destroy do
+    let(:client) { Fabricate(:client) }
+
+    subject { client.destroy }
+
+    context 'user has at least one user client association' do
+      let(:user) { Fabricate(:user) }
+      before { client.user_client_associations.push(UserClientAssociation.new({user: user})) }
+
+      it 'deletes all corresponding user_client_associations' do
+        expect { subject }.to change { UserClientAssociation.count }.by(-1)
+      end
+    end
+  end
 end

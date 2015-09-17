@@ -11,6 +11,8 @@ class Client
 
   embeds_many :access_tokens
 
+  has_many :user_client_associations, dependent: :destroy
+
   index 'access_tokens.token' => 1
 
   before_save do
