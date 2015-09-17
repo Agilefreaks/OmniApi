@@ -18,6 +18,10 @@ module API
       expose :token do |user_client_association, _options|
         user_client_association.access_token.token
       end
+
+      expose :refresh_token do |user_client_association, _options|
+        user_client_association.access_token.refresh_token.token
+      end
     end
   end
 end
