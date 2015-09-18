@@ -14,4 +14,8 @@ class UserClientAssociation
   def self.find_by_client_id(client_id)
     find_by(client_id: client_id)
   end
+
+  def self.find_by_token(token)
+    where('access_token.refresh_token.token' => token).first unless token.nil?
+  end
 end

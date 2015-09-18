@@ -4,35 +4,40 @@ describe Oauth::RefreshTokenTokenGenerator do
   let(:client) { Fabricate(:client, secret: 'secret') }
   let(:access_token) { AccessToken.build('42', token: 'access') }
   let(:refresh_token) { RefreshToken.build(token: 'refresh') }
-  let(:req) { double('request', refresh_token: refresh_token.token) }
-  let(:user) { Fabricate(:user) }
+  let(:params) { {} }
+  let(:req) { double('request', refresh_token: refresh_token.token, params: params) }
 
   describe '.generate' do
     subject { Oauth::RefreshTokenTokenGenerator.generate(client, req) }
 
-    context 'when refresh token is valid' do
-      before :each do
-        access_token.refresh_token = refresh_token
-        user.access_tokens.push(access_token)
-        user.save
+    context 'when resource is not present' do
+      before { params['resource_type'] = '' }
+
+      it 'delegates generate to the RefreshTokenUserTokenGenerator' do
+        expect(Oauth::RefreshTokenUserTokenGenerator).to receive(:generate).with(client, req)
+
+        subject
       end
+    end
 
-      it 'will not create a new access token' do
-        expect { subject }.to change(user.access_tokens, :count).by(0)
+    context 'when resource is user' do
+      before { params['resource_type'] = 'user' }
+
+      it 'delegates generate to the RefreshTokenUserTokenGenerator' do
+        expect(Oauth::RefreshTokenTokenGenerator).to receive(:generate).with(client, req)
+
+        subject
       end
+    end
 
-      context 'if access_token is expired' do
-        before do
-          access_token.expires_at = Time.now.utc - 2.months
-          user.save
-        end
+    context 'when resource is user_client_association' do
+      before { params['resource_type'] = 'user_client_association' }
 
-        its(:expires_at) { should >= Time.now.utc }
+      it 'delegates generate to the RefreshTokenUserClientAssociationTokenGenerator' do
+        expect(Oauth::RefreshTokenUserClientAssociationTokenGenerator).to receive(:generate).with(client, req)
+
+        subject
       end
-
-      its(:client_id) { should == '42' }
-
-      its('refresh_token.token') { should eq 'refresh' }
     end
   end
 end

@@ -8,7 +8,7 @@ module API
               access_token =  user.access_tokens.for_client(client.id).first ||
                               Oauth::BaseTokenGenerator.build_access_token_for(user, client.id)
               req = OpenStruct.new(refresh_token: access_token.refresh_token.token)
-              Oauth::RefreshTokenTokenGenerator.generate(nil, req) if access_token.expired?
+              Oauth::RefreshTokenUserTokenGenerator.generate(nil, req) if access_token.expired?
             end
 
             def fetch_user_with_email(email)

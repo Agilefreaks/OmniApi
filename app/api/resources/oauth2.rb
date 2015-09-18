@@ -27,7 +27,7 @@ module API
                    desc: 'The client secret.'
           optional :resource_type,
                    type: Symbol,
-                   values: [:user, :client], default: :client,
+                   values: [:user, :client, :user_client_association],
                    desc: 'The type of the resource for which to create the access token'
           optional :resource_id,
                    type: String,

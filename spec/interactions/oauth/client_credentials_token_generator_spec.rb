@@ -23,5 +23,15 @@ describe Oauth::ClientCredentialsTokenGenerator do
         end
       end
     end
+
+    context 'resource is empty' do
+      before { params['resource_type'] = '' }
+
+      it 'delegates the result to ClientCredentialsClientTokenGenerator' do
+        expect(Oauth::ClientCredentialsClientTokenGenerator).to receive(:generate).with(client, req)
+
+        subject
+      end
+    end
   end
 end
