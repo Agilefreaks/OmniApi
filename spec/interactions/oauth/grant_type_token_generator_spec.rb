@@ -8,9 +8,9 @@ describe Oauth::GrantTypeTokenGenerator do
     subject { Oauth::GrantTypeTokenGenerator.generate(client, req) }
 
     [
-      {grant_type: :refresh_token, generator: Oauth::RefreshTokenTokenGenerator},
-      {grant_type: :client_credentials, generator: Oauth::ClientCredentialsTokenGenerator},
-      {grant_type: :authorization_code, generator: Oauth::AuthorizationCodeTokenGenerator}
+      { grant_type: :refresh_token, generator: Oauth::RefreshTokenTokenGenerator },
+      { grant_type: :client_credentials, generator: Oauth::ClientCredentialsTokenGenerator },
+      { grant_type: :authorization_code, generator: Oauth::AuthorizationCodeTokenGenerator }
     ].each do |test_data|
       context "grant_type is #{test_data[:grant_type]}" do
         before { allow(req).to receive(:grant_type).and_return(test_data[:grant_type]) }

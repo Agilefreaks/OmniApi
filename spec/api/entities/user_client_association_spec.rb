@@ -3,9 +3,11 @@ require 'spec_helper'
 describe API::Entities::UserClientAssociation do
   let(:user) { Fabricate(:user) }
   let(:client) { Fabricate(:client) }
-  let(:refresh_token) { AccessToken.new({token: 'testRefreshToken'}) }
-  let(:token) { AccessToken.new(client: client, refresh_token: refresh_token, token: 'testToken', expires_at: 3.days.from_now) }
-  let(:user_client_association) { UserClientAssociation.create!({access_token: token, user: user, client: client}) }
+  let(:refresh_token) { AccessToken.new(token: 'testRefreshToken') }
+  let(:token) do
+    AccessToken.new(client: client, refresh_token: refresh_token, token: 'testToken', expires_at: 3.days.from_now)
+  end
+  let(:user_client_association) { UserClientAssociation.create!(access_token: token, user: user, client: client) }
 
   describe '#to_json' do
     let(:options) { {} }

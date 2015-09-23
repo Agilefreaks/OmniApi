@@ -2,15 +2,12 @@ require_relative 'base_token_generator'
 
 module Oauth
   class BaseDelegatingTokenGenerator < Oauth::BaseTokenGenerator
-
     def self.generate(client, req)
       delegate_generator_class(req).generate(client, req)
     end
 
-    protected
-
-    def self.delegate_generator_class(req)
-      raise NotImplementedError
+    def self.delegate_generator_class(_req)
+      fail NotImplementedError
     end
 
     def self.classify(symbol)

@@ -1,11 +1,9 @@
 module Oauth
   class AuthorizationCodeTokenGenerator < Oauth::BaseTokenGenerator
-    def self.generate(client, req)
+    def self.generate(_client, req)
       @user = find_user(req)
       super
     end
-
-    protected
 
     def self.find_user(req)
       User.find_by_code(req.code)
@@ -16,7 +14,7 @@ module Oauth
       build_access_token_for(@user, client.id)
     end
 
-    def self.authorize!(_, req)
+    def self.authorize!(_client, req)
       return unless @user.nil?
 
       NewRelic::Agent.add_custom_parameters(req.env)

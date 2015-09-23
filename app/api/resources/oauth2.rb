@@ -31,7 +31,7 @@ module API
                    desc: 'The type of the resource for which to create the access token'
           optional :resource_id,
                    type: String,
-                   desc: 'The identifier of resource for which to create the access token. eg: the user email for a user'
+                   desc: 'The identifier of resource for which to create the access token. eg: the email for a user'
         end
         post :token do
           response = authorization_response(env)

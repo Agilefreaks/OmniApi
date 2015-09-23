@@ -10,7 +10,11 @@ describe Oauth::RefreshTokenUserClientAssociationTokenGenerator do
 
     context 'a user_client_association exists with the given refresh token' do
       let(:user) { Fabricate(:user) }
-      let(:token) { AccessToken.new(client: client, user: user, expires_at: 3.days.from_now, refresh_token: refresh_token, token: 'tt') }
+      let(:token) do
+        AccessToken.new(client: client, user: user, expires_at: 3.days.from_now,
+                        refresh_token: refresh_token, token: 'tt')
+      end
+
       let!(:user_client_association) { UserClientAssociation.create!(user: user, client: client, access_token: token) }
 
       it 'updates the expiration date of the corresponding token' do

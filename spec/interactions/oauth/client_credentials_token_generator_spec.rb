@@ -10,8 +10,8 @@ describe Oauth::ClientCredentialsTokenGenerator do
     subject { Oauth::ClientCredentialsTokenGenerator.generate(client, req) }
 
     [
-      {resource: :user, generator: Oauth::ClientCredentialsUserTokenGenerator},
-      {resource: :client, generator: Oauth::ClientCredentialsClientTokenGenerator}
+      { resource: :user, generator: Oauth::ClientCredentialsUserTokenGenerator },
+      { resource: :client, generator: Oauth::ClientCredentialsClientTokenGenerator }
     ].each do |test_data|
       context "resource is #{test_data[:resource]}" do
         before { params['resource_type'] = test_data[:resource] }

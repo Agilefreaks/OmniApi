@@ -1,8 +1,8 @@
 module Oauth
   class BaseTokenGenerator
     def self.generate(client, req)
-      self.authorize!(client, req)
-      self.generate_core(client, req)
+      authorize!(client, req)
+      generate_core(client, req)
     end
 
     def self.build_access_token_for(access_tokens_holder, client_id = nil)
@@ -13,14 +13,12 @@ module Oauth
       access_token
     end
 
-    protected
-
-    def self.authorize!(client, req)
-      raise NotImplementedError
+    def self.authorize!(_client, _req)
+      fail NotImplementedError
     end
 
-    def self.generate_core(client, req)
-      raise NotImplementedError
+    def self.generate_core(_client, _req)
+      fail NotImplementedError
     end
   end
 end

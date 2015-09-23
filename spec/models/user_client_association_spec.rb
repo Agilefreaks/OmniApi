@@ -43,8 +43,13 @@ describe UserClientAssociation do
       let(:user) { Fabricate(:user) }
       let(:client) { Fabricate(:client) }
       let(:refresh_token) { RefreshToken.new(token: token) }
-      let(:access_token) { AccessToken.new(client: client, user: user, token: 't', expires_at: DateTime.now, refresh_token: refresh_token) }
-      let!(:user_client_association) { UserClientAssociation.create!(client: client, user: user, access_token: access_token) }
+      let(:access_token) do
+        AccessToken.new(client: client, user: user, token: 't', expires_at: DateTime.now, refresh_token: refresh_token)
+      end
+      let!(:user_client_association) do
+        UserClientAssociation.create!(client: client, user: user,
+                                      access_token: access_token)
+      end
 
       it { is_expected.to eq user_client_association }
     end
