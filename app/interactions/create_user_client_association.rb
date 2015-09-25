@@ -13,7 +13,7 @@ class CreateUserClientAssociation
   def create
     access_token = Oauth::BaseTokenGenerator.build_access_token_for(user, client.id)
     add_access_token_to_user(access_token, client)
-    create_association(access_token)
+    create_association
   end
 
   def add_access_token_to_user(access_token, client)
@@ -21,10 +21,9 @@ class CreateUserClientAssociation
     access_token.save
   end
 
-  def create_association(access_token)
+  def create_association
     UserClientAssociation.create(user: user, client: client) do |assoc|
       assoc.scopes = client.scopes.map(&:key)
-      assoc.access_token = access_token.clone
     end
   end
 end
