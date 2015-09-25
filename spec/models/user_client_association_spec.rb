@@ -29,29 +29,27 @@ describe UserClientAssociation do
     end
   end
 
-  describe :find_by_token do
-    let(:token) { 'someToken' }
-    subject { UserClientAssociation.find_by_token(token) }
+  describe '#access_token' do
+    context 'the association has a client and user set' do
+      let!(:instance) { Fabricate(:user_client_association) }
 
-    context 'the item does not exist' do
-      before { UserClientAssociation.delete_all }
+      subject { instance.access_token }
 
-      it { is_expected.to be_nil }
-    end
+      context 'the user has an access token for the equivalent client' do
+        let!(:access_token) do
+          access_token = AccessToken.build(instance.client.id)
+          instance.user.access_tokens.push(access_token)
+          access_token
+        end
 
-    context 'the user client association exists' do
-      let(:user) { Fabricate(:user) }
-      let(:client) { Fabricate(:client) }
-      let(:refresh_token) { RefreshToken.new(token: token) }
-      let(:access_token) do
-        AccessToken.new(client: client, user: user, token: 't', expires_at: DateTime.now, refresh_token: refresh_token)
-      end
-      let!(:user_client_association) do
-        UserClientAssociation.create!(client: client, user: user,
-                                      access_token: access_token)
+        it { is_expected.to eq access_token }
       end
 
-      it { is_expected.to eq user_client_association }
+      context 'the user does not have an access token for the equivalent client' do
+        let!(:access_token) { instance.user.access_tokens.destroy_all }
+
+        it { is_expected.to be_nil }
+      end
     end
   end
 end
